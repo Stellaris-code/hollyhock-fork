@@ -15,3 +15,6 @@ Tools for manipulating fx-CP400 firmware images, and useful IDAPython scripts.
 
 ### `fw_extract.py`
 Extracts firmware images from a ZIP file firmware updater, as downloaded from the CASIO website.
+
+### `fw_pack.py`
+Compresses a firmware file in the specific way required for it to be embedded into an `OSupdateDLL.dll` file.
