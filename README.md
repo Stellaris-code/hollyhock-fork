@@ -12,3 +12,6 @@ Tools and software for the CASIO fx-CP400 graphics calculator.
 
 ## `tools/`
 Tools for manipulating fx-CP400 firmware images, and useful IDAPython scripts.
+
+### `fw_extract.py`
+Extracts firmware images from a ZIP file firmware updater, as downloaded from the CASIO website.
