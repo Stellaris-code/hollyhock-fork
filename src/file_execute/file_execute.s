@@ -11,6 +11,9 @@
 ! r8 - file descriptor
 ! all delay slots are nops cause i can't be bothered
 
+mov.l r8, @-r15
+sts.l pr, @-r15
+
 ! Open the file and get a file descriptor
 mova file_path, r0
 mov r0, r4
@@ -60,10 +63,9 @@ mov.l buf, r0
 jsr @r0
 nop
 
-! Hang, because returning to the function is too hard
-hang:
-	bra hang
-	nop
+lds.l @r15+, pr
+rts
+mov.l @r15+, r8
 
 .align 4
 open:
