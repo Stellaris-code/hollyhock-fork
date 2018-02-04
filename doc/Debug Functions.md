@@ -19,8 +19,8 @@ Always returns 0.
 | --- | --- |
 | v02.01.2000.0000 | `0x8002E448` |
 
-## `bool Debug_PrintString(char *str, bool inverted)`
-Prints a string in debug text mode, either in normal black-on-white or inverted white-on-black. Color inversion occurs if `inverted == true`.
+## `bool Debug_PrintString(char *string, bool invert)`
+Prints a string in debug text mode, either in normal black-on-white or inverted white-on-black. Color inversion occurs if `invert == true`.
 
 Returns `true` if writing was successful, `false` otherwise. A return value of 0 may mean the string was too long to fit on the display.
 

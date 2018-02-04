@@ -1,40 +1,13 @@
 # File Functions
-## `int open(char *path, int flags)`
-Opens a file on the file system, and returns a file descriptor representing the open file.
-
-The `flags` argument appears to be a simple bitfield with the following meanings:
-
-<table>
-	<tr>
-		<td><b>Bit</b></td>
-		<td><b>7</b></td>
-		<td><b>6</b></td>
-		<td><b>5</b></td>
-		<td><b>4</b></td>
-		<td><b>3</b></td>
-		<td><b>2</b></td>
-		<td><b>1</b></td>
-		<td><b>0</b></td>
-	</tr>
-	<tr>
-		<td><b>Value</b></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td>Append</td>
-		<td></td>
-		<td>Create</td>
-		<td>Write</td>
-		<td>Read</td>
-	</tr>
-</table>
+## `int close(int fd)`
+Closes an open file.
 
 Returns 0 on success. On failure, returns a negative error code.
 
 ### Memory Location
 | Version | Address |
 | --- | --- |
-| v02.01.2000.0000 | `0x80057854` |
+| v02.01.2000.0000 | `0x80057912` |
 
 ## `int fstat(int fd, struct stat *buf)`
 Retrieves information about an open file. `buf` is filled with data such as the file size, and creation/modification dates. The full structure is not yet known.
@@ -44,13 +17,13 @@ Returns 0 on success. On failure, returns a negative error code.
 ```
 struct {
 	uint32_t unknown;
-	uint32_t file_size;
-	uint16_t creation_date;
-	uint16_t creation_time;
-	uint16_t last_modified_date;
-	uint32_t last_modified_time;
+	uint32_t fileSize;
+	uint16_t creationDate;
+	uint16_t creationTime;
+	uint16_t lastModifiedDate;
+	uint16_t lastModifiedTime;
 	uint16_t unknown;
-	uint16_t last_accessed_date;
+	uint16_t lastAccessedDate;
 } stat;
 ```
 
@@ -117,6 +90,53 @@ Times are stored as follows:
 | --- | --- |
 | v02.01.2000.0000 | `0x8005798E` |
 
+## `int info(char *path, uint8_t *buf)`
+Returns information about a directory/volume (unknown right now).
+
+Structure of `buf` is not yet known. Size is 0x34 bytes. May contain information about the free/used space on the volume.
+
+### Memory Location
+| Version | Address |
+| --- | --- |
+| v02.01.2000.0000 | `0x80057B4E` |
+
+## `int open(char *path, int flags)`
+Opens a file on the file system, and returns a file descriptor representing the open file.
+
+The `flags` argument appears to be a simple bitfield with the following meanings:
+
+<table>
+	<tr>
+		<td><b>Bit</b></td>
+		<td><b>7</b></td>
+		<td><b>6</b></td>
+		<td><b>5</b></td>
+		<td><b>4</b></td>
+		<td><b>3</b></td>
+		<td><b>2</b></td>
+		<td><b>1</b></td>
+		<td><b>0</b></td>
+	</tr>
+	<tr>
+		<td><b>Value</b></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td>Append</td>
+		<td></td>
+		<td>Create</td>
+		<td>Write</td>
+		<td>Read</td>
+	</tr>
+</table>
+
+Returns 0 on success. On failure, returns a negative error code.
+
+### Memory Location
+| Version | Address |
+| --- | --- |
+| v02.01.2000.0000 | `0x80057854` |
+
 ## `int read(int fd, uint8_t *buf, int count)`
 Reads up to `count` bytes from an open file and stores them in `buf`.
 
@@ -137,18 +157,8 @@ Returns the number of bytes written on success. On failure, returns a negative e
 | --- | --- |
 | v02.01.2000.0000 | `0x800578DA` |
 
-## `int close(int fd)`
-Closes an open file.
-
-Returns 0 on success. On failure, returns a negative error code.
-
-### Memory Location
-| Version | Address |
-| --- | --- |
-| v02.01.2000.0000 | `0x80057912` |
-
 # Error Constants
-Note: these values were found in the `PrintStandardErrorString` function, located at `0x80065998` in v02.01.2000.0000. There may be more which aren't documented.
+Note: these values were found in the `Debug_PrintStandardErrorString` function, located at `0x80065998` in v02.01.2000.0000. There may be more which aren't documented.
 
 | Human-Readable Name | Error Code (unsigned) | Error Code (signed) |
 | --- | --- | --- |
