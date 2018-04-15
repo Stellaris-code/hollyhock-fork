@@ -51,8 +51,12 @@ struct stat {
 
 int (*const close)(int fd) = (void *) 0x80057912;
 int (*const fstat)(int fd, struct stat *buf) = (void *) 0x8005798E;
+int (*const mkdir)(char *path) = (void *) 0x80057814;
 int (*const open)(char *path, int flags) = (void *) 0x80057854;
 int (*const read)(int fd, uint8_t *buf, int count) = (void *) 0x800578A2;
+int (*const remove)(char *path) = (void *) 0x8005794E;
+int (*const rename)(char *oldPath, char *newPath) = (void *) 0x80057A06;
+int (*const stat)(char *path, struct stat *buf) = (void *) 0x800579C2;
 int (*const write)(int fd, uint8_t *buf, int count) = (void *) 0x800578DA;
 
 #endif

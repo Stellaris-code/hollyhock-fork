@@ -100,6 +100,16 @@ Structure of `buf` is not yet known. Size is 0x34 bytes. May contain information
 | --- | --- |
 | v02.01.2000.0000 | `0x80057B4E` |
 
+## `int mkdir(char *path)`
+Creates a directory.
+
+Returns 0 on success. On failure, returns a negative error code.
+
+### Memory Location
+| Version | Address |
+| --- | --- |
+| v02.01.2000.0000 | `0x80057814` |
+
 ## `int open(char *path, int flags)`
 Opens a file on the file system, and returns a file descriptor representing the open file.
 
@@ -146,6 +156,36 @@ Returns the number of bytes read on success. On failure, returns a negative erro
 | Version | Address |
 | --- | --- |
 | v02.01.2000.0000 | `0x800578A2` |
+
+## `int remove(char *path)`
+Removes a file/directory.
+
+Returns 0 on success. On failure, returns a negative error code.
+
+### Memory Location
+| Version | Address |
+| --- | --- |
+| v02.01.2000.0000 | `0x8005794E` |
+
+## `int rename(char *oldPath, char *newPath)`
+Renames a file/directory.
+
+Returns 0 on success. On failure, returns a negative error code.
+
+### Memory Location
+| Version | Address |
+| --- | --- |
+| v02.01.2000.0000 | `0x80057A06` |
+
+## `int stat(char *path, struct stat *buf)`
+Performs an `fstat` on an unopened file with path `path`. `buf` is filled with information about the file.
+
+Returns 0 on success. On failure, returns a negative error code.
+
+### Memory Location
+| Version | Address |
+| --- | --- |
+| v02.01.2000.0000 | `0x800579C2` |
 
 ## `int write(int fd, uint8_t *buf, int count)`
 Writes `count` bytes to a file from `buf`.
