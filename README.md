@@ -13,14 +13,5 @@ Tools and software for the CASIO fx-CP400 graphics calculator.
 ## `src/`
 Code written to be run on the fx-CP400.
 
-### `file_execute/`
-Tool used to execute code from a file stored on the calculator's flash.
-
 ## `tools/`
 Tools for manipulating fx-CP400 firmware images, and useful IDAPython scripts.
-
-### `fw_extract.py`
-Extracts firmware images from a ZIP file firmware updater, as downloaded from the CASIO website.
-
-### `fw_pack.py`
-Compresses a firmware file in the specific way required for it to be embedded into an `OSupdateDLL.dll` file.
