@@ -9,9 +9,3 @@
 
 # fx-CP400
 Tools and software for the CASIO fx-CP400 graphics calculator.
-
-## `src/`
-Code written to be run on the fx-CP400.
-
-## `tools/`
-Tools for manipulating fx-CP400 firmware images, and useful IDAPython scripts.
