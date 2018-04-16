@@ -2,7 +2,6 @@
 #define _SDK_SYSTEM_DEBUG_H
 #include <stdbool.h>
 
-void (*const Debug_DrawScreen)() = (void *) 0x8003733E;
 int (*const Debug_GetCursorPosition)(int *x, int *y) = (void *) 0x8002E448;
 int (*const Debug_GetKey)() = (void *) 0x80094380;
 void (*const Debug_PrintStandardErrorString)(int retVal, char *functionName) = (void *) 0x80065998;
