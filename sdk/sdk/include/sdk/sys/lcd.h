@@ -3,6 +3,44 @@
 #include <stdint.h>
 
 /**
+ * Converts three RGB values into one RGB565 value.
+ *
+ * @param r The red component, between 0 and 31 (0x1F) inclusive.
+ * @param g The green component, between 0 and 63 (0x3F) inclusive.
+ * @param b The blue component, between 0 and 31 (0x1F) inclusive.
+ * @return The specified color, in RGB565 format.
+ */
+#define RGB_TO_RGB565(r, g, b) ( \
+	((r & 0x1F) << 11) | \
+	((g & 0x3F) << 5) | \
+	(b & 0x1F) \
+)
+
+/**
+ * Extracts the red component from an RGB565 value.
+ *
+ * @param rgb565 The RGB565 value.
+ * @return The red component.
+ */
+#define RGB565_TO_R(rgb565) ((rgb565 >> 11) & 0x1F)
+
+/**
+ * Extracts the green component from an RGB565 value.
+ *
+ * @param rgb565 The RGB565 value.
+ * @return The green component.
+ */
+#define RGB565_TO_G(rgb565) ((rgb565 >> 5) & 0x3F)
+
+/**
+ * Extracts the blue component from an RGB565 value.
+ *
+ * @param rgb565 The RGB565 value.
+ * @return The blue component.
+ */
+#define RGB565_TO_B(rgb565) (rgb565 & 0x1F)
+
+/**
  * Returns the color of a pixel. This is not necissailly the color which is
  * being displayed on the LCD, but instead is the color specified for the pixel
  * in the VRAM buffer. Color is in RGB565 format.
