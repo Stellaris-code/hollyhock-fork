@@ -1,5 +1,7 @@
 OUTPUT_FORMAT("binary");
 
+INCLUDE function_addresses.ld;
+
 SECTIONS {
 	start_addr = 0x8CFE0000;
 
