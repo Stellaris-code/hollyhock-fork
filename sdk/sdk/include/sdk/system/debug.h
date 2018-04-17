@@ -21,6 +21,46 @@ int Debug_GetCursorPosition(int *x, int *y);
 int Debug_GetKey();
 
 /**
+ * Prints the hex representation of a byte (8-bit number) at the specified
+ * position in debug text mode.
+ *
+ * @param value The byte to print.
+ * @param x The X coordinate to print the number at.
+ * @param y The Y coordinate to print the number at.
+ */
+void Debug_PrintNumberHex_Byte(uint8_t value, int x, int y);
+
+/**
+ * Prints the hex representation of a dword (32-bit number) at the specified
+ * position in debug text mode.
+ * 
+ * @param value The dword to print.
+ * @param x The X coordinate to print the number at.
+ * @param y The Y coordinate to print the number at.
+ */
+void Debug_PrintNumberHex_Dword(uint32_t value, int x, int y);
+
+/**
+ * Prints the hex representation of a nibble (4-bit number) at the specified
+ * position in debug text mode.
+ *
+ * @param value The nibble to print. High 4 bits are ignored.
+ * @param x The X coordinate to print the number at.
+ * @param y The Y coordinate to print the number at.
+ */
+void Debug_PrintNumberHex_Nibble(uint8_t value, int x, int y);
+
+/**
+ * Prints the hex representation of a word (16-bit number) at the specified
+ * position in debug text mode.
+ *
+ * @param value The word to print.
+ * @param x The X coordinate to print the number at.
+ * @param y The Y coordinate to print the number at.
+ */
+void Debug_PrintNumberHex_Word(uint16_t value, int x, int y);
+
+/**
  * Prints a string in debug text mode, either in normal black-on-white or
  * inverted white-on-black. Color inversion occurs if \c invert is true.
  * 
