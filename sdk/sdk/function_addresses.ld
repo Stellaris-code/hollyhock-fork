@@ -29,6 +29,7 @@ _LCD_GetSize = 0x8002E140;
 _LCD_GetVRAMAddress = 0x8002E154;
 _LCD_Refresh = 0x8003733E;
 _LCD_SetPixel = 0x80039302;
+_LCD_SetPixelFromPalette = 0x8003931A;
 
 /* mcs.h */
 _MCS_List_GetValue = 0x8012B17E;
