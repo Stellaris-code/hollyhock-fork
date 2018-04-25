@@ -1,6 +1,7 @@
 #ifndef _SDK_SYSTEM_DEBUG_H
 #define _SDK_SYSTEM_DEBUG_H
 #include <stdbool.h>
+#include <stdint.h>
 
 /**
  * Returns the current position of the cursor in debug text mode.
