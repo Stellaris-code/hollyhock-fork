@@ -74,7 +74,12 @@
 #define RGB565_TO_B(rgb565) (rgb565 & 0x1F)
 
 /**
- * Returns the color of a pixel. This is not necissailly the color which is
+ * Clears the LCD. Fills VRAM with white, but does not refresh the LCD.
+ */
+void LCD_ClearScreen();
+
+/**
+ * Returns the color of a pixel. This is not necessarily the color which is
  * being displayed on the LCD, but instead is the color specified for the pixel
  * in the VRAM buffer. Color is in RGB565 format.
  * 

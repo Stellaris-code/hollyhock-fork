@@ -24,6 +24,7 @@ _GUI_DisplayMessageBox = 0x80146A38;
 _GUI_DisplayMessageBox_Internal = 0x800B7914;
 
 /* lcd.h */
+_LCD_ClearScreen = 0x800394C0;
 _LCD_GetPixel = 0x80039328;
 _LCD_GetSize = 0x8002E140;
 _LCD_GetVRAMAddress = 0x8002E154;
