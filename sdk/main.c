@@ -1,4 +1,4 @@
-#include <sdk/sys/gui.h>
+#include <sdk/system/gui.h>
 
 void *main() {
 	// Put your code here.
