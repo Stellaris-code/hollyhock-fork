@@ -1,3 +1,8 @@
+/**
+ * @file
+ * Functions for retrieving and setting data in the MCS.
+ */
+
 #ifndef _SDK_SYSTEM_MCS_H
 #define _SDK_SYSTEM_MCS_H
 

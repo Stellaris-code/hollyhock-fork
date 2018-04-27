@@ -15,8 +15,12 @@ OBJECTS:=$(AS_SOURCES:.s=.o) $(CC_SOURCES:.c=.o)
 
 all: run.bin Makefile
 
+docs:
+	doxygen
+
 clean:
 	rm -f $(OBJECTS) run.bin
+	rm -rf doc/
 
 run.bin: $(OBJECTS) sdk/linker.ld
 	$(LD) -T sdk/linker.ld -o $@ $(LD_FLAGS) $(OBJECTS)
@@ -27,4 +31,4 @@ run.bin: $(OBJECTS) sdk/linker.ld
 %.o: %.s
 	$(AS) $< -o $@ $(AS_FLAGS)
 
-.PHONY: all clean
+.PHONY: all docs clean

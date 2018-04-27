@@ -1,3 +1,8 @@
+/**
+ * @file
+ * Functions for creating GUI elements, such as message boxes.
+ */
+
 #ifndef _SDK_SYSTEM_GUI_H
 #define _SDK_SYSTEM_GUI_H
 #include <stdbool.h>

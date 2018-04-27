@@ -1,3 +1,9 @@
+/**
+ * @file
+ * Functions used for modifying memory. Similar to the memory functions
+ * provided by the C standard library.
+ */
+
 #ifndef _SDK_SYSTEM_MCS_H
 #define _SDK_SYSTEM_MCS_H
 

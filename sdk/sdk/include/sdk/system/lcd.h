@@ -1,3 +1,24 @@
+/**
+ * @file
+ * Functions for interacting with the LCD and VRAM.
+ *
+ * Example: drawing a 30x50 rectangle at 10, 20 in purple
+ * @code{c}
+ * uint16_t *vram = LCD_GetVRAMAddress();
+ * uint8_t width, height;
+ * LCD_GetSize(&width, &height);
+ *
+ * for (int y = 0; y < 50; ++y) {
+ *     for (int x = 0; x < 30; ++x) {
+ *         vram[(x + 10) + (y + 20) * width] = RGB_TO_RGB565(0x1F, 0x3B, 0x08);
+ *     }
+ * }
+ *
+ * // Put our changes on the display
+ * LCD_Refresh();
+ * @endcode
+ */
+
 #ifndef _SDK_SYSTEM_LCD_H
 #define _SDK_SYSTEM_LCD_H
 #include <stdint.h>

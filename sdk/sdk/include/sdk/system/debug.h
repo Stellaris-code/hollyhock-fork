@@ -1,3 +1,29 @@
+/**
+ * @file
+ * Functions commonly used while debugging, such as printing text or
+ * numbers to the screen, or waiting for a key press.
+ *
+ * Example:
+ * @code{c}
+ * // Print "Hello, world!" at 0, 0 in black on white
+ * Debug_SetCursorPosition(0, 0);
+ * Debug_PrintString("Hello, world!", false);
+ *
+ * // Print "Inverted text" at 1, 3 in white on black
+ * Debug_SetCursorPosition(0, 1);
+ * Debug_PrintString("Inverted text", true);
+ *
+ * // Print the number 0x1322 at 3, 7
+ * Debug_PrintNumberHex_Word(0x1322, 3, 7);
+ *
+ * // Draw the changes we made to VRAM onto the LCD
+ * LCD_Refresh();
+ *
+ * // Block until the user presses a key (see Debug_GetKey documentation)
+ * Debug_GetKey();
+ * @endcode
+ */
+
 #ifndef _SDK_SYSTEM_DEBUG_H
 #define _SDK_SYSTEM_DEBUG_H
 #include <stdbool.h>

@@ -1,3 +1,59 @@
+/**
+ * @file
+ * Functions for interacting with the calculator's file system.
+ *
+ * The storage which appears when the calculator is attached to a PC is found
+ * under the path @c \\fls0\\.
+ *
+ * Example: reading 256 bytes from a file called @c test.txt from the USB flash
+ * @code{c}
+ * int fd = open("\\fls0\\test.txt", OPEN_READ);
+ * if (fd < 0) {
+ *     // An error occurred calling open
+ *     goto exit;
+ * }
+ *
+ * uint8_t buf[256];
+ * int ret = read(fd, buf, sizeof(buf) / sizeof(buf[0]));
+ * if (ret < 0) {
+ *     // An error occurred calling read
+ *     close(fd);
+ *     goto exit;
+ * }
+ *
+ * ret = close(fd);
+ * if (ret < 0) {
+ *     // An error occurred calling close
+ * }
+ *
+ * exit:
+ * @endcode
+ *
+ * Example: writing 16 bytes to a non-existant file called @c f.bin in a folder @c test in the USB flash
+ * @code{c}
+ * int fd = open("\\fls0\\test\\f.bin", OPEN_WRITE | OPEN_CREATE);
+ * if (fd < 0) {
+ *     // An error occurred calling open
+ *     goto exit;
+ * }
+ *
+ * uint8_t buf[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0xA, 0xB, 0xC, 0xD, 0xE, 0xF};
+ * int ret = write(fd, buf, sizeof(buf) / sizeof(buf[0]));
+ * if (ret < 0) {
+ *     // An error occurred calling write
+ *     close(fd);
+ *     goto exit;
+ * }
+ *
+ * ret = close(fd);
+ * if (ret < 0) {
+ *     // An error occurred calling close
+ * }
+ *
+ * exit:
+ * @endcode
+ */
+
 #ifndef _SDK_SYSTEM_FILE_H
 #define _SDK_SYSTEM_FILE_H
 #include <stdint.h>
