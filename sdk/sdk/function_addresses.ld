@@ -1,12 +1,12 @@
 /* debug.h */
 _Debug_GetCursorPosition = 0x8002E448;
-_Debug_GetKey = 0x80094380;
 _Debug_PrintNumberHex_Byte = 0x800944A0;
 _Debug_PrintNumberHex_Dword = 0x80094514;
 _Debug_PrintNumberHex_Nibble = 0x80094466;
 _Debug_PrintNumberHex_Word = 0x800944C8;
 _Debug_PrintString = 0x8002DA0C;
 _Debug_SetCursorPosition = 0x8002E430;
+_Debug_WaitKey = 0x80094380;
 
 /* file.h */
 _close = 0x80057912;

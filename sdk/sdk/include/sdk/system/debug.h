@@ -19,8 +19,8 @@
  * // Draw the changes we made to VRAM onto the LCD
  * LCD_Refresh();
  *
- * // Block until the user presses a key (see Debug_GetKey documentation)
- * Debug_GetKey();
+ * // Block until the user presses a key (see Debug_WaitKey documentation)
+ * Debug_WaitKey();
  * @endcode
  */
 
@@ -37,15 +37,6 @@
  * @return Always returns 0.
  */
 int Debug_GetCursorPosition(int *x, int *y);
-
-/**
- * Waits until a key is pressed, then returns a number representing the key.
- * Only appears to react to number keys and the Power/Clear key. Returns 0x30
- * to 0x39 for keys 0 to 9, and 0x98 for the Power/Clear key.
- * 
- * @return A number representing the key that was pressed.
- */
-int Debug_GetKey();
 
 /**
  * Prints the hex representation of a byte (8-bit number) at the specified
@@ -107,5 +98,14 @@ bool Debug_PrintString(char *string, bool invert);
  * @return Always returns 0.
  */
 int Debug_SetCursorPosition(int x, int y);
+
+/**
+ * Waits until a key is pressed, then returns a number representing the key.
+ * Only appears to react to number keys and the Power/Clear key. Returns 0x30
+ * to 0x39 for keys 0 to 9, and 0x98 for the Power/Clear key.
+ * 
+ * @return A number representing the key that was pressed.
+ */
+int Debug_WaitKey();
 
 #endif
