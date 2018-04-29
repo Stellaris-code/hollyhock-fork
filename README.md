@@ -7,5 +7,5 @@
 - **BY USING THESE TOOLS, YOU AGREE TO TAKE FULL RESPONSIBILITY FOR ANY DAMAGE THAT MAY OCCUR.**  
 - **YOU HAVE BEEN WARNED**
 
-# fx-CP400
+# hollyhock
 Tools and software for the CASIO fx-CP400 graphics calculator.
