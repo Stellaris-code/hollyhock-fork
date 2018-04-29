@@ -11,6 +11,6 @@ void *main() {
 		0,
 		"Program",
 		"run.bin", "The program has finished execution.",
-		0, false
+		BUTTON_OK, false
 	);
 }
