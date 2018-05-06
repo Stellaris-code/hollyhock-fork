@@ -4,8 +4,8 @@
  * provided by the C standard library.
  */
 
-#ifndef _SDK_SYSTEM_MCS_H
-#define _SDK_SYSTEM_MCS_H
+#ifndef _SDK_OS_MCS_H
+#define _SDK_OS_MCS_H
 
 /**
  * Copies one region of memory to another. Equivalent to the C standard library

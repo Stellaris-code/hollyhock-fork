@@ -3,8 +3,8 @@
  * Functions for creating GUI elements, such as message boxes.
  */
 
-#ifndef _SDK_SYSTEM_GUI_H
-#define _SDK_SYSTEM_GUI_H
+#ifndef _SDK_OS_GUI_H
+#define _SDK_OS_GUI_H
 #include <stdbool.h>
 
 #define BUTTON_OK 1 << 5

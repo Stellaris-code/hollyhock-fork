@@ -3,8 +3,8 @@
  * Functions for retrieving and setting data in the MCS.
  */
 
-#ifndef _SDK_SYSTEM_MCS_H
-#define _SDK_SYSTEM_MCS_H
+#ifndef _SDK_OS_MCS_H
+#define _SDK_OS_MCS_H
 
 void MCS_List_GetValue(char *folder, char *name, int count, int index, uint32_t *unknown, uint8_t *buf);
 int MCS_GetVariableSize(uint8_t *unused, char *folder, char *name);

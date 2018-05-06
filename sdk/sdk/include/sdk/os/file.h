@@ -54,8 +54,8 @@
  * @endcode
  */
 
-#ifndef _SDK_SYSTEM_FILE_H
-#define _SDK_SYSTEM_FILE_H
+#ifndef _SDK_OS_FILE_H
+#define _SDK_OS_FILE_H
 #include <stdint.h>
 
 #define ENOMEM -1

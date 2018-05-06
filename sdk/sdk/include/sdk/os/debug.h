@@ -24,8 +24,8 @@
  * @endcode
  */
 
-#ifndef _SDK_SYSTEM_DEBUG_H
-#define _SDK_SYSTEM_DEBUG_H
+#ifndef _SDK_OS_DEBUG_H
+#define _SDK_OS_DEBUG_H
 #include <stdbool.h>
 #include <stdint.h>
 

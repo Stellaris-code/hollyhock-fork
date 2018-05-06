@@ -19,8 +19,8 @@
  * @endcode
  */
 
-#ifndef _SDK_SYSTEM_LCD_H
-#define _SDK_SYSTEM_LCD_H
+#ifndef _SDK_OS_LCD_H
+#define _SDK_OS_LCD_H
 #include <stdint.h>
 
 /**
