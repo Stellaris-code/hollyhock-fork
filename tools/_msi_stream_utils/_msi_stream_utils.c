@@ -58,10 +58,9 @@ msierror(int status)
 		free(res);
 	return NULL;
 }
-
 // End theft
 
-static PyObject *msi_read_stream_record_readstream(PyObject *self, PyObject *args)
+static PyObject *msi_stream_utils_record_readstream(PyObject *self, PyObject *args)
 {
 	msiobj *record;
 	unsigned int field;
@@ -101,26 +100,26 @@ static PyObject *msi_read_stream_record_readstream(PyObject *self, PyObject *arg
 	return PyBytes_FromObject(ret_buf);
 }
 
-static PyMethodDef msi_read_stream_methods[] =
+static PyMethodDef msi_stream_utils_methods[] =
 {
-	{"ReadStream", msi_read_stream_record_readstream, METH_VARARGS, "ReadStream"},
+	{"ReadStream", msi_stream_utils_record_readstream, METH_VARARGS, "ReadStream"},
 	{NULL, NULL, 0, NULL}
 };
 
-static struct PyModuleDef msi_read_stream =
+static struct PyModuleDef msi_stream_utils =
 {
 	PyModuleDef_HEAD_INIT,
-	"msi_read_stream",
-	"Extension methods to the msilib class to allow reading streams",
+	"msi_stream_utils",
+	"Extension methods to the msilib class to allow reading/writing streams",
 	-1,
-	msi_read_stream_methods
+	msi_stream_utils_methods
 };
 
-PyMODINIT_FUNC PyInit__msi_read_stream()
+PyMODINIT_FUNC PyInit__msi_stream_utils()
 {
-	PyObject *m = PyModule_Create(&msi_read_stream);
+	PyObject *m = PyModule_Create(&msi_stream_utils);
 
-	MSIError = PyErr_NewException("_msi_read_stream.MSIError", NULL, NULL);
+	MSIError = PyErr_NewException("_msi_stream_utils.MSIError", NULL, NULL);
 
 	if (!MSIError)
 	{

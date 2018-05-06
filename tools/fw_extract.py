@@ -10,7 +10,7 @@ import platform
 import shutil
 import tempfile
 import zipfile
-import _msi_read_stream
+import _msi_stream_utils
 
 logging.basicConfig(format='|%(levelname)s| %(message)s', level=logging.DEBUG)
 
@@ -139,7 +139,7 @@ def extract_msi(file_path, extract_directory_path):
 			break
 
 		file_name = record.GetString(2)
-		data = _msi_read_stream.ReadStream(record, 3)
+		data = _msi_stream_utils.ReadStream(record, 3)
 		with open(os.path.join(extract_directory_path, file_name), 'wb') as f:
 			f.write(data)
 
