@@ -353,7 +353,8 @@ int stat(char *path, struct stat *buf);
  * @param fd The file descriptor of an open file to write to.
  * @param buf A buffer of bytes to write to the file.
  * @param count The number of bytes from @c buf to write to the file.
- * @return 0 on success, or a negative error code on failure.
+ * @return The number of bytes written on success, or a negative error code on
+ * failure.
  */
 int write(int fd, uint8_t *buf, int count);
 

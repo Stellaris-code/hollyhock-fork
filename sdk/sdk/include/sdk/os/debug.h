@@ -19,7 +19,7 @@
  * // Draw the changes we made to VRAM onto the LCD
  * LCD_Refresh();
  *
- * // Block until the user presses a key (see Debug_WaitKey documentation)
+ * // Block until the user presses a key
  * Debug_WaitKey();
  * @endcode
  */
