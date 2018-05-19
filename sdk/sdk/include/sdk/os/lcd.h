@@ -5,7 +5,7 @@
  * Example: drawing a 30x50 rectangle at 10, 20 in purple
  * @code{c}
  * uint16_t *vram = LCD_GetVRAMAddress();
- * uint8_t width, height;
+ * int width, height;
  * LCD_GetSize(&width, &height);
  *
  * for (int y = 0; y < 50; ++y) {
