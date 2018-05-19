@@ -301,6 +301,19 @@ int close(int fd);
 int fstat(int fd, struct stat *buf);
 
 /**
+ * Retrieves the memory address of a file.
+ *
+ * If the file is empty or the offset would point outside of the file, @c EINVAL
+ * is returned.
+ *
+ * @param fd The file descriptor of an open file.
+ * @param offset An offset to apply to the pointer to the file's data.
+ * @param buf A double pointer to store the address of the file's data in.
+ * @return 0 on success, or a negative error code on failure.
+ */
+int getAddr(int fd, int offset, uint8_t **buf);
+
+/**
  * Repositions the file offset of the file descriptor. The new position depends
  * on the value of both @p offset and @p whence.
  *
