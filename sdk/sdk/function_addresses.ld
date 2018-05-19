@@ -25,6 +25,9 @@ _write = 0x800578DA;
 _GUI_DisplayMessageBox = 0x80146A38;
 _GUI_DisplayMessageBox_Internal = 0x800B7914;
 
+/* input.h */
+_GetInput = 0x8007CE2C;
+
 /* lcd.h */
 _LCD_ClearScreen = 0x800394C0;
 _LCD_GetPixel = 0x80039328;
