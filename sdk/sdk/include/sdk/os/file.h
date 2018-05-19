@@ -82,6 +82,22 @@
 #define ESYSTEM -99
 
 /**
+ * Flag passed to @ref lseek. Specifies that the file offset be set to
+ * @c offset.
+ */
+#define SEEK_SET 0
+/**
+ * Flag passed to @ref lseek. Specifies that the file offset be set to the
+ * current position, plus @c offset bytes.
+ */
+#define SEEK_CUR 1
+/**
+ * Flag passed to @ref lseek. Specifies that the file offset be set to the
+ * end of the file, plus @c offset bytes.
+ */
+#define SEEK_END 2
+
+/**
  * Flag passed to @ref open. Specifies the file descriptor to be readable.
  */
 #define OPEN_READ (1 << 0)
@@ -283,6 +299,24 @@ int close(int fd);
  * @see stat
  */
 int fstat(int fd, struct stat *buf);
+
+/**
+ * Repositions the file offset of the file descriptor. The new position depends
+ * on the value of both @p offset and @p whence.
+ *
+ * - @p whence @c == @c SEEK_SET: specifies that the file offset be set to
+ * @c offset.
+ * - @p whence @c == @c SEEK_CUR: specifies that the file offset be set to the
+ * current position, plus @c offset bytes.
+ * - @p whence @c == @c SEEK_END: specifies that the file offset be set to the
+ * end of the file, plus @c offset bytes.
+ *
+ * @param fd The file descriptor of an open file to change the file offset of.
+ * @param offset The new offset, relative to some point.
+ * @param whence Where @p offset is relative to.
+ * @return The new file offset on success, or a negative error code on failure.
+ */
+int lseek(int fd, int offset, int whence);
 
 /**
  * Creates a directory.

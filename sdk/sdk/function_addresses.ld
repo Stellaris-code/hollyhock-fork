@@ -11,6 +11,7 @@ _Debug_WaitKey = 0x80094380;
 /* file.h */
 _close = 0x80057912;
 _fstat = 0x8005798E;
+_lseek = 0x80057A96;
 _mkdir = 0x80057814;
 _open = 0x80057854;
 _read = 0x800578A2;
