@@ -8,9 +8,19 @@
 #define _SDK_OS_MCS_H
 
 /**
+ * Allocates @p size bytes of memory.
+ *
+ * The current application crashes if the memory cannot be allocated.
+ *
+ * @param size The number of bytes of memory to allocate.
+ * @return A pointer to the allocated memory region.
+ */
+void *malloc(uint32_t size);
+
+/**
  * Copies one region of memory to another. Equivalent to the C standard library
  * function with the same name.
- * 
+ *
  * Copies @p num bytes from @p source to @p destination.
  * 
  * @param destination A pointer to the destination of the copy.

@@ -44,5 +44,6 @@ _MCS_GetVariableInfo = 0x80076A82;
 _MCS_List_GetNumEntries = 0x8012B442;
 
 /* mem.h */
+_malloc = 0x800CFB00;
 _memcpy = 0x800A78AC;
 _memset = 0x800A7FC0;
