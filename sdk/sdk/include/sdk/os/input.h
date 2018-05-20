@@ -8,6 +8,11 @@
 #include <stdint.h>
 
 #define EVENT_KEY 0x0017
+#define EVENT_ACTBAR_RESIZE 0x1003
+#define EVENT_ACTBAR_SWAP 0x1004
+#define EVENT_ACTBAR_ROTATE 0x1005
+#define EVENT_ACTBAR_ESC 0x3009
+#define EVENT_ACTBAR_SETTINGS 0x300A
 #define EVENT_TOUCH 0x4000
 
 #define KEY_PRESSED 1
@@ -61,7 +66,8 @@
 struct InputEvent {
 	/**
 	 * Code representing which event occurred. Events with a value for this
-	 * field other than @ref EVENT_KEY and @ref EVENT_TOUCH should be ignored.
+	 * field which do not correspond to a macro beginning with @c EVENT_ must
+	 * be ignored.
 	 */
 	uint16_t type;
 	uint16_t zero;
@@ -74,6 +80,10 @@ struct InputEvent {
 	 * Corresponding members:
 	 * - @c EVENT_KEY: @c key
 	 * - @c EVENT_TOUCH: @c touch_single
+	 *
+	 * The events @c EVENT_ACTBAR_RESIZE, @c EVENT_ACTBAR_SWAP,
+	 * @c EVENT_ACTBAR_ROTATE, @c EVENT_ACTBAR_ESC, and @c EVENT_ACTBAR_SETTINGS
+	 * do not report any data.
 	 */
 	union {
 		struct {

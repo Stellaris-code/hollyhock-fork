@@ -128,7 +128,7 @@ void *main() {
 				Debug_PrintString("hold/drag", false);
 				break;
 			case TOUCH_ACT_BAR:
-				Debug_PrintString("act. bar.", false);
+				Debug_PrintString("act. bar", false);
 				break;
 			case TOUCH_UP:
 				Debug_PrintString("up", false);
@@ -142,6 +142,41 @@ void *main() {
 			Debug_SetCursorPosition(0, 5);
 			Debug_PrintString("y:", false);
 			Debug_PrintNumberHex_Dword(event.data.touch_single.p1_y, 3, 5);
+
+			LCD_Refresh();
+			break;
+		case EVENT_ACTBAR_RESIZE:
+		case EVENT_ACTBAR_SWAP:
+		case EVENT_ACTBAR_ROTATE:
+		case EVENT_ACTBAR_ESC:
+		case EVENT_ACTBAR_SETTINGS:
+			LCD_ClearScreen();
+
+			printHeader();
+
+			Debug_SetCursorPosition(0, 1);
+			Debug_PrintString("Act. Bar Event", true);
+
+			Debug_SetCursorPosition(0, 3);
+			Debug_PrintString("Location: ", false);
+
+			switch (event.type) {
+			case EVENT_ACTBAR_RESIZE:
+				Debug_PrintString("Resize", false);
+				break;
+			case EVENT_ACTBAR_SWAP:
+				Debug_PrintString("Swap", false);
+				break;
+			case EVENT_ACTBAR_ROTATE:
+				Debug_PrintString("Rotate", false);
+				break;
+			case EVENT_ACTBAR_ESC:
+				Debug_PrintString("Esc", false);
+				break;
+			case EVENT_ACTBAR_SETTINGS:
+				Debug_PrintString("Settings", false);
+				break;
+			}
 
 			LCD_Refresh();
 			break;
