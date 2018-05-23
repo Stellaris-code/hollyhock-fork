@@ -22,6 +22,10 @@ _stat = 0x800579C2;
 _write = 0x800578DA;
 
 /* gui.h */
+_GUI_CreateDialog = 0x800D57F6;
+_GUI_CreateLabel = 0x80109980;
+_GUI_CreateRadioButton = 0x800F9964;
+_GUI_CreateTextBox = 0x80117544;
 _GUI_DisplayMessageBox = 0x80146A38;
 _GUI_DisplayMessageBox_Internal = 0x800B7914;
 
