@@ -27,10 +27,10 @@ clean:
 sdk.o: $(OBJECTS)
 	$(LD) -o $@ $(LD_FLAGS) $(OBJECTS)
 
-%.o: %.c
-	$(CC) -c $< -o $@ $(CC_FLAGS)
-
 %.o: %.s
 	$(AS) $< -o $@ $(AS_FLAGS)
+
+%.o: %.c
+	$(CC) -c $< -o $@ $(CC_FLAGS)
 
 .PHONY: all docs clean

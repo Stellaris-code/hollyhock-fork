@@ -29,10 +29,10 @@ run.bin: $(OBJECTS) $(SDK_DIR)/linker.ld $(SDK_DIR)/sdk.o
 $(SDK_DIR)/sdk.o:
 	$(error You need to build the SDK before using it. Run make in the SDK directory, and check the README.md in the SDK directory for more information)
 
-%.o: %.c
-	$(CC) -c $< -o $@ $(CC_FLAGS)
-
 %.o: %.s
 	$(AS) $< -o $@ $(AS_FLAGS)
+
+%.o: %.c
+	$(CC) -c $< -o $@ $(CC_FLAGS)
 
 .PHONY: all clean
