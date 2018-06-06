@@ -2,7 +2,6 @@
 #include <stdint.h>
 #include <sdk/cpu/ubc.h>
 #include <sdk/os/debug.h>
-#include <sdk/os/gui.h>
 #include <sdk/os/lcd.h>
 
 struct CPUState {
@@ -230,7 +229,7 @@ uint32_t GetBreakpointAddress() {
 	return address;
 }
 
-void *main() {
+void main() {
 	// Put your code here.
 	LCD_ClearScreen();
 
@@ -280,15 +279,4 @@ void *main() {
 		LCD_Refresh();
 		break;
 	}
-
-	// Returning the output of this function is necessary to allow the
-	// OS to resume execution once our code has finished running.
-	// Removing this line (i.e. not returning the output of this function) will
-	// cause the GC to lock up when the program's execution finishes.
-	return GUI_DisplayMessageBox_Internal(
-		0,
-		"Program",
-		"run.bin", "The program has finished execution.",
-		BUTTON_OK, false
-	);
 }

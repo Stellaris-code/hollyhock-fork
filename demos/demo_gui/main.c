@@ -3,7 +3,7 @@
 #include <sdk/os/gui.h>
 #include <sdk/os/lcd.h>
 
-void *main() {
+void main() {
 	// Put your code here.
 	struct GUI_Dialog *dialog = GUI_CreateDialog(
 		0,
@@ -81,15 +81,4 @@ void *main() {
 	dialog->functions->AddElement(dialog, radioButton1, 0);
 
 	dialog->functions->ShowDialog(dialog);
-
-	// Returning the output of this function is necessary to allow the
-	// OS to resume execution once our code has finished running.
-	// Removing this line (i.e. not returning the output of this function) will
-	// cause the GC to lock up when the program's execution finishes.
-	return GUI_DisplayMessageBox_Internal(
-		0,
-		"Program",
-		"run.bin", "The program has finished execution.",
-		0, false
-	);
 }

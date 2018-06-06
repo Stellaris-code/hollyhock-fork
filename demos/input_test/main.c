@@ -1,6 +1,5 @@
 #include <stdbool.h>
 #include <sdk/os/debug.h>
-#include <sdk/os/gui.h>
 #include <sdk/os/input.h>
 #include <sdk/os/lcd.h>
 #include <sdk/os/mem.h>
@@ -52,7 +51,7 @@ void printHeader() {
 	Debug_PrintString("GetInput demo (clear=quit)", false);
 }
 
-void *main() {
+void main() {
 	// Put your code here.
 	struct InputEvent event;
 
@@ -182,15 +181,4 @@ void *main() {
 			break;
 		}
 	}
-
-	// Returning the output of this function is necessary to allow the
-	// OS to resume execution once our code has finished running.
-	// Removing this line (i.e. not returning the output of this function) will
-	// cause the GC to lock up when the program's execution finishes.
-	return GUI_DisplayMessageBox_Internal(
-		0,
-		"Program",
-		"run.bin", "The program has finished execution.",
-		BUTTON_OK, false
-	);
 }

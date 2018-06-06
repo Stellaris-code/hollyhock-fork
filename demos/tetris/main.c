@@ -1,6 +1,5 @@
 #include <stdbool.h>
 #include <sdk/os/debug.h>
-#include <sdk/os/gui.h>
 #include <sdk/os/input.h>
 #include <sdk/os/lcd.h>
 #include <sdk/os/mem.h>
@@ -38,7 +37,7 @@ void draw_square(unsigned int x, unsigned int y, uint8_t color_index){	//draws o
 	}
 }
 
-void *main() {
+void main() {
 	
 	uint32_t rand = 0;	//used to save random numbers. the last number is used as the seed for the next number
 	uint32_t score = 0;
@@ -390,11 +389,4 @@ void *main() {
 	print_score(score);
 	LCD_Refresh();
 	Debug_WaitKey();
-	
-	return GUI_DisplayMessageBox_Internal(
-		0,
-		"Program",
-		"run.bin", "The End",
-		BUTTON_OK, false
-	);
 }

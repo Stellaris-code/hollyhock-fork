@@ -1,4 +1,4 @@
-#include <sdk/os/gui.h>
+#include <stdbool.h>
 #include <sdk/os/input.h>
 #include <sdk/os/lcd.h>
 #include <sdk/os/mem.h>
@@ -26,7 +26,7 @@ void drawCircle(int32_t x0, int32_t y0, int radius) {
 	}
 }
 
-void *main() {
+void main() {
 	// Put your code here.
 	vram = LCD_GetVRAMAddress();
 	LCD_GetSize(&width, &height);
@@ -74,15 +74,4 @@ void *main() {
 			}
 		}
 	}
-
-	// Returning the output of this function is necessary to allow the
-	// OS to resume execution once our code has finished running.
-	// Removing this line (i.e. not returning the output of this function) will
-	// cause the GC to lock up when the program's execution finishes.
-	return GUI_DisplayMessageBox_Internal(
-		0,
-		"Program",
-		"run.bin", "The program has finished execution.",
-		BUTTON_OK, false
-	);
 }
