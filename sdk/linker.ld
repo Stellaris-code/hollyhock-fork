@@ -1,3 +1,5 @@
+OUTPUT_FORMAT("binary");
+
 /* debug.h */
 _Debug_GetCursorPosition = 0x8002E448;
 _Debug_PrintNumberHex_Byte = 0x800944A0;
@@ -51,3 +53,13 @@ _MCS_List_GetNumEntries = 0x8012B442;
 _malloc = 0x800CFB00;
 _memcpy = 0x800A78AC;
 _memset = 0x800A7FC0;
+
+SECTIONS {
+	start_addr = 0x8CFE0000;
+
+	. = start_addr;
+
+	.init start_addr : AT(start_addr) {
+		*(.init)
+	}
+}
