@@ -14,6 +14,6 @@ void *main_bootstrap() {
 		0,
 		"Program",
 		"run.bin", "The program has finished execution.",
-		BUTTON_OK, false
+		0, false
 	);
 }
