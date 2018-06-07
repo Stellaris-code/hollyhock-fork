@@ -9,3 +9,7 @@
 
 # hollyhock
 Tools and software for the CASIO fx-CP400 graphics calculator.
+
+## Guides
+1. [Patching your firmware](doc/patching.md)
+2. [Developing applications](doc/developing.md)
