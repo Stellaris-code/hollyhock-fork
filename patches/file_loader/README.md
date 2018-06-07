@@ -1,2 +1,2 @@
 # `file_loader`
-Implements a file loader which loads a file `run.bin` from flash into memory, and executes it.
+Allows an file `run.bin` to be loaded from flash into RAM, and executed using the System > Set Imaginary Unit menu.
