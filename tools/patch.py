@@ -2,7 +2,6 @@ import argparse
 import glob
 import hashlib
 import json
-import logging
 import os
 
 PATCHES_FORMAT_VERSION = '1'
@@ -66,7 +65,7 @@ def main():
 		patches_metadata = json.loads(f.read())
 
 	if patches_metadata['patches_format_version'] != PATCHES_FORMAT_VERSION:
-		logging.error('Patches file format version does not match patch.py version. Aborting.')
+		print('Patches file format version does not match patch.py version. Aborting.')
 		return
 
 	with open(args.fw3070_file_path, 'rb') as f:
@@ -77,7 +76,7 @@ def main():
 		fw3070_checksum = m.hexdigest()
 
 	if patches_metadata['fw3070_checksum'] != fw3070_checksum:
-		logging.error('Checksum for fw3070 specified in patches file did not match the checksum of the fw3070 file to be patched. Aborting.')
+		print('Checksum for fw3070 specified in patches file did not match the checksum of the fw3070 file to be patched. Aborting.')
 		return
 
 	for patchset_folder_relpath in os.listdir(args.patches_directory_path):
