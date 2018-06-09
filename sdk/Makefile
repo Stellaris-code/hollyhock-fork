@@ -11,7 +11,7 @@ CC_FLAGS:=-ffreestanding -Wall -Wextra -O2 -I include/
 LD:=sh4-elf-ld
 LD_FLAGS:=-nostdlib -r
 
-AS_SOURCES:=$(wildcard *.s)
+AS_SOURCES:=$(wildcard *.s) $(wildcard **/*.s)
 CC_SOURCES:=$(wildcard *.c)
 OBJECTS:=$(AS_SOURCES:.s=.o) $(CC_SOURCES:.c=.o)
 
