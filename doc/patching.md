@@ -1,7 +1,9 @@
 # Patching the fx-CP400 firmware
 This isn't a fun process at the moment, but it works. Hopefully, in the future, this process will be easier - but it isn't yet. If you run into any serious trouble, reach out to me on [Twitter](http://twitter.com/The6P4C) or [Reddit](http://reddit.com/u/The6P4C) and I *may* be able to help you out. 
 
-You need both a Windows and Linux machine to complete this process (as there is no updater for Linux, and the extraction tool extracts the firmware from the Windows DLLs). I'd recommend a virtual machine (or Vagrant box for simplicity) rather than two physical machines. You'll also need a resource editor program - [Resource Hacker](http://www.angusj.com/resourcehacker/) has been tested to work - and the [ProcMon](https://docs.microsoft.com/en-us/sysinternals/downloads/procmon) tool from Microsoft.
+You need both a Windows and Linux machine to complete this process (as there is no updater for Linux, and the extraction tool extracts the firmware from the Windows DLLs). I'd recommend a virtual machine (or Vagrant box for simplicity) rather than two physical machines.
+
+You'll also need a resource editor program - [Resource Hacker](http://www.angusj.com/resourcehacker/) has been tested to work (Visual Studio can also be used to replace the RCDATA resource - just be careful to give the replaced resource an ID of 3070!).
 
 ## 0. Clone this repository
 Clone this repository onto your machine. If you're using a virtual machine, this is really great place to use the shared folders feature your VM host probably provides.
@@ -56,19 +58,13 @@ Keep working on your Linux machine.
 `cd` into the `patches/` directory. Run `make`.
 
 ## 3. Harvest the firmware updater
-Jump over onto your Windows machine and get ready for the most annoying part of this process.
+Download the latest firmware update ZIP file from the [CASIO website](http://edu.casio.com/products/cg/cp2/). Run the installer inside the ZIP, but don't move through any of the steps. Leave it open.
 
-Open [Process Monitor](https://docs.microsoft.com/en-us/sysinternals/downloads/procmon) and set up the filters to show only `FASTIO_WRITE` events from the `msiexec.exe` process.
-
-![Process Monitor filter set to only events whose "Process Name" column is msiexec.exe and "Operation" column is FASTIO_WRITE.](patching_filter.png)
-
-Download the latest firmware update ZIP file from the [CASIO website](http://edu.casio.com/products/cg/cp2/). Run the installer inside the ZIP, but don't run through any of the steps.
-
-Process Monitor should now be filled with events referencing `OSupdateDLL.dll`, `fxASPI.dll` and `LanguageResource.dll`. Right click any of these events, and copy the path to the file (it should be in the `AppData` folder, and have a long GUID in the path). Remove the filename from the path, and navigate to this folder. Copy all 3 DLL files into a temporary directory somewhere on your machine.
+Now, open your user's `AppData` folder and search for `OSupdateDLL.dll`. One result should appear - open the folder it's contained in. It should contain the files `OSupdateDLL.dll`, `fxASPI.dll` and `LanguageResource.dll`.
 
 ![Directory containing the OSupdateDLL.dll, fxASPI.dll and LanguageResource.dll files](patching_dlls.png)
 
-You can close the installer and ProcMon now.
+Copy all three of these files into a temporary directory somewhere on your system. You can close the installer now.
 
 ## 4. Extract, patch, pack and embed the firmware image
 Move to either your Windows or Linux machine (whichever you have Python installed on).
