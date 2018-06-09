@@ -22,6 +22,8 @@ docs:
 
 clean:
 	rm -f $(OBJECTS) sdk.o
+
+clean_docs:
 	rm -rf doc/
 
 sdk.o: $(OBJECTS)
@@ -33,4 +35,4 @@ sdk.o: $(OBJECTS)
 %.o: %.c
 	$(CC) -c $< -o $@ $(CC_FLAGS)
 
-.PHONY: all docs clean
+.PHONY: all docs clean clean_docs
