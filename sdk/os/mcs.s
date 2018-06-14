@@ -1,14 +1,7 @@
-.global _MCS_CreateFolder
-.set _MCS_CreateFolder, 0x8007689C
+.include "os/_util.inc"
 
-.global _MCS_GetVariable
-.set _MCS_GetVariable, 0x80076A82
-
-.global _MCS_List_Create
-.set _MCS_List_Create, 0x8012AD62
-
-.global _MCS_List_Set
-.set _MCS_List_Set, 0x8012B0C4
-
-.global _MCS_SetVariable
-.set _MCS_SetVariable, 0x80076B20
+DEFINE_OS_FUNC MCS_CreateFolder 0x8007689C
+DEFINE_OS_FUNC MCS_GetVariable 0x80076A82
+DEFINE_OS_FUNC MCS_List_Create 0x8012AD62
+DEFINE_OS_FUNC MCS_List_Set 0x8012B0C4
+DEFINE_OS_FUNC MCS_SetVariable 0x80076B20
