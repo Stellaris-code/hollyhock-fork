@@ -1,11 +1,14 @@
-.global _MCS_List_GetValue
-.set _MCS_List_GetValue, 0x8012B17E
+.global _MCS_CreateFolder
+.set _MCS_CreateFolder, 0x8007689C
 
-.global _MCS_GetVariableSize
-.set _MCS_GetVariableSize, 0x8012EF9A
+.global _MCS_GetVariable
+.set _MCS_GetVariable, 0x80076A82
 
-.global _MCS_GetVariableInfo
-.set _MCS_GetVariableInfo, 0x80076A82
+.global _MCS_List_Create
+.set _MCS_List_Create, 0x8012AD62
 
-.global _MCS_List_GetNumEntries
-.set _MCS_List_GetNumEntries, 0x8012B442
+.global _MCS_List_Set
+.set _MCS_List_Set, 0x8012B0C4
+
+.global _MCS_SetVariable
+.set _MCS_SetVariable, 0x80076B20
