@@ -111,26 +111,40 @@ bool moveSnake() {
 }
 
 void moveFruit() {
-	// Emulate modulo - SH4 doesn't let us do mod by an arbitary value
-	uint32_t xCopy = fruitXLFSR & 0xFF;
-	while (xCopy >= numBlocksX) {
-		xCopy -= numBlocksX;
+	bool foundPosition = false;
+
+	while (!foundPosition) {
+		// Emulate modulo - SH4 doesn't let us do mod by an arbitary value
+		uint32_t xCopy = fruitXLFSR & 0xFF;
+		while (xCopy >= numBlocksX) {
+			xCopy -= numBlocksX;
+		}
+		fruitX = xCopy;
+
+		uint32_t yCopy = fruitYLFSR & 0xFF;
+		while (yCopy >= numBlocksY) {
+			yCopy -= numBlocksY;
+		}
+		fruitY = yCopy;
+
+		// calculate lfsr
+		// poly: x^32 + x^22 + x^2 + x
+		uint32_t fruitXLFSRBit = ((fruitXLFSR >> 0) ^ (fruitXLFSR >> 10) ^ (fruitXLFSR >> 30) ^ (fruitXLFSR >> 31)) & 1;
+		fruitXLFSR = (fruitXLFSR >> 1) | (fruitXLFSRBit << 31);
+
+		uint32_t fruitYLFSRBit = ((fruitYLFSR >> 0) ^ (fruitYLFSR >> 10) ^ (fruitYLFSR >> 30) ^ (fruitYLFSR >> 31)) & 1;
+		fruitYLFSR = (fruitYLFSR >> 1) | (fruitYLFSRBit << 31);
+
+		foundPosition = true;
+
+		// check we haven't placed the fruit on the snake
+		for (int i = 0; i < snakeLength; ++i) {
+			if (fruitX == snakeX[i] && fruitY == snakeY[i]) {
+				foundPosition = false;
+				break;
+			}
+		}
 	}
-	fruitX = xCopy;
-
-	uint32_t yCopy = fruitYLFSR & 0xFF;
-	while (yCopy >= numBlocksY) {
-		yCopy -= numBlocksY;
-	}
-	fruitY = yCopy;
-
-	// calculate lfsr
-	// poly: x^32 + x^22 + x^2 + x
-	uint32_t fruitXLFSRBit = ((fruitXLFSR >> 0) ^ (fruitXLFSR >> 10) ^ (fruitXLFSR >> 30) ^ (fruitXLFSR >> 31)) & 1;
-	fruitXLFSR = (fruitXLFSR >> 1) | (fruitXLFSRBit << 31);
-
-	uint32_t fruitYLFSRBit = ((fruitYLFSR >> 0) ^ (fruitYLFSR >> 10) ^ (fruitYLFSR >> 30) ^ (fruitYLFSR >> 31)) & 1;
-	fruitYLFSR = (fruitYLFSR >> 1) | (fruitYLFSRBit << 31);
 }
 
 bool checkSnake() {
