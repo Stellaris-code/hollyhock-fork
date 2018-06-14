@@ -1,6 +1,7 @@
 PROJECT_NAME = "hollyhock"
 
 INPUT = include/
+RECURSIVE = YES
 
 GENERATE_HTML = YES
 HTML_OUTPUT = doc
