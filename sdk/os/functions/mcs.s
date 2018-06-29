@@ -1,4 +1,4 @@
-.include "os/_util.inc"
+.include "os/functions/_util.inc"
 
 DEFINE_OS_FUNC MCS_CreateFolder 0x8007689C
 DEFINE_OS_FUNC MCS_GetVariable 0x80076A82

@@ -1,4 +1,4 @@
-.include "os/_util.inc"
+.include "os/functions/_util.inc"
 
 DEFINE_OS_FUNC LCD_ClearScreen 0x800394C0
 DEFINE_OS_FUNC LCD_GetPixel 0x80039328

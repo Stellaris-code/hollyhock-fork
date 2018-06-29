@@ -1,4 +1,4 @@
-.include "os/_util.inc"
+.include "os/functions/_util.inc"
 
 DEFINE_OS_FUNC GUI_CreateDialog 0x800D57F6
 DEFINE_OS_FUNC GUI_CreateLabel 0x80109980

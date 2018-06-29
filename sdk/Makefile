@@ -11,8 +11,8 @@ CC_FLAGS:=-ffreestanding -fno-exceptions -fno-rtti -Wall -Wextra -O2 -I include/
 LD:=sh4-elf-ld
 LD_FLAGS:=-nostdlib -r
 
-AS_SOURCES:=$(wildcard *.s) $(wildcard **/*.s)
-CC_SOURCES:=$(wildcard *.cpp)
+AS_SOURCES:=$(wildcard *.s) $(wildcard **/*.s) $(wildcard **/**/*.s)
+CC_SOURCES:=$(wildcard *.cpp) $(wildcard **/*.cpp)
 OBJECTS:=$(AS_SOURCES:.s=.o) $(CC_SOURCES:.cpp=.o)
 
 all: sdk.o Makefile

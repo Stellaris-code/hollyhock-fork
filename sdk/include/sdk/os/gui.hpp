@@ -31,6 +31,213 @@ const int BUTTON_ABORT = 1 << 8;
 const int BUTTON_RETRY = 1 << 9;
 const int BUTTON_CANCEL = 1 << 10;
 
+/**
+ * Wraps an internal class from the fx-CP400.
+ */
+class Wrapped {
+public:
+	/**
+	 * Returns a pointer to the internal class.
+	 * 
+	 * @return A pointer to the internal class.
+	 */
+	virtual void *GetWrapped() = 0;
+
+protected:
+	Wrapped() = default;
+	~Wrapped() = default;
+
+	// Since we use the trick with the vtable to overide functions, we can't
+	// let the object's address change. Prevent that by deleting the copy
+	// constructor and assignment operator.
+	Wrapped(Wrapped const &) = delete;
+	void operator=(Wrapped const &) = delete;
+};
+
+/**
+ * Utility class which is the parent of all GUI element classes.
+ */
+class GUIElement : public Wrapped {};
+
+// pre-declare the class, since a pointer to it is placed in the vtable
+class GUIDialog;
+
+/// @private
+struct GUIDialog_Wrapped_VTable {
+	/**
+	 * Stores the address of the GUIDialog object this vtable belongs to.
+	 * Should be set by the constructor of GUIDialog.
+	 */
+	GUIDialog *me;
+
+	uint8_t unknown0[0x1C];
+
+	int (*OnEvent)(struct GUIDialog_Wrapped *dialog, void *eventData);
+
+	uint8_t unknown1[0x14];
+
+	// unknown0 - always pass 0
+	void (*const AddElement)(struct GUIDialog_Wrapped *dialog, void *element, int unknown0);
+
+	uint8_t unknown2[0x158];
+	
+	void (*const ShowDialog)(struct GUIDialog_Wrapped *dialog);
+
+	// TODO: work out the true length of the vtable
+	uint8_t unknown3[0x200];
+};
+
+/// @private
+struct GUIDialog_Wrapped {
+	uint8_t unknown0[0x10];
+
+	// refer to accessors in GUIDialog class for documentation
+	uint16_t leftX;
+	uint16_t topY;
+	uint16_t rightX;
+	uint16_t bottomY;
+
+	uint8_t unknown1[0x34];
+
+	struct GUIDialog_Wrapped_VTable *vtable;
+};
+
+class GUIDialog : public Wrapped {
+	public:
+		enum Height : int {
+		Height25 = 0,
+		Height55 = 1,
+		Height75 = 2,
+		Height95 = 3,
+		Height35 = 4,
+		Height60 = 5
+	};
+
+	enum Alignment : int {
+		AlignTop = 0,
+		AlignCenter = 1,
+		AlignBottom = 2
+	};
+
+	enum KeyboardState : int {
+		KeyboardStateNone = 0, // 2 gives same effect
+		KeyboardStateMath1 = 1, // 3 gives same effect
+		KeyboardStateMath2 = 4,
+		KeyboardStateMath3 = 5,
+		KeyboardStateTrig = 6,
+		KeyboardStateVar = 7,
+		KeyboardStateABC = 8,
+		KeyboardStateCatalog = 9,
+		KeyboardStateAdvance = 10,
+		KeyboardStateNumber = 11
+	};
+
+	GUIDialog(
+		enum Height height, enum Alignment alignment,
+		const char* title,
+		enum KeyboardState keyboard
+	);
+
+	virtual int OnEvent(struct GUIDialog_Wrapped *dialog, void *eventData);
+	
+	uint16_t GetLeftX();
+	uint16_t GetTopY();
+	uint16_t GetRightX();
+	uint16_t GetBottomY();
+
+	void AddElement(GUIElement &element);
+	void ShowDialog();
+
+	void *GetWrapped();
+
+private:
+	struct GUIDialog_Wrapped *m_wrapped;
+
+	struct GUIDialog_Wrapped_VTable *m_oldVTable;
+	struct GUIDialog_Wrapped_VTable m_vtable;
+
+	static int OnEvent_Wrap(struct GUIDialog_Wrapped *dialog, void *eventData);
+};
+
+class GUILabel : public GUIElement {
+public:
+	enum Flag : int {
+		/// Enables displaying the background color of the label.
+		FlagBackground = 1 << 0,
+
+		/**
+		 * Allows the label to be selected/brought into focus.
+		 * 
+		 * When the label is selected, the text and background colors switch.
+		 */
+		FlagSelectable = 1 << 15
+	};
+
+	GUILabel(int x, int y, const char *text);
+	GUILabel(
+		int x, int y,
+		const char *text,
+		int flags,
+		uint16_t *textColor, uint16_t *backgroundColor
+	);
+	GUILabel(
+		int x, int y,
+		const char *text,
+		int flags,
+		uint16_t *textColor, uint16_t *backgroundColor,
+		bool showShadow, uint16_t shadowColor
+	);
+
+	void *GetWrapped();
+
+private:
+	void *m_wrapped;
+};
+
+class GUIRadioButton : public GUIElement {
+public:
+	enum Flag : int {
+		/// Causes the radio button to be selected by default.
+		FlagSelected = 1 << 2,
+
+		/// Makes the radio button interactive.
+		FlagEnabled = 1 << 15
+	};
+
+	GUIRadioButton(
+		int x, int y,
+		const char *text,
+		int flags
+	);
+
+	void *GetWrapped();
+
+private:
+	void *m_wrapped;
+};
+
+class GUITextBox : public GUIElement {
+public:
+	enum Flag {
+		/// Enables drawing the text box's outline and background.
+		FlagDrawBox = 1 << 3,
+
+		/// Allows the contents of the text box to be modified.
+		FlagEditable = 1 << 8
+	};
+
+	GUITextBox(
+		int x, int y, int width,
+		const char *text,
+		int flags, int maxLength, bool countLengthByBytes
+	);
+
+	void *GetWrapped();
+
+private:
+	void *m_wrapped;
+};
+
 extern "C"
 struct GUI_Dialog *GUI_CreateDialog(
 	void *dialog,
@@ -117,350 +324,3 @@ void *GUI_DisplayMessageBox_Internal(
 	const char *contentPrefix, const char *contentString,
 	int buttons, bool disableCloseButton
 );
-
-class Wrapped {
-public:
-	/**
-	 * Returns a pointer to the internal class this class wraps.
-	 * 
-	 * @return The pointer to the internal class this class wraps.
-	 */
-	virtual void *GetWrapped() = 0;
-};
-
-class GUIElement : public Wrapped {};
-
-class GUIDialog : public Wrapped {
-public:
-	enum Height : int {
-		Height25 = 0,
-		Height55 = 1,
-		Height75 = 2,
-		Height95 = 3,
-		Height35 = 4,
-		Height60 = 5
-	};
-
-	enum Alignment : int {
-		AlignTop = 0,
-		AlignCenter = 1,
-		AlignBottom = 2
-	};
-
-	enum KeyboardState : int {
-		KeyboardStateNone = 0, // 2 gives same effect
-		KeyboardStateMath1 = 1, // 3 gives same effect
-		KeyboardStateMath2 = 4,
-		KeyboardStateMath3 = 5,
-		KeyboardStateTrig = 6,
-		KeyboardStateVar = 7,
-		KeyboardStateABC = 8,
-		KeyboardStateCatalog = 9,
-		KeyboardStateAdvance = 10,
-		KeyboardStateNumber = 11
-	};
-
-	/**
-	 * Creates a dialog.
-	 * 
-	 * @param height The height of the dialog.
-	 * @param alignment The screen position to align the dialog with.
-	 * @param title The string to display in the title bar of the dialog.
-	 * @param keyboard The keyboard to display when the dialog is shown.
-	 */
-	GUIDialog(
-		enum Height height, enum Alignment alignment,
-		const char* title,
-		enum KeyboardState keyboard
-	) {
-		m_wrapped = reinterpret_cast<decltype(m_wrapped)>(GUI_CreateDialog(
-			0,
-			height, alignment,
-			title,
-			0, 0,
-			keyboard
-		));
-	}
-
-	/**
-	 * Returns the X position of the left edge of the dialog body, in pixels.
-	 *
-	 * @return The X position of the left edge of the dialog body, in pixels.
-	 */
-	uint16_t GetLeftX() {
-		return m_wrapped->leftX;
-	}
-
-	/**
-	 * Returns the Y position of the top edge of the dialog body, in pixels.
-	 *
-	 * @return The Y position of the top edge of the dialog body, in pixels.
-	 */
-	uint16_t GetTopY() {
-		return m_wrapped->topY;
-	}
-
-	/**
-	 * Returns the X position of the right edge of the dialog body, in pixels.
-	 *
-	 * @return The X position of the right edge of the dialog body, in pixels.
-	 */
-	uint16_t GetRightX() {
-		return m_wrapped->rightX;
-	}
-
-	/**
-	 * Returns the Y position of the bottom edge of the dialog body, in pixels.
-	 *
-	 * @return The Y position of the bottom edge of the dialog body, in pixels.
-	 */
-	uint16_t GetBottomY() {
-		return m_wrapped->bottomY;
-	}
-
-	/**
-	 * Adds a GUI element to the dialog.
-	 * 
-	 * @param element The GUI element to add.
-	 */
-	void AddElement(GUIElement &element) {
-		m_wrapped->vtable->AddElement(m_wrapped, element.GetWrapped(), 0);
-	}
-
-	/**
-	 * Presents the dialog to the user. Blocks until the dialog is closed.
-	 */
-	void ShowDialog() {
-		m_wrapped->vtable->ShowDialog(m_wrapped);
-	}
-
-	void *GetWrapped() {
-		return m_wrapped;
-	}
-
-private:
-	struct {
-		uint8_t unknown0[0x10];
-
-		// refer to accessors for documentation
-		uint16_t leftX;
-		uint16_t topY;
-		uint16_t rightX;
-		uint16_t bottomY;
-
-		uint8_t unknown1[0x34];
-
-		struct {
-			uint8_t unknown0[0x38];
-
-			// unknown0 - always pass 0
-			void (*const AddElement)(void *dialog, void *element, int unknown0);
-
-			uint8_t unknown1[0x158];
-			void (*const ShowDialog)(void *dialog);
-
-			// TODO: work out the true length of the vtable
-			uint8_t unknown2[0x200];
-		} *vtable;
-	} *m_wrapped;
-};
-
-class GUILabel : public GUIElement {
-public:
-	enum Flag : int {
-		/** Enables displaying the background color of the label. */
-		FlagBackground = 1 << 0,
-
-		/**
-		 * Allows the label to be selected/brought into focus.
-		 * 
-		 * When the label is selected, the text and background colors switch.
-		 */
-		FlagSelectable = 1 << 15
-	};
-
-	/**
-	 * Creates a label.
-	 * 
-	 * @param x The X position to place the label at, in pixels and relative to
-	 * the top left of the display.
-	 * @param y The Y position to place the label at, in pixels and relative to
-	 * the top left of the display.
-	 * @param text The text to display as the label.
-	 */
-	GUILabel(int x, int y, const char *text) : GUILabel(
-		x, y, text, 0, 0, 0, false, 0
-	) {
-
-	}
-
-	/**
-	 * Creates a label.
-	 * 
-	 * @param x The X position to place the label at, in pixels and relative to
-	 * the top left of the display.
-	 * @param y The Y position to place the label at, in pixels and relative to
-	 * the top left of the display.
-	 * @param text The text to display as the label.
-	 * @param flags A bitfield of flags specified by bitwise-ORing members of
-	 * the @ref Flag enum.
-	 * @param textColor A pointer to an RGB565 color to use for the text, or 0
-	 * for the default color.
-	 * @param backgroundColor A pointer to an RGB565 color to use for the
-	 * background, or 0 for the default color.
-	 */
-	GUILabel(
-		int x, int y,
-		const char *text,
-		int flags,
-		uint16_t *textColor, uint16_t *backgroundColor
-	) : GUILabel(x, y, text, flags, textColor, backgroundColor, false, 0) {
-
-	}
-
-	/**
-	 * Creates a label.
-	 * 
-	 * @param x The X position to place the label at, in pixels and relative to
-	 * the top left of the display.
-	 * @param y The Y position to place the label at, in pixels and relative to
-	 * the top left of the display.
-	 * @param text The text to display as the label.
-	 * @param flags A bitfield of flags specified by bitwise-ORing members of
-	 * the @ref Flag enum.
-	 * @param textColor A pointer to an RGB565 color to use for the text, or 0
-	 * for the default color.
-	 * @param backgroundColor A pointer to an RGB565 color to use for the
-	 * background, or 0 for the default color.
-	 * @param showShadow True if the text shadow should be shown.
-	 * @param shadowColor An RGB565 color to use for the text shadow.
-	 */
-	GUILabel(
-		int x, int y,
-		const char *text,
-		int flags,
-		uint16_t *textColor, uint16_t *backgroundColor,
-		bool showShadow, uint16_t shadowColor
-	) {
-		m_wrapped = reinterpret_cast<decltype(m_wrapped)>(GUI_CreateLabel(
-			0,
-			x, y, text,
-			0,
-			flags,
-			0, 
-			textColor, backgroundColor, showShadow, shadowColor,
-			0
-		));
-	}
-
-	void *GetWrapped() {
-		return m_wrapped;
-	}
-
-private:
-	void *m_wrapped;
-};
-
-class GUIRadioButton : public GUIElement {
-public:
-	enum Flag : int {
-		/** Causes the radio button to be selected by default. */
-		FlagSelected = 1 << 2,
-
-		/** Makes the radio button interactive. */
-		FlagEnabled = 1 << 15
-	};
-
-	/**
-	 * Creates a radio button.
-	 * 
-	 * @param x The X position to place the radio button at, in pixels and
-	 * relative to the top left of the display.
-	 * @param y The Y position to place the radio button at, in pixels and
-	 * relative to the top left of the display.
-	 * @param text The text to display to the right-hand side of the radio
-	 * button.
-	 * @param flags A bitfield of flags specified by bitwise-ORing members of
-	 * the @ref Flag enum.
-	 */
-	GUIRadioButton(
-		int x, int y,
-		const char *text,
-		int flags
-	) {
-		m_wrapped = reinterpret_cast<decltype(m_wrapped)>(GUI_CreateRadioButton(
-			0,
-			x, y,
-			text,
-			0,
-			flags,
-			0, 0
-		));
-	}
-
-	void *GetWrapped() {
-		return m_wrapped;
-	}
-
-private:
-	void *m_wrapped;
-};
-
-class GUITextBox : public GUIElement {
-public:
-	enum Flag {
-		/** Enables drawing the text box's outline and background. */
-		FlagDrawBox = 1 << 3,
-
-		/** Allows the contents of the text box to be modified. */
-		FlagEditable = 1 << 8
-	};
-
-	/**
-	 * Creates a text box.
-	 *
-	 * With an example value for the parameter @p maxLength of 4, the behaviour
-	 * of @p countLengthByBytes is as follows:
-	 * - If true, 4 bytes worth of text can be written in the text box. This may
-	 * be two 2-byte characters, one 2-byte character and two 1-byte characters,
-	 * etc.
-	 * - If false, 4 characters worth of text can be written in the text box.
-	 * This may be four 2-byte characters, one 2-byte character and three 1-byte
-	 * characters, etc.
-	 * 
-	 * @param x The X position to place the text box at, in pixels and relative
-	 * to the top left of the display.
-	 * @param y The Y position to place the text box at, in pixels and relative
-	 * to the top left of the display.
-	 * @param width The width of the textbox, in pixels.
-	 * @param text A string to pre-populate the text box with, or 0 if the
-	 * textbox should be initially empty.
-	 * @param flags A bitfield of flags specified by bitwise-ORing members of
-	 * the @ref Flag enum.
-	 * @param maxLength The maximum number of characters/bytes the text box
-	 * should hold.
-	 * @param countLengthByBytes True if @p maxLength specifies the maximum
-	 * number of bytes, and false if it specifies the maximum number of
-	 * characters.
-	 */
-	GUITextBox(
-		int x, int y, int width,
-		const char *text,
-		int flags, int maxLength, bool countLengthByBytes
-	) {
-		m_wrapped = reinterpret_cast<decltype(m_wrapped)>(GUI_CreateTextBox(
-			0,
-			x, y, width,
-			text,
-			0,
-			flags, maxLength, countLengthByBytes
-		));
-	}
-
-	void *GetWrapped() {
-		return m_wrapped;
-	}
-
-private:
-	void *m_wrapped;
-};

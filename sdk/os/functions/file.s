@@ -1,4 +1,4 @@
-.include "os/_util.inc"
+.include "os/functions/_util.inc"
 
 DEFINE_OS_FUNC close 0x80057912
 DEFINE_OS_FUNC fstat 0x8005798E

@@ -1,4 +1,4 @@
-.include "os/_util.inc"
+.include "os/functions/_util.inc"
 
 DEFINE_OS_FUNC malloc 0x800CFB00
 DEFINE_OS_FUNC memcpy 0x800A78AC
