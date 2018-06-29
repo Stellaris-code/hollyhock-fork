@@ -94,7 +94,7 @@ void Debug_PrintNumberHex_Word(uint16_t value, int x, int y);
  * @return True if writing the string was successful, false otherwise.
  */
 extern "C"
-bool Debug_PrintString(char *string, bool invert);
+bool Debug_PrintString(const char *string, bool invert);
 
 /**
  * Sets the position of the cursor in debug text mode.

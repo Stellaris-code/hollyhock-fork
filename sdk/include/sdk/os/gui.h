@@ -148,7 +148,7 @@ extern "C"
 struct GUI_Dialog *GUI_CreateDialog(
 	void *dialog,
 	int height, int alignment,
-	char *title,
+	const char *title,
 	int unknown2, int unknown3,
 	int keyboard
 );
@@ -186,7 +186,7 @@ extern "C"
 void *GUI_CreateLabel(
 	void *label,
 	int x, int y,
-	char *text,
+	const char *text,
 	int unknown0,
 	int flags,
 	void *font,
@@ -223,7 +223,7 @@ extern "C"
 void *GUI_CreateRadioButton(
 	void *radioButton,
 	int x, int y,
-	char *text,
+	const char *text,
 	int unknown0,
 	int flags,
 	void *font,
@@ -269,7 +269,7 @@ extern "C"
 void *GUI_CreateTextBox(
 	void *textBox,
 	int x, int y, int width,
-	char *text,
+	const char *text,
 	int unknown0,
 	int flags,
 	int maxLength, bool countLengthByBytes
@@ -314,8 +314,8 @@ void GUI_DisplayMessageBox(int unknown, int titleStringID, int contentStringID);
 extern "C"
 void *GUI_DisplayMessageBox_Internal(
 	int unknown,
-	char *titleString,
-	char *contentPrefix, char *contentString,
+	const char *titleString,
+	const char *contentPrefix, const char *contentString,
 	int buttons, bool disableCloseButton
 );
 

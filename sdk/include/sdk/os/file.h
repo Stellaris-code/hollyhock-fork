@@ -342,7 +342,7 @@ int lseek(int fd, int offset, int whence);
  * @return 0 on success, or a negative error code on failure.
  */
 extern "C"
-int mkdir(char *path);
+int mkdir(const char *path);
 
 /**
  * Opens a file on the file system.
@@ -355,7 +355,7 @@ int mkdir(char *path);
  * @return A file descriptor on success, or a negative error code on failure.
  */
 extern "C"
-int open(char *path, int flags);
+int open(const char *path, int flags);
 
 /**
  * Reads up to @c count bytes from a file, and stores them in @c buf.
@@ -379,7 +379,7 @@ int read(int fd, uint8_t *buf, int count);
  * @return 0 on success, or a negative error code on failure.
  */
 extern "C"
-int remove(char *path);
+int remove(const char *path);
 
 /**
  * Renames a file or directory.
@@ -389,7 +389,7 @@ int remove(char *path);
  * @return 0 on success, or a negative error code on failure.
  */
 extern "C"
-int rename(char *oldPath, char *newPath);
+int rename(const char *oldPath, const char *newPath);
 
 /**
  * Retrieves information about a file.
@@ -402,7 +402,7 @@ int rename(char *oldPath, char *newPath);
  * @see fstat
  */
 extern "C"
-int stat(char *path, struct stat *buf);
+int stat(const char *path, struct stat *buf);
 
 /**
  * Writes @c count bytes from @c buf to an file.
