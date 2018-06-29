@@ -270,12 +270,14 @@ private:
 	void *m_wrapped;
 };
 
+/// @private
 struct GUITextBox_Wrapped_VTable {
 	uint8_t unknown0[0x188];
 
 	void (*const SetText)(struct GUITextBox_Wrapped *textBox, const char *text);
 };
 
+/// @private
 struct GUITextBox_Wrapped {
 	uint8_t unknown0[0x4C];
 
