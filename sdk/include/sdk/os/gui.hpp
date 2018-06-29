@@ -79,12 +79,16 @@ struct GUIDialog_Wrapped_VTable {
 	// unknown0 - always pass 0
 	void (*const AddElement)(struct GUIDialog_Wrapped *dialog, void *element, int unknown0);
 
-	uint8_t unknown2[0x158];
+	uint8_t unknown3[0x38];
+
+	void (*const Refresh)(struct GUIDialog_Wrapped *dialog);
+
+	uint8_t unknown4[0x11C];
 	
 	void (*const ShowDialog)(struct GUIDialog_Wrapped *dialog);
 
 	// TODO: work out the true length of the vtable
-	uint8_t unknown3[0x200];
+	uint8_t unknown5[0x200];
 };
 
 /// @private
@@ -100,7 +104,10 @@ struct GUIDialog_Wrapped {
 	uint8_t unknown1[0x34];
 
 	struct GUIDialog_Wrapped_VTable *vtable;
+
+	uint8_t unknown2[0x58];
 };
+static_assert(sizeof(struct GUIDialog_Wrapped) == 0xA8);
 
 struct GUIDialog_OnEvent_Data {
 	uint16_t type;
@@ -154,6 +161,7 @@ public:
 	uint16_t GetBottomY();
 
 	void AddElement(GUIElement &element);
+	void Refresh();
 	void ShowDialog();
 
 	void *GetWrapped();
@@ -262,6 +270,21 @@ private:
 	void *m_wrapped;
 };
 
+struct GUITextBox_Wrapped_VTable {
+	uint8_t unknown0[0x188];
+
+	void (*const SetText)(void *textBox, const char *text);
+};
+
+struct GUITextBox_Wrapped {
+	uint8_t unknown0[0x4C];
+
+	struct GUITextBox_Wrapped_VTable *vtable;
+
+	uint8_t unknown1[0x50];
+};
+static_assert(sizeof(struct GUITextBox_Wrapped) == 0xA0);
+
 class GUITextBox : public GUIElement {
 public:
 	enum Flag {
@@ -278,10 +301,12 @@ public:
 		int flags, int maxLength, bool countLengthByBytes
 	);
 
+	void SetText(const char *text);
+
 	void *GetWrapped();
 
 private:
-	void *m_wrapped;
+	struct GUITextBox_Wrapped *m_wrapped;
 };
 
 extern "C"

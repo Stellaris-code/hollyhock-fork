@@ -88,6 +88,13 @@ void GUIDialog::AddElement(GUIElement &element) {
 }
 
 /**
+ * Refreshes the dialog, redrawing all components.
+ */
+void GUIDialog::Refresh() {
+	m_wrapped->vtable->Refresh(m_wrapped);
+}
+
+/**
  * Presents the dialog to the user. Blocks until the dialog is closed.
  */
 void GUIDialog::ShowDialog() {
@@ -322,6 +329,15 @@ GUITextBox::GUITextBox(
 		0,
 		flags, maxLength, countLengthByBytes
 	));
+}
+
+/**
+ * Set the text box's text.
+ * 
+ * @param text The new string for the textbox.
+ */
+void GUITextBox::SetText(const char *text) {
+	m_wrapped->vtable->SetText(m_wrapped, text);
 }
 
 void *GUITextBox::GetWrapped() {
