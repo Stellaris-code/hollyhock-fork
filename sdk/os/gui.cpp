@@ -14,13 +14,13 @@ GUIDialog::GUIDialog(
 	const char* title,
 	enum KeyboardState keyboard
 ) : m_vtable({}) {
-	m_wrapped = reinterpret_cast<decltype(m_wrapped)>(GUI_CreateDialog(
+	m_wrapped = GUI_CreateDialog(
 		0,
 		height, alignment,
 		title,
 		0, 0,
 		keyboard
-	));
+	);
 
 	// Save the old vtable
 	m_oldVTable = m_wrapped->vtable;
@@ -244,7 +244,7 @@ GUILabel::GUILabel(
 	uint16_t *textColor, uint16_t *backgroundColor,
 	bool showShadow, uint16_t shadowColor
 ) {
-	m_wrapped = reinterpret_cast<decltype(m_wrapped)>(GUI_CreateLabel(
+	m_wrapped = GUI_CreateLabel(
 		0,
 		x, y, text,
 		0,
@@ -252,7 +252,7 @@ GUILabel::GUILabel(
 		0, 
 		textColor, backgroundColor, showShadow, shadowColor,
 		0
-	));
+	);
 }
 
 void *GUILabel::GetWrapped() {
@@ -276,14 +276,14 @@ GUIRadioButton::GUIRadioButton(
 	const char *text,
 	int flags
 ) {
-	m_wrapped = reinterpret_cast<decltype(m_wrapped)>(GUI_CreateRadioButton(
+	m_wrapped = GUI_CreateRadioButton(
 		0,
 		x, y,
 		text,
 		0,
 		flags,
 		0, 0
-	));
+	);
 }
 
 void *GUIRadioButton::GetWrapped() {
@@ -322,17 +322,20 @@ GUITextBox::GUITextBox(
 	const char *text,
 	int flags, int maxLength, bool countLengthByBytes
 ) {
-	m_wrapped = reinterpret_cast<decltype(m_wrapped)>(GUI_CreateTextBox(
+	m_wrapped = GUI_CreateTextBox(
 		0,
 		x, y, width,
 		text,
 		0,
 		flags, maxLength, countLengthByBytes
-	));
+	);
 }
 
 /**
  * Set the text box's text.
+ * 
+ * If the text specified is longer than the maximum string length permitted by
+ * the textbox, it is truncated to fit.
  * 
  * @param text The new string for the textbox.
  */

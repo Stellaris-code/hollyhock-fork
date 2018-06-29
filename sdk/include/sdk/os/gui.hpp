@@ -318,7 +318,7 @@ void *GUI_CreateButton(
 );
 
 extern "C"
-struct GUI_Dialog *GUI_CreateDialog(
+struct GUIDialog_Wrapped *GUI_CreateDialog(
 	void *dialog,
 	int height, int alignment,
 	const char *title,
@@ -351,7 +351,7 @@ void *GUI_CreateRadioButton(
 );
 
 extern "C"
-void *GUI_CreateTextBox(
+GUITextBox_Wrapped *GUI_CreateTextBox(
 	void *textBox,
 	int x, int y, int width,
 	const char *text,
