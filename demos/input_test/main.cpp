@@ -51,7 +51,6 @@ void printHeader() {
 }
 
 void main() {
-	// Put your code here.
 	struct InputEvent event;
 
 	bool running = true;

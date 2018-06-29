@@ -229,7 +229,6 @@ uint32_t GetBreakpointAddress() {
 }
 
 void main() {
-	// Put your code here.
 	LCD_ClearScreen();
 
 	Debug_SetCursorPosition(0, 0);

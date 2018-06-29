@@ -26,7 +26,6 @@ void drawCircle(int32_t x0, int32_t y0, int radius) {
 }
 
 void main() {
-	// Put your code here.
 	vram = LCD_GetVRAMAddress();
 	LCD_GetSize(&width, &height);
 
