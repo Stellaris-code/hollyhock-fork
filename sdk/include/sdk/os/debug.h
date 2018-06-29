@@ -36,6 +36,7 @@
  * @param y Pointer to an int to store the Y position of the cursor in.
  * @return Always returns 0.
  */
+extern "C"
 int Debug_GetCursorPosition(int *x, int *y);
 
 /**
@@ -46,6 +47,7 @@ int Debug_GetCursorPosition(int *x, int *y);
  * @param x The X coordinate to print the number at.
  * @param y The Y coordinate to print the number at.
  */
+extern "C"
 void Debug_PrintNumberHex_Byte(uint8_t value, int x, int y);
 
 /**
@@ -56,6 +58,7 @@ void Debug_PrintNumberHex_Byte(uint8_t value, int x, int y);
  * @param x The X coordinate to print the number at.
  * @param y The Y coordinate to print the number at.
  */
+extern "C"
 void Debug_PrintNumberHex_Dword(uint32_t value, int x, int y);
 
 /**
@@ -66,6 +69,7 @@ void Debug_PrintNumberHex_Dword(uint32_t value, int x, int y);
  * @param x The X coordinate to print the number at.
  * @param y The Y coordinate to print the number at.
  */
+extern "C"
 void Debug_PrintNumberHex_Nibble(uint8_t value, int x, int y);
 
 /**
@@ -76,6 +80,7 @@ void Debug_PrintNumberHex_Nibble(uint8_t value, int x, int y);
  * @param x The X coordinate to print the number at.
  * @param y The Y coordinate to print the number at.
  */
+extern "C"
 void Debug_PrintNumberHex_Word(uint16_t value, int x, int y);
 
 /**
@@ -88,6 +93,7 @@ void Debug_PrintNumberHex_Word(uint16_t value, int x, int y);
  * @param invert True if the colors used to print the text should be inverted.
  * @return True if writing the string was successful, false otherwise.
  */
+extern "C"
 bool Debug_PrintString(char *string, bool invert);
 
 /**
@@ -97,6 +103,7 @@ bool Debug_PrintString(char *string, bool invert);
  * @param y The cursor's new Y position.
  * @return Always returns 0.
  */
+extern "C"
 int Debug_SetCursorPosition(int x, int y);
 
 /**
@@ -106,6 +113,7 @@ int Debug_SetCursorPosition(int x, int y);
  * 
  * @return A number representing the key that was pressed.
  */
+extern "C"
 int Debug_WaitKey();
 
 #endif

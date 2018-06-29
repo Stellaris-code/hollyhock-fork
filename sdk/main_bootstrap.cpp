@@ -1,7 +1,8 @@
 #include <sdk/os/gui.h>
 
-extern void main();
+void main();
 
+extern "C"
 void *main_bootstrap() {
 	main();
 

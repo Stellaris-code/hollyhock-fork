@@ -5,15 +5,15 @@ endif
 AS:=sh4-elf-as
 AS_FLAGS:=
 
-CC:=sh4-elf-gcc
-CC_FLAGS:=-ffreestanding -Wall -Wextra -O2 -I $(SDK_DIR)/include/
+CC:=sh4-elf-g++
+CC_FLAGS:=-ffreestanding -fno-exceptions -fno-rtti -Wall -Wextra -O2 -I $(SDK_DIR)/include/
 
 LD:=sh4-elf-ld
 LD_FLAGS:=-nostdlib --no-undefined
 
 AS_SOURCES:=$(wildcard *.s)
-CC_SOURCES:=$(wildcard *.c)
-OBJECTS:=$(AS_SOURCES:.s=.o) $(CC_SOURCES:.c=.o)
+CC_SOURCES:=$(wildcard *.cpp)
+OBJECTS:=$(AS_SOURCES:.s=.o) $(CC_SOURCES:.cpp=.o)
 
 all: run.bin Makefile
 
@@ -32,7 +32,7 @@ $(SDK_DIR)/sdk.o:
 %.o: %.s
 	$(AS) $< -o $@ $(AS_FLAGS)
 
-%.o: %.c
+%.o: %.cpp
 	$(CC) -c $< -o $@ $(CC_FLAGS)
 
 .PHONY: all clean

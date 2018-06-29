@@ -97,6 +97,7 @@
 /**
  * Clears the LCD. Fills VRAM with white, but does not refresh the LCD.
  */
+extern "C"
 void LCD_ClearScreen();
 
 /**
@@ -108,6 +109,7 @@ void LCD_ClearScreen();
  * @param y The Y coordinate of the pixel.
  * @return The color of the pixel, in RGB565 format.
  */
+extern "C"
 uint16_t LCD_GetPixel(int x, int y);
 
 /**
@@ -116,6 +118,7 @@ uint16_t LCD_GetPixel(int x, int y);
  * @param width A pointer to an int to store the LCD's width in.
  * @param height A pointer to an int to store the LCD's height in.
  */
+extern "C"
 void LCD_GetSize(int *width, int *height);
 
 /**
@@ -125,11 +128,13 @@ void LCD_GetSize(int *width, int *height);
  *
  * @return A pointer to the VRAM.
  */
+extern "C"
 uint16_t *LCD_GetVRAMAddress();
 
 /**
  * Pushes the content of the VRAM to the LCD.
  */
+extern "C"
 void LCD_Refresh();
 
 /**
@@ -140,6 +145,7 @@ void LCD_Refresh();
  * @param y The Y coordinate of the pixel.
  * @param color The color to set the pixel, in RGB565 format.
  */
+extern "C"
 void LCD_SetPixel(int x, int y, uint16_t color);
 
 /**
@@ -151,6 +157,7 @@ void LCD_SetPixel(int x, int y, uint16_t color);
  * @param y The Y coordinate of the pixel.
  * @param index The index of the color in the palette to use.
  */
+extern "C"
 void LCD_SetPixelFromPalette(int x, int y, uint8_t index);
 
 #endif

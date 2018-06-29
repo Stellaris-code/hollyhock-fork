@@ -15,6 +15,7 @@
  * @param size The number of bytes of memory to allocate.
  * @return A pointer to the allocated memory region.
  */
+extern "C"
 void *malloc(uint32_t size);
 
 /**
@@ -28,6 +29,7 @@ void *malloc(uint32_t size);
  * @param num The number of bytes to copy.
  * @return @p destination
  */
+extern "C"
 void *memcpy(void *destination, void *source, int num);
 
 /**
@@ -42,6 +44,7 @@ void *memcpy(void *destination, void *source, int num);
  * @param num The number of bytes to fill.
  * @return @p ptr
  */
+extern "C"
 void *memset(void *ptr, int value, int num);
 
 #endif

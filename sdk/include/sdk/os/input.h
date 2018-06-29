@@ -166,6 +166,7 @@ struct InputEvent {
  * @param unknown2 An unknown value. The value @c 0x10 must be supplied.
  * @return Always returns 0.
  */
+extern "C"
 int GetInput(struct InputEvent *event, uint32_t unknown1, uint32_t unknown2);
 
 #endif

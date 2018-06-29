@@ -144,6 +144,7 @@ struct GUI_Dialog {
  * with macros beginning with @c DIALOG_KBD_.
  * @return A pointer to the dialog struct created.
  */
+extern "C"
 struct GUI_Dialog *GUI_CreateDialog(
 	void *dialog,
 	int height, int alignment,
@@ -181,6 +182,7 @@ struct GUI_Dialog *GUI_CreateDialog(
  * @param unknown1 Unknown parameter. Value 0 should be passed.
  * @return A pointer to the label struct created.
  */
+extern "C"
 void *GUI_CreateLabel(
 	void *label,
 	int x, int y,
@@ -217,6 +219,7 @@ void *GUI_CreateLabel(
  * @param unknown2 Unknown parameter. Value 0 should be passed.
  * @return A pointer to the radio button struct created.
  */
+extern "C"
 void *GUI_CreateRadioButton(
 	void *radioButton,
 	int x, int y,
@@ -262,6 +265,7 @@ void *GUI_CreateRadioButton(
  * of bytes, and false if it specifies the maximum number of characters.
  * @return A pointer to the text box struct created.
  */
+extern "C"
 void *GUI_CreateTextBox(
 	void *textBox,
 	int x, int y, int width,
@@ -280,6 +284,7 @@ void *GUI_CreateTextBox(
  * @param contentStringID The ID of the string to use for the message box's
  * content.
  */
+extern "C"
 void GUI_DisplayMessageBox(int unknown, int titleStringID, int contentStringID);
 
 /**
@@ -306,6 +311,7 @@ void GUI_DisplayMessageBox(int unknown, int titleStringID, int contentStringID);
  * @param disableCloseButton Set to @c true to disable the close button.
  * @return An unknown GUI struct.
  */
+extern "C"
 void *GUI_DisplayMessageBox_Internal(
 	int unknown,
 	char *titleString,

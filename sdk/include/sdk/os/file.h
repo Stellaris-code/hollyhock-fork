@@ -286,6 +286,7 @@ struct stat {
  * @param fd The file descriptor for the open file.
  * @return 0 on success, or a negative error code on failure.
  */
+extern "C"
 int close(int fd);
 
 /**
@@ -298,6 +299,7 @@ int close(int fd);
  * 
  * @see stat
  */
+extern "C"
 int fstat(int fd, struct stat *buf);
 
 /**
@@ -311,6 +313,7 @@ int fstat(int fd, struct stat *buf);
  * @param buf A double pointer to store the address of the file's data in.
  * @return 0 on success, or a negative error code on failure.
  */
+extern "C"
 int getAddr(int fd, int offset, uint8_t **buf);
 
 /**
@@ -329,6 +332,7 @@ int getAddr(int fd, int offset, uint8_t **buf);
  * @param whence Where @p offset is relative to.
  * @return The new file offset on success, or a negative error code on failure.
  */
+extern "C"
 int lseek(int fd, int offset, int whence);
 
 /**
@@ -337,6 +341,7 @@ int lseek(int fd, int offset, int whence);
  * @param path The path to the directory to be created.
  * @return 0 on success, or a negative error code on failure.
  */
+extern "C"
 int mkdir(char *path);
 
 /**
@@ -349,6 +354,7 @@ int mkdir(char *path);
  * @param flags A bitfield describing the mode in which to open the file.
  * @return A file descriptor on success, or a negative error code on failure.
  */
+extern "C"
 int open(char *path, int flags);
 
 /**
@@ -363,6 +369,7 @@ int open(char *path, int flags);
  * @return The number of bytes read on success, or a negative error code on
  * failure.
  */
+extern "C"
 int read(int fd, uint8_t *buf, int count);
 
 /**
@@ -371,6 +378,7 @@ int read(int fd, uint8_t *buf, int count);
  * @param path The path to the file or directory to be deleted.
  * @return 0 on success, or a negative error code on failure.
  */
+extern "C"
 int remove(char *path);
 
 /**
@@ -380,6 +388,7 @@ int remove(char *path);
  * @param newPath The path to the new name for the file or directory.
  * @return 0 on success, or a negative error code on failure.
  */
+extern "C"
 int rename(char *oldPath, char *newPath);
 
 /**
@@ -392,6 +401,7 @@ int rename(char *oldPath, char *newPath);
  * 
  * @see fstat
  */
+extern "C"
 int stat(char *path, struct stat *buf);
 
 /**
@@ -403,6 +413,7 @@ int stat(char *path, struct stat *buf);
  * @return The number of bytes written on success, or a negative error code on
  * failure.
  */
+extern "C"
 int write(int fd, uint8_t *buf, int count);
 
 #endif

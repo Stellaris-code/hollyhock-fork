@@ -119,6 +119,7 @@ struct CBCD {
  * @return 0 if the folder was created successfully, or @c MCS_FOLDER_EXISTS if
  * the folder already exists.
  */
+extern "C"
 int MCS_CreateFolder(char *folder, uint8_t *folderIndex);
 
 /**
@@ -133,6 +134,7 @@ int MCS_CreateFolder(char *folder, uint8_t *folderIndex);
  * @return 0 if the variable exists, @c MCS_NO_VARIABLE if the variable does not
  * exist, or @c MCS_NO_FOLDER if the folder does not exist.
  */
+extern "C"
 int MCS_GetVariable(
 	char *folder, char *name,
 	uint8_t *variableType, char **name2, void **data, uint32_t *size
@@ -154,6 +156,7 @@ int MCS_GetVariable(
  * @return 0 on success, @c MCS_NO_FOLDER if the requested folder does not
  * exist.
  */
+extern "C"
 int MCS_List_Create(
 	char *folder, char *name,
 	uint32_t size, uint16_t length, uint8_t variableType
@@ -174,6 +177,7 @@ int MCS_List_Create(
  * if the variable was not a list, or @c MCS_INDEX_OOB if the index was out of
  * bounds.
  */
+extern "C"
 int MCS_List_Set(
 	char *folder, char *name,
 	uint32_t size, int index, uint8_t variableType, void *data
@@ -195,6 +199,7 @@ int MCS_List_Set(
  * @return 0 if the variable was set successfully, or @c MCS_NO_FOLDER if the
  * specified folder does not exist.
  */
+extern "C"
 int MCS_SetVariable(
 	char *folder, char *name,
 	uint8_t variableType, uint32_t size, void *data
