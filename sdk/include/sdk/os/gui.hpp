@@ -111,8 +111,8 @@ struct GUIDialog_OnEvent_Data {
 };
 
 class GUIDialog : public Wrapped {
-	public:
-		enum Height : int {
+public:
+	enum Height : int {
 		Height25 = 0,
 		Height55 = 1,
 		Height75 = 2,
