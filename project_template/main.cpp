@@ -1,5 +1,5 @@
-#include <sdk/os/debug.h>
-#include <sdk/os/lcd.h>
+#include <sdk/os/debug.hpp>
+#include <sdk/os/lcd.hpp>
 
 void main() {
 	Debug_SetCursorPosition(0, 0);
