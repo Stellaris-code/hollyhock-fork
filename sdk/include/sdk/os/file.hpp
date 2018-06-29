@@ -57,63 +57,63 @@
 #pragma once
 #include <stdint.h>
 
-#define ENOMEM -1
-#define EINVAL -2
-#define EDEVFAIL -3
-#define EMOUNTED -4
-#define EACCES -5
-#define EBADFSID -6
-#define ENOVOLUME -7
-#define ENOPATH -8
-#define EEXIST -9
-#define ENAMETOOLONG -10
-#define EOUTOFBOUND -11
-#define EUNFORMAT -12
-#define ENOSPC -13
-#define ENOENT -14
-#define EISDIRECTORY -15
-#define ESHARE -16
-#define EMFILE -17
-#define EBADF -18
-#define EEOF -19
-#define ENOTEMPTY -20
-#define ECLUSTERSIZEMISMATCH -40
-#define ESYSTEM -99
+const int ENOMEM = -1;
+const int EINVAL = -2;
+const int EDEVFAIL = -3;
+const int EMOUNTED = -4;
+const int EACCES = -5;
+const int EBADFSID = -6;
+const int ENOVOLUME = -7;
+const int ENOPATH = -8;
+const int EEXIST = -9;
+const int ENAMETOOLONG = -10;
+const int EOUTOFBOUND = -11;
+const int EUNFORMAT = -12;
+const int ENOSPC = -13;
+const int ENOENT = -14;
+const int EISDIRECTORY = -15;
+const int ESHARE = -16;
+const int EMFILE = -17;
+const int EBADF = -18;
+const int EEOF = -19;
+const int ENOTEMPTY = -20;
+const int ECLUSTERSIZEMISMATCH = -40;
+const int ESYSTEM = -99;
 
 /**
  * Flag passed to @ref lseek. Specifies that the file offset be set to
  * @c offset.
  */
-#define SEEK_SET 0
+const int SEEK_SET = 0;
 /**
  * Flag passed to @ref lseek. Specifies that the file offset be set to the
  * current position, plus @c offset bytes.
  */
-#define SEEK_CUR 1
+const int SEEK_CUR = 1;
 /**
  * Flag passed to @ref lseek. Specifies that the file offset be set to the
  * end of the file, plus @c offset bytes.
  */
-#define SEEK_END 2
+const int SEEK_END = 2;
 
 /**
  * Flag passed to @ref open. Specifies the file descriptor to be readable.
  */
-#define OPEN_READ (1 << 0)
+const int OPEN_READ = 1 << 0;
 /**
  * Flag passed to @ref open. Specifies the file descriptor to be writable.
  */
-#define OPEN_WRITE (1 << 1)
+const int OPEN_WRITE = 1 << 1;
 /**
  * Flag passed to @ref open. Specifies the file should be created if it does not
  * already exist.
  */
-#define OPEN_CREATE (1 << 2)
+const int OPEN_CREATE = 1 << 2;
 /**
  * Flag passed to @ref open. Specifies the file descriptor's internal pointer
  * should begin at the end of the file.
  */
-#define OPEN_APPEND (1 << 4)
+const int OPEN_APPEND = 1 << 4;
 
 /**
  * Retrieves the year from a @c struct @ref stat date field.

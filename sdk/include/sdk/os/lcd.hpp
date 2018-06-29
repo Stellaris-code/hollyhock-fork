@@ -25,35 +25,35 @@
 /**
  * Palette color passed to @ref LCD_SetPixelFromPalette.
  */
-#define PALETTE_BLACK 0
+const uint8_t PALETTE_BLACK = 0;
 /**
  * Palette color passed to @ref LCD_SetPixelFromPalette.
  */
-#define PALETTE_BLUE 1
+const uint8_t PALETTE_BLUE = 1;
 /**
  * Palette color passed to @ref LCD_SetPixelFromPalette.
  */
-#define PALETTE_GREEN 2
+const uint8_t PALETTE_GREEN = 2;
 /**
  * Palette color passed to @ref LCD_SetPixelFromPalette.
  */
-#define PALETTE_CYAN 3
+const uint8_t PALETTE_CYAN = 3;
 /**
  * Palette color passed to @ref LCD_SetPixelFromPalette.
  */
-#define PALETTE_RED 4
+const uint8_t PALETTE_RED = 4;
 /**
  * Palette color passed to @ref LCD_SetPixelFromPalette.
  */
-#define PALETTE_MAGENTA 5
+const uint8_t PALETTE_MAGENTA = 5;
 /**
  * Palette color passed to @ref LCD_SetPixelFromPalette.
  */
-#define PALETTE_YELLOW 6
+const uint8_t PALETTE_YELLOW = 6;
 /**
  * Palette color passed to @ref LCD_SetPixelFromPalette.
  */
-#define PALETTE_WHITE 7
+const uint8_t PALETTE_WHITE = 7;
 
 /**
  * Converts three RGB values into one RGB565 value.

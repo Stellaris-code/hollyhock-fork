@@ -9,72 +9,72 @@
 /**
  * Variable type: OBCD (@c struct @ref OBCD).
  */
-#define VARTYPE_OBCD 0x01
+const uint8_t VARTYPE_OBCD = 0x01;
 
 /**
  * Variable type: CBCD (@c struct @ref CBCD).
  */
-#define VARTYPE_CBCD 0x02
+const uint8_t VARTYPE_CBCD = 0x02;
 
 /**
  * Variable type: null-terminated string.
  */
-#define VARTYPE_STR 0x05
+const uint8_t VARTYPE_STR = 0x05;
 
 /**
  * Variable type: list.
  */
-#define VARTYPE_LIST 0x0A
+const uint8_t VARTYPE_LIST = 0x0A;
 
 /**
  * Variable type: matrix.
  */
-#define VARTYPE_MAT 0x0C
+const uint8_t VARTYPE_MAT = 0x0C;
 
 /**
  * Variable type: program.
  */
-#define VARTYPE_PRGM 0x47
+const uint8_t VARTYPE_PRGM = 0x47;
 
 /**
  * Variable type: function.
  */
-#define VARTYPE_FUNC 0x48
+const uint8_t VARTYPE_FUNC = 0x48;
 
 /**
  * Variable type: geometry data.
  */
-#define VARTYPE_GEO 0x54
+const uint8_t VARTYPE_GEO = 0x54;
 
 /**
  * Error code signaling that the variable does not exist.
  */
-#define MCS_NO_VARIABLE 0x30
+const int MCS_NO_VARIABLE = 0x30;
 
 /**
  * Error code signaling that the folder does not exist.
  */
-#define MCS_NO_FOLDER 0x40
+const int MCS_NO_FOLDER = 0x40;
 
 /**
  * Error code signaling that the folder already exists.
  */
-#define MCS_FOLDER_EXISTS 0x42
+const int MCS_FOLDER_EXISTS = 0x42;
 
 /**
  * Error code signaling that the specified size was not a power of 2.
  */
-#define MCS_SIZE_NOT_PO2 0x61
+const int MCS_SIZE_NOT_PO2 = 0x61;
 
 /**
  * Error code signaling that the variable was not a list.
  */
-#define MCS_NOT_LIST 0x62
+const int MCS_NOT_LIST = 0x62;
 
 /**
  * Error code signaling that the index was out of bounds.
  */
-#define MCS_INDEX_OOB 0x63
+const int MCS_INDEX_OOB = 0x63;
 
 /**
  * Retrieves the BCD digit at position @c i (0 representing the least

@@ -27,43 +27,43 @@
 #pragma once
 #include <stdint.h>
 
-#define BUTTON_OK (1 << 5)
-#define BUTTON_YES (1 << 6)
-#define BUTTON_NO (1 << 7)
-#define BUTTON_ABORT (1 << 8)
-#define BUTTON_RETRY (1 << 9)
-#define BUTTON_CANCEL (1 << 10)
+const int BUTTON_OK = 1 << 5;
+const int BUTTON_YES = 1 << 6;
+const int BUTTON_NO = 1 << 7;
+const int BUTTON_ABORT = 1 << 8;
+const int BUTTON_RETRY = 1 << 9;
+const int BUTTON_CANCEL = 1 << 10;
 
-#define DIALOG_HEIGHT_25 0
-#define DIALOG_HEIGHT_55 1
-#define DIALOG_HEIGHT_75 2
-#define DIALOG_HEIGHT_95 3
-#define DIALOG_HEIGHT_35 4
-#define DIALOG_HEIGHT_60 5
+const int DIALOG_HEIGHT_25 = 0;
+const int DIALOG_HEIGHT_55 = 1;
+const int DIALOG_HEIGHT_75 = 2;
+const int DIALOG_HEIGHT_95 = 3;
+const int DIALOG_HEIGHT_35 = 4;
+const int DIALOG_HEIGHT_60 = 5;
 
-#define DIALOG_ALIGN_TOP 0
-#define DIALOG_ALIGN_CENTER 1
-#define DIALOG_ALIGN_BOTTOM 2
+const int DIALOG_ALIGN_TOP = 0;
+const int DIALOG_ALIGN_CENTER = 1;
+const int DIALOG_ALIGN_BOTTOM = 2;
 
-#define DIALOG_KBD_NONE 0 // 2 gives same effect
-#define DIALOG_KBD_MATH1 1 // 3 gives same effect
-#define DIALOG_KBD_MATH2 4
-#define DIALOG_KBD_MATH3 5
-#define DIALOG_KBD_TRIG 6
-#define DIALOG_KBD_VAR 7
-#define DIALOG_KBD_ABC 8
-#define DIALOG_KBD_CATALOG 9
-#define DIALOG_KBD_ADVANCE 10
-#define DIALOG_KBD_NUMBER 11
+const int DIALOG_KBD_NONE = 0; // 2 gives same effect
+const int DIALOG_KBD_MATH1 = 1; // 3 gives same effect
+const int DIALOG_KBD_MATH2 = 4;
+const int DIALOG_KBD_MATH3 = 5;
+const int DIALOG_KBD_TRIG = 6;
+const int DIALOG_KBD_VAR = 7;
+const int DIALOG_KBD_ABC = 8;
+const int DIALOG_KBD_CATALOG = 9;
+const int DIALOG_KBD_ADVANCE = 10;
+const int DIALOG_KBD_NUMBER = 11;
 
-#define LABEL_BACKGROUND (1 << 0)
-#define LABEL_SELECTABLE (1 << 15)
+const int LABEL_BACKGROUND = 1 << 0;
+const int LABEL_SELECTABLE = 1 << 15;
 
-#define RADIOBUTTON_SELECTED (1 << 2)
-#define RADIOBUTTON_ENABLED (1 << 15)
+const int RADIOBUTTON_SELECTED = 1 << 2;
+const int RADIOBUTTON_ENABLED = 1 << 15;
 
-#define TEXTBOX_DRAW_BOX (1 << 3)
-#define TEXTBOX_EDITABLE (1 << 8)
+const int TEXTBOX_DRAW_BOX = 1 << 3;
+const int TEXTBOX_EDITABLE = 1 << 8;
 
 // Forward declaration - the dialog struct is passed as an argument to some
 // functions in the function table.

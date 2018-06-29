@@ -6,57 +6,57 @@
 #pragma once
 #include <stdint.h>
 
-#define EVENT_KEY 0x0017
-#define EVENT_ACTBAR_RESIZE 0x1003
-#define EVENT_ACTBAR_SWAP 0x1004
-#define EVENT_ACTBAR_ROTATE 0x1005
-#define EVENT_ACTBAR_ESC 0x3009
-#define EVENT_ACTBAR_SETTINGS 0x300A
-#define EVENT_TOUCH 0x4000
+const uint16_t EVENT_KEY = 0x0017;
+const uint16_t EVENT_ACTBAR_RESIZE = 0x1003;
+const uint16_t EVENT_ACTBAR_SWAP = 0x1004;
+const uint16_t EVENT_ACTBAR_ROTATE = 0x1005;
+const uint16_t EVENT_ACTBAR_ESC = 0x3009;
+const uint16_t EVENT_ACTBAR_SETTINGS = 0x300A;
+const uint16_t EVENT_TOUCH = 0x4000;
 
-#define KEY_PRESSED 1
-#define KEY_HELD 0x100
-#define KEY_RELEASED 0x40
+const uint32_t KEY_PRESSED = 1;
+const uint32_t KEY_HELD = 0x100;
+const uint32_t KEY_RELEASED = 0x40;
 
-#define KEYCODE_KEYBOARD 0x00B3
-#define KEYCODE_SHIFT 0x00A0
-#define KEYCODE_BACKSPACE 0x0097
-#define KEYCODE_POWER_CLEAR 0x0080
-#define KEYCODE_UP 0x0090
-#define KEYCODE_DOWN 0x0091
-#define KEYCODE_LEFT 0x0092
-#define KEYCODE_RIGHT 0x0093
-#define KEYCODE_EQUALS 0x003D
-#define KEYCODE_X 0xEDB8
-#define KEYCODE_Y 0xEDB9
-#define KEYCODE_Z 0xEDBA
-#define KEYCODE_POWER 0x005E
-#define KEYCODE_DIVIDE 0x002F
-#define KEYCODE_OPEN_PARENTHESIS 0x0028
-#define KEYCODE_7 0x0037
-#define KEYCODE_8 0x0038
-#define KEYCODE_9 0x0039
-#define KEYCODE_TIMES 0xEE10
-#define KEYCODE_CLOSE_PARENTHESIS 0x0029
-#define KEYCODE_4 0x0034
-#define KEYCODE_5 0x0035
-#define KEYCODE_6 0x0036
-#define KEYCODE_MINUS 0x002D
-#define KEYCODE_COMMA 0x002C
-#define KEYCODE_1 0x0031
-#define KEYCODE_2 0x0032
-#define KEYCODE_3 0x0033
-#define KEYCODE_PLUS 0x002B
-#define KEYCODE_NEGATIVE 0x001F
-#define KEYCODE_0 0x0030
-#define KEYCODE_DOT 0x002E
-#define KEYCODE_EXP 0x001D
-#define KEYCODE_EXE 0x0094
+const uint16_t KEYCODE_KEYBOARD = 0x00B3;
+const uint16_t KEYCODE_SHIFT = 0x00A0;
+const uint16_t KEYCODE_BACKSPACE = 0x0097;
+const uint16_t KEYCODE_POWER_CLEAR = 0x0080;
+const uint16_t KEYCODE_UP = 0x0090;
+const uint16_t KEYCODE_DOWN = 0x0091;
+const uint16_t KEYCODE_LEFT = 0x0092;
+const uint16_t KEYCODE_RIGHT = 0x0093;
+const uint16_t KEYCODE_EQUALS = 0x003D;
+const uint16_t KEYCODE_X = 0xEDB8;
+const uint16_t KEYCODE_Y = 0xEDB9;
+const uint16_t KEYCODE_Z = 0xEDBA;
+const uint16_t KEYCODE_POWER = 0x005E;
+const uint16_t KEYCODE_DIVIDE = 0x002F;
+const uint16_t KEYCODE_OPEN_PARENTHESIS = 0x0028;
+const uint16_t KEYCODE_7 = 0x0037;
+const uint16_t KEYCODE_8 = 0x0038;
+const uint16_t KEYCODE_9 = 0x0039;
+const uint16_t KEYCODE_TIMES = 0xEE10;
+const uint16_t KEYCODE_CLOSE_PARENTHESIS = 0x0029;
+const uint16_t KEYCODE_4 = 0x0034;
+const uint16_t KEYCODE_5 = 0x0035;
+const uint16_t KEYCODE_6 = 0x0036;
+const uint16_t KEYCODE_MINUS = 0x002D;
+const uint16_t KEYCODE_COMMA = 0x002C;
+const uint16_t KEYCODE_1 = 0x0031;
+const uint16_t KEYCODE_2 = 0x0032;
+const uint16_t KEYCODE_3 = 0x0033;
+const uint16_t KEYCODE_PLUS = 0x002B;
+const uint16_t KEYCODE_NEGATIVE = 0x001F;
+const uint16_t KEYCODE_0 = 0x0030;
+const uint16_t KEYCODE_DOT = 0x002E;
+const uint16_t KEYCODE_EXP = 0x001D;
+const uint16_t KEYCODE_EXE = 0x0094;
 
-#define TOUCH_DOWN 1
-#define TOUCH_HOLD_DRAG 2
-#define TOUCH_ACT_BAR 0x100
-#define TOUCH_UP 0x40
+const uint32_t TOUCH_DOWN = 1;
+const uint32_t TOUCH_HOLD_DRAG = 2;
+const uint32_t TOUCH_ACT_BAR = 0x100;
+const uint32_t TOUCH_UP = 0x40;
 
 /**
  * Information about an input event returned from @ref GetInput. See
