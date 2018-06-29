@@ -29,13 +29,14 @@ struct CPUState {
 };
 
 // Defined in breakpoint_handler_stub.s
-extern void BreakpointHandlerStub();
+extern "C" void BreakpointHandlerStub();
 
 /**
  * Called by @c BreakpointHandlerStub when a breakpoint is triggered.
  *
  * @param cpuState The state of the CPU when the breakpoint was triggered.
  */
+extern "C"
 void BreakpointHandler(struct CPUState *cpuState) {
 	Debug_SetCursorPosition(0, 0);
 	Debug_PrintString("Breakpoint triggered!", true);
