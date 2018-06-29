@@ -3,8 +3,7 @@
  * Functions used to retrieve user input via the touch screen or keypad.
  */
 
-#ifndef _SDK_OS_INPUT_H
-#define _SDK_OS_INPUT_H
+#pragma once
 #include <stdint.h>
 
 #define EVENT_KEY 0x0017
@@ -168,5 +167,3 @@ struct InputEvent {
  */
 extern "C"
 int GetInput(struct InputEvent *event, uint32_t unknown1, uint32_t unknown2);
-
-#endif

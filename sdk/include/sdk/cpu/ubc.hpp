@@ -1,5 +1,5 @@
-#ifndef _SDK_CPU_UBC_H
-#define _SDK_CPU_UBC_H
+#pragma once
+#include <stdint.h>
 
 #define UBC_REG_CBR0 (*((uint32_t *) 0xFF200000))
 #define UBC_REG_CRR0 (*((uint32_t *) 0xFF200004))
@@ -16,5 +16,3 @@
 #define UBC_CRR_BIE (0)
 
 #define UBC_CBCR_UBDE (0)
-
-#endif

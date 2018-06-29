@@ -1,11 +1,10 @@
-#include <stdbool.h>
-#include <sdk/os/debug.h>
-#include <sdk/os/input.h>
-#include <sdk/os/lcd.h>
-#include <sdk/os/mem.h>
+#include <sdk/os/debug.hpp>
+#include <sdk/os/input.hpp>
+#include <sdk/os/lcd.hpp>
+#include <sdk/os/mem.hpp>
 
 struct LUTEntry {
-	char *str;
+	const char *str;
 	uint32_t keyCode;
 };
 
@@ -92,13 +91,17 @@ void main() {
 			Debug_SetCursorPosition(0, 4);
 			Debug_PrintString("Key code: ", false);
 
-			int i = 0;
-			while (true) {
-				struct LUTEntry lutEntry = lut[i++];
+			// Wrap in a block to avoid "jump to case label" errors due to the
+			// definition of the variable i
+			{
+				int i = 0;
+				while (true) {
+					struct LUTEntry lutEntry = lut[i++];
 
-				if (event.data.key.keyCode == lutEntry.keyCode) {
-					Debug_PrintString(lutEntry.str, false);
-					break;
+					if (event.data.key.keyCode == lutEntry.keyCode) {
+						Debug_PrintString(lutEntry.str, false);
+						break;
+					}
 				}
 			}
 

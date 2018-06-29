@@ -1,8 +1,7 @@
-#include <stdbool.h>
 #include <stdint.h>
-#include <sdk/cpu/ubc.h>
-#include <sdk/os/debug.h>
-#include <sdk/os/lcd.h>
+#include <sdk/cpu/ubc.hpp>
+#include <sdk/os/debug.hpp>
+#include <sdk/os/lcd.hpp>
 
 struct CPUState {
 	uint32_t r0;

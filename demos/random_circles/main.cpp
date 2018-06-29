@@ -1,7 +1,6 @@
-#include <stdbool.h>
-#include <sdk/os/input.h>
-#include <sdk/os/lcd.h>
-#include <sdk/os/mem.h>
+#include <sdk/os/input.hpp>
+#include <sdk/os/lcd.hpp>
+#include <sdk/os/mem.hpp>
 
 #define PIXEL(x, y) (vram[(x) + (y) * width])
 

@@ -3,7 +3,7 @@
  * Functions for interacting with the LCD and VRAM.
  *
  * Example: drawing a 30x50 rectangle at 10, 20 in purple
- * @code{c}
+ * @code{cpp}
  * uint16_t *vram = LCD_GetVRAMAddress();
  * int width, height;
  * LCD_GetSize(&width, &height);
@@ -19,8 +19,7 @@
  * @endcode
  */
 
-#ifndef _SDK_OS_LCD_H
-#define _SDK_OS_LCD_H
+#pragma once
 #include <stdint.h>
 
 /**
@@ -159,5 +158,3 @@ void LCD_SetPixel(int x, int y, uint16_t color);
  */
 extern "C"
 void LCD_SetPixelFromPalette(int x, int y, uint8_t index);
-
-#endif

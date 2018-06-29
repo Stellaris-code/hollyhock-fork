@@ -1,7 +1,7 @@
-#include <sdk/os/debug.h>
-#include <sdk/os/file.h>
-#include <sdk/os/gui.h>
-#include <sdk/os/lcd.h>
+#include <sdk/os/debug.hpp>
+#include <sdk/os/file.hpp>
+#include <sdk/os/gui.hpp>
+#include <sdk/os/lcd.hpp>
 
 void main() {
 	// Put your code here.

@@ -3,8 +3,8 @@
  * Functions for retrieving and setting data in the MCS.
  */
 
-#ifndef _SDK_OS_MCS_H
-#define _SDK_OS_MCS_H
+#pragma once
+#include <stdint.h>
 
 /**
  * Variable type: OBCD (@c struct @ref OBCD).
@@ -204,5 +204,3 @@ int MCS_SetVariable(
 	const char *folder, const char *name,
 	uint8_t variableType, uint32_t size, void *data
 );
-
-#endif

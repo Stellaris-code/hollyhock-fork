@@ -1,8 +1,7 @@
-#include <stdbool.h>
-#include <sdk/os/debug.h>
-#include <sdk/os/input.h>
-#include <sdk/os/lcd.h>
-#include <sdk/os/mem.h>
+#include <sdk/os/debug.hpp>
+#include <sdk/os/input.hpp>
+#include <sdk/os/lcd.hpp>
+#include <sdk/os/mem.hpp>
 //320x520 -> 16x26 (20px x 20px) -> 12x22
 
 void print_score(uint32_t score){	//prints to score to the top of the screen

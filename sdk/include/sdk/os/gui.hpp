@@ -3,7 +3,7 @@
  * Functions for creating GUI elements, such as dialogs and message boxes.
  *
  * Example: display a simple dialog with a label
- * @code{c}
+ * @code{cpp}
  * struct GUI_Dialog *dialog = GUI_CreateDialog(
  *     0,
  *     DIALOG_HEIGHT_55, DIALOG_ALIGN_CENTER,
@@ -24,9 +24,7 @@
  * @endcode
  */
 
-#ifndef _SDK_OS_GUI_H
-#define _SDK_OS_GUI_H
-#include <stdbool.h>
+#pragma once
 #include <stdint.h>
 
 #define BUTTON_OK (1 << 5)
@@ -318,5 +316,3 @@ void *GUI_DisplayMessageBox_Internal(
 	const char *contentPrefix, const char *contentString,
 	int buttons, bool disableCloseButton
 );
-
-#endif

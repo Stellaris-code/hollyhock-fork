@@ -6,7 +6,7 @@
  * under the path @c \\fls0\\.
  *
  * Example: reading 256 bytes from a file called @c test.txt from the USB flash
- * @code{c}
+ * @code{cpp}
  * int fd = open("\\fls0\\test.txt", OPEN_READ);
  * if (fd < 0) {
  *     // An error occurred calling open
@@ -30,7 +30,7 @@
  * @endcode
  *
  * Example: writing 16 bytes to a non-existant file called @c f.bin in a folder @c test in the USB flash
- * @code{c}
+ * @code{cpp}
  * int fd = open("\\fls0\\test\\f.bin", OPEN_WRITE | OPEN_CREATE);
  * if (fd < 0) {
  *     // An error occurred calling open
@@ -54,8 +54,7 @@
  * @endcode
  */
 
-#ifndef _SDK_OS_FILE_H
-#define _SDK_OS_FILE_H
+#pragma once
 #include <stdint.h>
 
 #define ENOMEM -1
@@ -314,7 +313,7 @@ int fstat(int fd, struct stat *buf);
  * @return 0 on success, or a negative error code on failure.
  */
 extern "C"
-int getAddr(int fd, int offset, uint8_t **buf);
+int getAddr(int fd, int offset, const uint8_t **buf);
 
 /**
  * Repositions the file offset of the file descriptor. The new position depends
@@ -370,7 +369,7 @@ int open(const char *path, int flags);
  * failure.
  */
 extern "C"
-int read(int fd, uint8_t *buf, int count);
+int read(int fd, void *buf, int count);
 
 /**
  * Deletes a file or directory.
@@ -414,6 +413,4 @@ int stat(const char *path, struct stat *buf);
  * failure.
  */
 extern "C"
-int write(int fd, uint8_t *buf, int count);
-
-#endif
+int write(int fd, const void *buf, int count);

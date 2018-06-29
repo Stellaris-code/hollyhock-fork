@@ -4,8 +4,8 @@
  * provided by the C standard library.
  */
 
-#ifndef _SDK_OS_MCS_H
-#define _SDK_OS_MCS_H
+#pragma once
+#include <stdint.h>
 
 /**
  * Allocates @p size bytes of memory.
@@ -30,7 +30,7 @@ void *malloc(uint32_t size);
  * @return @p destination
  */
 extern "C"
-void *memcpy(void *destination, void *source, int num);
+void *memcpy(void *destination, const void *source, int num);
 
 /**
  * Sets a region of memory to a specific value. Equivalent to the C standard
@@ -46,5 +46,3 @@ void *memcpy(void *destination, void *source, int num);
  */
 extern "C"
 void *memset(void *ptr, int value, int num);
-
-#endif

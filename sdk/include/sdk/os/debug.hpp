@@ -4,7 +4,7 @@
  * numbers to the screen, or waiting for a key press.
  *
  * Example:
- * @code{c}
+ * @code{cpp}
  * // Print "Hello, world!" at 0, 0 in black on white
  * Debug_SetCursorPosition(0, 0);
  * Debug_PrintString("Hello, world!", false);
@@ -24,9 +24,7 @@
  * @endcode
  */
 
-#ifndef _SDK_OS_DEBUG_H
-#define _SDK_OS_DEBUG_H
-#include <stdbool.h>
+#pragma once
 #include <stdint.h>
 
 /**
@@ -115,5 +113,3 @@ int Debug_SetCursorPosition(int x, int y);
  */
 extern "C"
 int Debug_WaitKey();
-
-#endif
