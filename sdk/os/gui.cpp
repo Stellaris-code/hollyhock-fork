@@ -332,7 +332,16 @@ GUITextBox::GUITextBox(
 }
 
 /**
- * Set the text box's text.
+ * Retrieves the text box's current text content.
+ * 
+ * @return The text box's text, or 0 if the text box is empty.
+ */
+const char *GUITextBox::GetText() {
+	return m_wrapped->text;
+}
+
+/**
+ * Sets the text box's text.
  * 
  * If the text specified is longer than the maximum string length permitted by
  * the textbox, it is truncated to fit.

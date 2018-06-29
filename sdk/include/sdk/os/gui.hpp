@@ -281,7 +281,11 @@ struct GUITextBox_Wrapped {
 
 	struct GUITextBox_Wrapped_VTable *vtable;
 
-	uint8_t unknown1[0x50];
+	uint8_t unknown1[0x4];
+
+	const char *text;
+
+	uint8_t unknown2[0x48];
 };
 static_assert(sizeof(struct GUITextBox_Wrapped) == 0xA0);
 
@@ -301,6 +305,7 @@ public:
 		int flags, int maxLength, bool countLengthByBytes
 	);
 
+	const char *GetText();
 	void SetText(const char *text);
 
 	void *GetWrapped();
