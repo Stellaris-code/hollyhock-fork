@@ -72,7 +72,7 @@ struct GUIDialog_Wrapped_VTable {
 
 	uint8_t unknown0[0x1C];
 
-	int (*OnEvent)(struct GUIDialog_Wrapped *dialog, void *eventData);
+	int (*OnEvent)(struct GUIDialog_Wrapped *dialog, struct GUIDialog_OnEvent_Data *event);
 
 	uint8_t unknown1[0x14];
 
@@ -100,6 +100,14 @@ struct GUIDialog_Wrapped {
 	uint8_t unknown1[0x34];
 
 	struct GUIDialog_Wrapped_VTable *vtable;
+};
+
+struct GUIDialog_OnEvent_Data {
+	uint16_t type;
+	uint16_t unknown0;
+
+	/// The pointer to the internal GUI element class the event refers to. 
+	void *element;
 };
 
 class GUIDialog : public Wrapped {
@@ -138,7 +146,7 @@ class GUIDialog : public Wrapped {
 		enum KeyboardState keyboard
 	);
 
-	virtual int OnEvent(struct GUIDialog_Wrapped *dialog, void *eventData);
+	virtual int OnEvent(struct GUIDialog_Wrapped *dialog, struct GUIDialog_OnEvent_Data *data);
 	
 	uint16_t GetLeftX();
 	uint16_t GetTopY();
@@ -156,7 +164,45 @@ private:
 	struct GUIDialog_Wrapped_VTable *m_oldVTable;
 	struct GUIDialog_Wrapped_VTable m_vtable;
 
-	static int OnEvent_Wrap(struct GUIDialog_Wrapped *dialog, void *eventData);
+	static int OnEvent_Wrap(struct GUIDialog_Wrapped *dialog, struct GUIDialog_OnEvent_Data *data);
+};
+
+class GUIButton : public GUIElement {
+public:
+	enum Flag : int {
+		/// Allows the button to be pressed.
+		FlagEnabled = 1 << 15
+	};
+
+	GUIButton(
+		uint16_t leftX, uint16_t topY, uint16_t rightX, uint16_t bottomY,
+		const char *text,
+		uint16_t eventType
+	);
+	GUIButton(
+		uint16_t leftX, uint16_t topY, uint16_t rightX, uint16_t bottomY,
+		const char *text,
+		uint16_t eventType, int flags
+	);
+
+	/**
+	 * Returns the type which will be reported in the event data passed to a
+	 * dialog's OnEvent from an @c eventType passed into the constructor for a
+	 * @ref GUIButton.
+	 * 
+	 * @param eventType The @c eventType value passed into the button's
+	 * constructor.
+	 * @return The type reported in the event data for the specified
+	 * @p eventType.
+	 */
+	static inline uint16_t GetEventType(uint16_t eventType) {
+		return ((eventType + 8) << 4) | (1 << 3);
+	}
+
+	void *GetWrapped();
+
+private:
+	void *m_wrapped;
 };
 
 class GUILabel : public GUIElement {
@@ -237,6 +283,14 @@ public:
 private:
 	void *m_wrapped;
 };
+
+extern "C"
+void *GUI_CreateButton(
+	void *button,
+	uint16_t bounds[4],
+	const char *text,
+	uint16_t eventType, int unk0, int unk1
+);
 
 extern "C"
 struct GUI_Dialog *GUI_CreateDialog(
