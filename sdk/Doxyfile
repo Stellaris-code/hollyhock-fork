@@ -1,6 +1,6 @@
 PROJECT_NAME = "hollyhock"
 
-INPUT = include/
+INPUT = .
 RECURSIVE = YES
 EXTRACT_PRIVATE = NO
 
