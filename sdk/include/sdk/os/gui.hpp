@@ -170,7 +170,7 @@ public:
 		enum KeyboardState keyboard
 	);
 
-	virtual int OnEvent(struct GUIDialog_Wrapped *dialog, struct GUIDialog_OnEvent_Data *data);
+	virtual int OnEvent(struct GUIDialog_Wrapped *dialog, struct GUIDialog_OnEvent_Data *event);
 	
 	uint16_t GetLeftX();
 	uint16_t GetTopY();
@@ -185,7 +185,7 @@ private:
 	struct GUIDialog_Wrapped_VTable *m_oldVTable;
 	struct GUIDialog_Wrapped_VTable m_vtable;
 
-	static int OnEvent_Wrap(struct GUIDialog_Wrapped *dialog, struct GUIDialog_OnEvent_Data *data);
+	static int OnEvent_Wrap(struct GUIDialog_Wrapped *dialog, struct GUIDialog_OnEvent_Data *event);
 };
 
 class GUIButton : public GUIElement {
