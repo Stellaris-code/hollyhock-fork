@@ -36,7 +36,16 @@ const int BUTTON_CANCEL = 1 << 10;
  */
 class Wrapped {
 public:
-	void *GetWrapped();
+	/**
+	 * Returns a pointer to the internal class.
+	 * 
+	 * @tparam T The type of the pointer to return. Can be @c void.
+	 * @return A pointer to the internal class.
+	 */
+	template <typename T>
+	T *GetWrapped() {
+		return static_cast<T *>(m_wrapped);
+	}
 
 protected:
 	Wrapped() = default;
