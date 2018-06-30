@@ -36,12 +36,7 @@ const int BUTTON_CANCEL = 1 << 10;
  */
 class Wrapped {
 public:
-	/**
-	 * Returns a pointer to the internal class.
-	 * 
-	 * @return A pointer to the internal class.
-	 */
-	virtual void *GetWrapped() = 0;
+	void *GetWrapped();
 
 protected:
 	Wrapped() = default;
@@ -52,6 +47,8 @@ protected:
 	// constructor and assignment operator.
 	Wrapped(Wrapped const &) = delete;
 	void operator=(Wrapped const &) = delete;
+
+	void *m_wrapped;
 };
 
 /**
@@ -175,11 +172,7 @@ public:
 	void Refresh();
 	void ShowDialog();
 
-	void *GetWrapped();
-
 private:
-	struct GUIDialog_Wrapped *m_wrapped;
-
 	struct GUIDialog_Wrapped_VTable *m_oldVTable;
 	struct GUIDialog_Wrapped_VTable m_vtable;
 
@@ -217,11 +210,6 @@ public:
 	static inline uint16_t GetEventType(uint16_t eventType) {
 		return ((eventType + 8) << 4) | (1 << 3);
 	}
-
-	void *GetWrapped();
-
-private:
-	void *m_wrapped;
 };
 
 class GUILabel : public GUIElement {
@@ -252,11 +240,6 @@ public:
 		uint16_t *textColor, uint16_t *backgroundColor,
 		bool showShadow, uint16_t shadowColor
 	);
-
-	void *GetWrapped();
-
-private:
-	void *m_wrapped;
 };
 
 class GUIRadioButton : public GUIElement {
@@ -274,11 +257,6 @@ public:
 		const char *text,
 		int flags
 	);
-
-	void *GetWrapped();
-
-private:
-	void *m_wrapped;
 };
 
 /// @private
@@ -328,11 +306,6 @@ public:
 
 	const char *GetText();
 	void SetText(const char *text);
-
-	void *GetWrapped();
-
-private:
-	struct GUITextBox_Wrapped *m_wrapped;
 };
 
 extern "C"
@@ -377,7 +350,7 @@ void *GUI_CreateRadioButton(
 );
 
 extern "C"
-GUITextBox_Wrapped *GUI_CreateTextBox(
+struct GUITextBox_Wrapped *GUI_CreateTextBox(
 	void *textBox,
 	int x, int y, int width,
 	const char *text,

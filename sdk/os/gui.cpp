@@ -2,6 +2,15 @@
 #include <sdk/os/mem.hpp>
 
 /**
+ * Returns a pointer to the internal class.
+ * 
+ * @return A pointer to the internal class.
+ */
+void *Wrapped::GetWrapped() {
+	return m_wrapped;
+}
+
+/**
  * Creates a dialog.
  * 
  * @param height The height of the dialog.
@@ -23,15 +32,15 @@ GUIDialog::GUIDialog(
 	);
 
 	// Save the old vtable
-	m_oldVTable = m_wrapped->vtable;
+	m_oldVTable = static_cast<GUIDialog_Wrapped *>(m_wrapped)->vtable;
 
 	// Copy the pre-existing vtable
-	memcpy(&m_vtable, m_wrapped->vtable, sizeof(m_vtable));
+	memcpy(&m_vtable, static_cast<GUIDialog_Wrapped *>(m_wrapped)->vtable, sizeof(m_vtable));
 
 	m_vtable.me = this;
 	m_vtable.OnEvent = OnEvent_Wrap;
 
-	m_wrapped->vtable = &m_vtable;
+	static_cast<GUIDialog_Wrapped *>(m_wrapped)->vtable = &m_vtable;
 }
 
 int GUIDialog::OnEvent_Wrap(struct GUIDialog_Wrapped *dialog, struct GUIDialog_OnEvent_Data *event) {
@@ -48,7 +57,7 @@ int GUIDialog::OnEvent(struct GUIDialog_Wrapped *dialog, struct GUIDialog_OnEven
  * @return The X position of the left edge of the dialog body, in pixels.
  */
 uint16_t GUIDialog::GetLeftX() {
-	return m_wrapped->leftX;
+	return static_cast<GUIDialog_Wrapped *>(m_wrapped)->leftX;
 }
 
 /**
@@ -57,7 +66,7 @@ uint16_t GUIDialog::GetLeftX() {
  * @return The Y position of the top edge of the dialog body, in pixels.
  */
 uint16_t GUIDialog::GetTopY() {
-	return m_wrapped->topY;
+	return static_cast<GUIDialog_Wrapped *>(m_wrapped)->topY;
 }
 
 /**
@@ -66,7 +75,7 @@ uint16_t GUIDialog::GetTopY() {
  * @return The X position of the right edge of the dialog body, in pixels.
  */
 uint16_t GUIDialog::GetRightX() {
-	return m_wrapped->rightX;
+	return static_cast<GUIDialog_Wrapped *>(m_wrapped)->rightX;
 }
 
 /**
@@ -75,7 +84,7 @@ uint16_t GUIDialog::GetRightX() {
  * @return The Y position of the bottom edge of the dialog body, in pixels.
  */
 uint16_t GUIDialog::GetBottomY() {
-	return m_wrapped->bottomY;
+	return static_cast<GUIDialog_Wrapped *>(m_wrapped)->bottomY;
 }
 
 /**
@@ -84,25 +93,29 @@ uint16_t GUIDialog::GetBottomY() {
  * @param element The GUI element to add.
  */
 void GUIDialog::AddElement(GUIElement &element) {
-	m_wrapped->vtable->AddElement(m_wrapped, element.GetWrapped(), 1);
+	static_cast<GUIDialog_Wrapped *>(m_wrapped)->vtable->AddElement(
+		static_cast<GUIDialog_Wrapped *>(m_wrapped),
+		element.GetWrapped(),
+		1
+	);
 }
 
 /**
  * Refreshes the dialog, redrawing all components.
  */
 void GUIDialog::Refresh() {
-	m_wrapped->vtable->Refresh(m_wrapped);
+	static_cast<GUIDialog_Wrapped *>(m_wrapped)->vtable->Refresh(
+		static_cast<GUIDialog_Wrapped *>(m_wrapped)
+	);
 }
 
 /**
  * Presents the dialog to the user. Blocks until the dialog is closed.
  */
 void GUIDialog::ShowDialog() {
-	m_wrapped->vtable->ShowDialog(m_wrapped);
-}
-
-void *GUIDialog::GetWrapped() {
-	return m_wrapped;
+	static_cast<GUIDialog_Wrapped *>(m_wrapped)->vtable->ShowDialog(
+		static_cast<GUIDialog_Wrapped *>(m_wrapped)
+	);
 }
 
 /**
@@ -175,10 +188,6 @@ GUIButton::GUIButton(
 		bounds, text, eventType,
 		flags, 0
 	);
-}
-
-void *GUIButton::GetWrapped() {
-	return m_wrapped;
 }
 
 /**
@@ -255,10 +264,6 @@ GUILabel::GUILabel(
 	);
 }
 
-void *GUILabel::GetWrapped() {
-	return m_wrapped;
-}
-
 /**
  * Creates a radio button.
  * 
@@ -284,10 +289,6 @@ GUIRadioButton::GUIRadioButton(
 		flags,
 		0, 0
 	);
-}
-
-void *GUIRadioButton::GetWrapped() {
-	return m_wrapped;
 }
 
 /**
@@ -404,7 +405,7 @@ GUITextBox::GUITextBox(
  * @return The text box's text, or 0 if the text box is empty.
  */
 const char *GUITextBox::GetText() {
-	return m_wrapped->text;
+	return static_cast<GUITextBox_Wrapped *>(m_wrapped)->text;
 }
 
 /**
@@ -416,9 +417,8 @@ const char *GUITextBox::GetText() {
  * @param text The new string for the textbox.
  */
 void GUITextBox::SetText(const char *text) {
-	m_wrapped->vtable->SetText(m_wrapped, text);
-}
-
-void *GUITextBox::GetWrapped() {
-	return m_wrapped;
+	static_cast<GUITextBox_Wrapped *>(m_wrapped)->vtable->SetText(
+		static_cast<GUITextBox_Wrapped *>(m_wrapped),
+		text
+	);
 }
