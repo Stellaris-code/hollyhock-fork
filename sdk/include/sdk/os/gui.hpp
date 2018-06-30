@@ -47,8 +47,8 @@ protected:
 	Wrapped() = default;
 	~Wrapped() = default;
 
-	// Since we use the trick with the vtable to overide functions, we can't
-	// let the object's address change. Prevent that by deleting the copy
+	// Since we use the trick with the vtable to overide functions (@c .me), we
+	// can't let the object's address change. Prevent that by deleting the copy
 	// constructor and assignment operator.
 	Wrapped(Wrapped const &) = delete;
 	void operator=(Wrapped const &) = delete;
@@ -65,8 +65,19 @@ class GUIDialog;
 /// @private
 struct GUIDialog_Wrapped_VTable {
 	/**
-	 * Stores the address of the GUIDialog object this vtable belongs to.
-	 * Should be set by the constructor of GUIDialog.
+	 * Stores the address of the @ref GUIDialog object this vtable belongs to.
+	 * Should be set by the constructor of @ref GUIDialog.
+	 * 
+	 * In the original vtable, the first dword is zero. Since it appears to
+	 * never be accessed, and the vtables in the firmware are stored in ROM (i.e
+	 * even if the firmware wanted to change the value, it couldn't) we're safe
+	 * to use it for our own purposes.
+	 * 
+	 * That purpose is to link the vtable to an instance of the @ref GUIDialog.
+	 * Since we can't populate the vtable with instance function pointers, we
+	 * have to use a static function. Without this entry, the static function
+	 * would have no idea which @ref GUIDialog instance the function call was
+	 * associated with.
 	 */
 	GUIDialog *me;
 
