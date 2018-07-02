@@ -1,6 +1,7 @@
 #include <stdint.h>
 #include <sdk/cpu/ubc.hpp>
 #include <sdk/os/debug.hpp>
+#include <sdk/os/gui.hpp>
 #include <sdk/os/lcd.hpp>
 
 struct CPUState {
@@ -140,142 +141,134 @@ void RemoveBreakpoint() {
 	UBC_REG_CBR0 = 0 << UBC_CBR_CE;
 }
 
-/**
- * Prompts the user for an address to set the breakpoint at.
- * 
- * @returns An address, or 0 if the user cancelled the operation.
- */
-uint32_t GetBreakpointAddress() {
-	static char DIGITS[] = "0123456789ABCDEF";
+class BreakpointDialog : public GUIDialog {
+public:
+	BreakpointDialog() : GUIDialog(
+		Height55, AlignCenter,
+		"Breakpoint Utility",
+		KeyboardStateABC
+	), m_breakpointAddressLabel(
+		GetLeftX() + 10, GetTopY() + 10,
+		"Breakpoint address (hex)"
+	), m_breakpointAddress(
+		GetLeftX() + 10, GetTopY() + 30, GetRightX() - GetLeftX() - 20,
+		8, true 
+	), m_setBreakpoint(
+		GetLeftX() + 10, GetTopY() + 60, GetRightX() - 10, GetTopY() + 90,
+		"Set breakpoint", BUTTON_SET_BREAKPOINT_EVENT_TYPE
+	), m_removeBreakpoint(
+		GetLeftX() + 10, GetTopY() + 95, GetRightX() - 10, GetTopY() + 125,
+		"Remove breakpoint", BUTTON_REMOVE_BREAKPOINT_EVENT_TYPE
+	), m_close(
+		GetLeftX() + 10, GetTopY() + 130, GetRightX() - 10, GetTopY() + 160,
+		"Close", BUTTON_CLOSE_EVENT_TYPE
+	) {
+		AddElement(m_breakpointAddressLabel);
+		AddElement(m_breakpointAddress);
+		AddElement(m_setBreakpoint);
+		AddElement(m_removeBreakpoint);
+		AddElement(m_close);
+	}
 
-	uint32_t address = 0;
-	// We're calling the least significant nibble position 0
-	// Therefore the most significant nibble is position 7
-	int currentPosition = 7;
+	/**
+	 * Returns the integer representation of the address the user entered.
+	 * 
+	 * Accepts both uppercase and lowercase hexidecimal.
+	 * 
+	 * @return The integer representation of the address the user entered, or 0
+	 * if the address was invalid in some way.
+	 */
+	uint32_t GetBreakpointAddress() {
+		const char *text = m_breakpointAddress.GetText();
 
-	int key = 0;
-
-	do {
-		LCD_ClearScreen();
-		Debug_SetCursorPosition(0, 0);
-
-		Debug_PrintString("Breakpoint at:", false);
-		
-		// Print the current address, highlighting the nibble that's currently
-		// selected
-		char *numberString = "0";
-		for (int i = 0; i < 8; ++i) {
-			int index = 7 - i;
-			int digit = (address >> (index * 4)) & 0xF;
-			numberString[0] = DIGITS[digit];
-
-			Debug_SetCursorPosition(15 + i, 0);
-			Debug_PrintString(numberString, index == currentPosition);
+		if (text == 0) {
+			return 0;
 		}
 
-		Debug_SetCursorPosition(0, 2);
-		Debug_PrintString("8:     increase", false);
-		Debug_SetCursorPosition(0, 3);
-		Debug_PrintString("2:     decrease", false);
-		Debug_SetCursorPosition(0, 4);
-		Debug_PrintString("4:     left", false);
-		Debug_SetCursorPosition(0, 5);
-		Debug_PrintString("6:     right", false);
+		char c;
+		uint32_t address = 0;
+		while ((c = *text++) != '\0') {
+			uint32_t v;
 
-		Debug_SetCursorPosition(0, 7);
-		Debug_PrintString("5:     set breakpoint", false);
-		Debug_SetCursorPosition(0, 8);
-		Debug_PrintString("Clear: cancel", false);
-
-		LCD_Refresh();
-
-		key = Debug_WaitKey();
-
-		uint32_t mask = ~(0xF << (currentPosition * 4));
-		int digit = (address >> (currentPosition * 4)) & 0xF;
-
-		switch (key) {
-		case 0x38:
-				if (digit != 0xF) {
-					digit++;
-				}
-				address = (address & mask) | (digit << (currentPosition * 4));
-			break;
-		case 0x32:
-				if (digit != 0) {
-					digit--;
-				}
-				address = (address & mask) | (digit << (currentPosition * 4));
-			break;
-		case 0x34:
-			if (currentPosition != 7) {
-				currentPosition++;
+			// Since 0-9, a-f and A-F are consecutive in the ASCII space, this
+			// is an easy way to cheat the conversion from hex string -> number
+			if (c >= '0' && c <= '9') {
+				v = c - '0';
+			} else if (c >= 'a' && c <= 'f') {
+				v = c - 'a' + 0xA;
+			} else if (c >= 'A' && c <= 'F') {
+				v = c - 'A' + 0xA;
+			} else {
+				return 0;
 			}
-			break;
-		case 0x36:
-			if (currentPosition != 0) {
-				currentPosition--;
-			}
-			break;
-		case 0x35:
 
-			break;
-		case 0x98:
-			address = 0;
-			break;
+			address *= 0x10;
+			address += v;
 		}
-	} while (key != 0x98 && key != 0x35);
 
-	return address;
-}
+		// Check if the address is within an actual region of memory
+		// i.e 0x8000000-0x81500000 or 0x8C000000-0x8D000000
+		if (
+			!(address >= 0x80000000 && address <= 0x81500000) &&
+			!(address >= 0x8C000000 && address <= 0x8D000000)
+		) {
+			return 0;
+		}
+
+		return address;
+	}
+
+	int OnEvent(struct GUIDialog_Wrapped *dialog, struct GUIDialog_OnEvent_Data *event) {
+		// Annoyingly, setting the text of the address textbox is the best
+		// way I have at the moment of providing some feedback to the user.
+		// Not elegant, but it gets the job done.
+		// TODO: Add a label to indicate the status -> requires finding a
+		// SetText function for labels.
+
+		if (event->type == GUIButton::GetEventType(BUTTON_SET_BREAKPOINT_EVENT_TYPE)) {
+			uint32_t address = GetBreakpointAddress();
+
+			if (address != 0) {
+				SetBreakpoint(address);
+
+				m_breakpointAddress.SetText("Set!");
+			} else {
+				m_breakpointAddress.SetText("Invalid.");
+			}
+
+			Refresh();
+			return 0;
+		}
+
+		if (event->type == GUIButton::GetEventType(BUTTON_REMOVE_BREAKPOINT_EVENT_TYPE)) {
+			RemoveBreakpoint();
+
+			m_breakpointAddress.SetText("Removed.");
+			Refresh();
+			return 0;
+		}
+
+		return GUIDialog::OnEvent(dialog, event);
+	}
+
+private:
+	GUILabel m_breakpointAddressLabel;
+	GUITextBox m_breakpointAddress;
+
+	static const int BUTTON_SET_BREAKPOINT_EVENT_TYPE = 1;
+	GUIButton m_setBreakpoint;
+
+	static const int BUTTON_REMOVE_BREAKPOINT_EVENT_TYPE = 2;
+	GUIButton m_removeBreakpoint;
+
+	// This corresponds to the event that causes the dialog to close.
+	// Not 100% sure of the mechanism that makes this work, but that hasn't
+	// stopped me using stuff before :)
+	static const int BUTTON_CLOSE_EVENT_TYPE = 0x3EA;
+	GUIButton m_close;
+};
 
 void main() {
-	LCD_ClearScreen();
-
-	Debug_SetCursorPosition(0, 0);
-	Debug_PrintString("1:     set breakpoint", false);
-	Debug_SetCursorPosition(0, 1);
-	Debug_PrintString("2:     remove breakpoint", false);
-	Debug_SetCursorPosition(0, 2);
-	Debug_PrintString("Clear: cancel", false);
-
-	LCD_Refresh();
-
-	int key = Debug_WaitKey();
-
-	switch (key) {
-	case 0x31: {
-		uint32_t address = GetBreakpointAddress();
-
-		LCD_ClearScreen();
-		Debug_SetCursorPosition(0, 0);
-
-		if (address != 0) {
-			SetBreakpoint(address);
-			Debug_PrintString("Breakpoint set!", true);
-		} else {
-			Debug_PrintString("Did nothing.", true);
-		}
-
-		LCD_Refresh();
-		break;
-	}
-	case 0x32:
-		LCD_ClearScreen();
-		Debug_SetCursorPosition(0, 0);
-
-		RemoveBreakpoint();
-		Debug_PrintString("Breakpoint removed!", true);
-
-		LCD_Refresh();
-		break;
-	default:
-		LCD_ClearScreen();
-		Debug_SetCursorPosition(0, 0);
-
-		Debug_PrintString("Did nothing.", true);
-
-		LCD_Refresh();
-		break;
-	}
+	BreakpointDialog dialog;
+	dialog.ShowDialog();
 }
