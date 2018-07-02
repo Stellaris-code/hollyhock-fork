@@ -216,7 +216,7 @@ public:
 	 * @return The type reported in the event data for the specified
 	 * @p eventType.
 	 */
-	static inline uint16_t GetEventType(uint16_t eventType) {
+	static constexpr uint16_t GetEventType(uint16_t eventType) {
 		return ((eventType + 8) << 4) | (1 << 3);
 	}
 };
