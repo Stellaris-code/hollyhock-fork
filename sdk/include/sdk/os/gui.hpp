@@ -24,6 +24,46 @@
 #pragma once
 #include <stdint.h>
 
+/**
+ * Create a vtable entry. Makes entries for the offset (suffix @c _Offset)
+ * (added to @c self when the function is called), an unused padding entry, and
+ * an entry for the function pointer.
+ * 
+ * @param return_type The return type of the function.
+ * @param name The name of the function.
+ * @param ... The arguments to the function (type and name).
+ */
+#define VTABLE_ENTRY(return_type, name, ...) int32_t name##_Offset; \
+                                             uint32_t name##_Unused; \
+                                             return_type (*name)(__VA_ARGS__); \
+
+/**
+ * Call a function within an external vtable.
+ * 
+ * @param vtable The vtable containing the function.
+ * @param name The name of the function to call.
+ * @param self The pointer to the object to call the function on.
+ * @param .. The arguments to the function.
+ */
+#define VTABLE_CALL_EXT(self, vtable, name, ...) (vtable)->name( \
+	reinterpret_cast<decltype(self)>( \
+		reinterpret_cast<uint8_t *>(self) + (vtable)->name##_Offset \
+	), \
+	## __VA_ARGS__ \
+)
+
+/**
+ * Call a function within a vtable.
+ * 
+ * @param vtable The name of the vtable inside @p self.
+ * @param name The name of the function to call.
+ * @param self The pointer to the object to call the function on.
+ * @param .. The arguments to the function.
+ */
+#define VTABLE_CALL(self, vtable, name, ...) VTABLE_CALL_EXT( \
+	self, self->vtable, name, ## __VA_ARGS__ \
+)
+
 const int BUTTON_OK = 1 << 5;
 const int BUTTON_YES = 1 << 6;
 const int BUTTON_NO = 1 << 7;
@@ -87,22 +127,34 @@ struct GUIDialog_Wrapped_VTable {
 	 */
 	GUIDialog *me;
 
-	uint8_t unknown0[0x1C];
+	uint8_t unknown0[0x14];
 
-	int (*OnEvent)(struct GUIDialog_Wrapped *dialog, struct GUIDialog_OnEvent_Data *event);
+	VTABLE_ENTRY(
+		int, OnEvent,
+		struct GUIDialog_Wrapped *dialog, struct GUIDialog_OnEvent_Data *event
+	);
 
-	uint8_t unknown1[0x14];
+	uint8_t unknown1[0xC];
 
 	// unknown0 - always pass 0
-	void (*const AddElement)(struct GUIDialog_Wrapped *dialog, void *element, int unknown0);
+	VTABLE_ENTRY(
+		void, AddElement,
+		struct GUIDialog_Wrapped *dialog, void *element, int unknown0
+	);
 
-	uint8_t unknown3[0x38];
+	uint8_t unknown3[0x30];
 
-	void (*const Refresh)(struct GUIDialog_Wrapped *dialog);
+	VTABLE_ENTRY(
+		void, Refresh,
+		struct GUIDialog_Wrapped *dialog
+	)
 
-	uint8_t unknown4[0x11C];
+	uint8_t unknown4[0x114];
 	
-	void (*const ShowDialog)(struct GUIDialog_Wrapped *dialog);
+	VTABLE_ENTRY(
+		void, ShowDialog,
+		struct GUIDialog_Wrapped *dialog
+	)
 
 	uint8_t unknown5[0x84];
 };
@@ -270,9 +322,12 @@ public:
 
 /// @private
 struct GUITextBox_Wrapped_VTable {
-	uint8_t unknown0[0x188];
+	uint8_t unknown0[0x180];
 
-	void (*const SetText)(struct GUITextBox_Wrapped *textBox, const char *text);
+	VTABLE_ENTRY(
+		void, SetText,
+		struct GUITextBox_Wrapped *textBox, const char *text
+	);
 
 	uint8_t unknown1[0xA8];
 };

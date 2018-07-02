@@ -39,7 +39,15 @@ int GUIDialog::OnEvent_Wrap(struct GUIDialog_Wrapped *dialog, struct GUIDialog_O
 }
 
 int GUIDialog::OnEvent(struct GUIDialog_Wrapped *dialog, struct GUIDialog_OnEvent_Data *event) {
-	return m_oldVTable->OnEvent(dialog, event);
+	// We've overidden the entry for OnEvent in our vtable with one that
+	// redirects to this method. Since we've done that, if we want to call the
+	// actual base OnEvent method, we use the old vtable we backed up in the
+	// constructor.
+	return VTABLE_CALL_EXT(
+		dialog, m_oldVTable,
+		OnEvent,
+		event
+	);
 }
 
 /**
@@ -84,10 +92,10 @@ uint16_t GUIDialog::GetBottomY() {
  * @param element The GUI element to add.
  */
 void GUIDialog::AddElement(GUIElement &element) {
-	GetWrapped<GUIDialog_Wrapped>()->vtable->AddElement(
-		GetWrapped<GUIDialog_Wrapped>(),
-		element.GetWrapped<void>(),
-		1
+	VTABLE_CALL(
+		GetWrapped<GUIDialog_Wrapped>(), vtable,
+		AddElement,
+		element.GetWrapped<void>(), 1
 	);
 }
 
@@ -95,8 +103,9 @@ void GUIDialog::AddElement(GUIElement &element) {
  * Refreshes the dialog, redrawing all components.
  */
 void GUIDialog::Refresh() {
-	GetWrapped<GUIDialog_Wrapped>()->vtable->Refresh(
-		GetWrapped<GUIDialog_Wrapped>()
+	VTABLE_CALL(
+		GetWrapped<GUIDialog_Wrapped>(), vtable,
+		Refresh
 	);
 }
 
@@ -104,8 +113,9 @@ void GUIDialog::Refresh() {
  * Presents the dialog to the user. Blocks until the dialog is closed.
  */
 void GUIDialog::ShowDialog() {
-	GetWrapped<GUIDialog_Wrapped>()->vtable->ShowDialog(
-		GetWrapped<GUIDialog_Wrapped>()
+	VTABLE_CALL(
+		GetWrapped<GUIDialog_Wrapped>(), vtable,
+		ShowDialog
 	);
 }
 
@@ -371,8 +381,9 @@ const char *GUITextBox::GetText() {
  * @param text The new string for the textbox.
  */
 void GUITextBox::SetText(const char *text) {
-	GetWrapped<GUITextBox_Wrapped>()->vtable->SetText(
-		GetWrapped<GUITextBox_Wrapped>(),
+	VTABLE_CALL(
+		GetWrapped<GUITextBox_Wrapped>(), vtable,
+		SetText,
 		text
 	);
 }
