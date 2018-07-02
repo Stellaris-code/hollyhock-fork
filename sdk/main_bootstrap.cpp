@@ -1,5 +1,6 @@
 #include <sdk/os/gui.hpp>
 
+// This will be declared by the user in their application.
 void main();
 
 extern "C"
