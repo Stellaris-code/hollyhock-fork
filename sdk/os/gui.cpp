@@ -35,6 +35,7 @@ GUIDialog::GUIDialog(
 }
 
 int GUIDialog::OnEvent_Wrap(struct GUIDialog_Wrapped *dialog, struct GUIDialog_OnEvent_Data *event) {
+	// Call the OnEvent function of our class (not of CASIO's one!)
 	return dialog->vtable->me->OnEvent(dialog, event);
 }
 

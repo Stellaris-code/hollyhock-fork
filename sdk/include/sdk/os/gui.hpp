@@ -25,6 +25,14 @@
 #include <stdint.h>
 
 /**
+ * Create @p n fake vtable entries. 
+ * 
+ * @param name The name to give the fake entries.
+ * @param n The number of fake vtable entries.
+ */
+#define VTABLE_FAKE_ENTRY(n, x) uint32_t fakeentry##x[n * 3]
+
+/**
  * Create a vtable entry. Makes entries for the offset (suffix @c _Offset)
  * (added to @c self when the function is called), an unused padding entry, and
  * an entry for the function pointer.
@@ -35,7 +43,7 @@
  */
 #define VTABLE_ENTRY(return_type, name, ...) int32_t name##_Offset; \
                                              uint32_t name##_Unused; \
-                                             return_type (*name)(__VA_ARGS__); \
+                                             return_type (*name)(__VA_ARGS__)
 
 /**
  * Call a function within an external vtable.
@@ -126,15 +134,15 @@ struct GUIDialog_Wrapped_VTable {
 	 * associated with.
 	 */
 	GUIDialog *me;
+	uint32_t fakeentrypadding[2];
 
-	uint8_t unknown0[0x14];
-
+	VTABLE_FAKE_ENTRY(1, 0);
+	
 	VTABLE_ENTRY(
 		int, OnEvent,
 		struct GUIDialog_Wrapped *dialog, struct GUIDialog_OnEvent_Data *event
 	);
-
-	uint8_t unknown1[0xC];
+	VTABLE_FAKE_ENTRY(1, 1);
 
 	// unknown0 - always pass 0
 	VTABLE_ENTRY(
@@ -142,21 +150,21 @@ struct GUIDialog_Wrapped_VTable {
 		struct GUIDialog_Wrapped *dialog, void *element, int unknown0
 	);
 
-	uint8_t unknown3[0x30];
+	VTABLE_FAKE_ENTRY(4, 2);
 
 	VTABLE_ENTRY(
 		void, Refresh,
 		struct GUIDialog_Wrapped *dialog
-	)
+	);
 
-	uint8_t unknown4[0x114];
-	
+	VTABLE_FAKE_ENTRY(23, 3);
+
 	VTABLE_ENTRY(
 		void, ShowDialog,
 		struct GUIDialog_Wrapped *dialog
-	)
+	);
 
-	uint8_t unknown5[0x84];
+	VTABLE_FAKE_ENTRY(11, 4);
 };
 static_assert(sizeof(struct GUIDialog_Wrapped_VTable) == 0x21C);
 
@@ -322,14 +330,14 @@ public:
 
 /// @private
 struct GUITextBox_Wrapped_VTable {
-	uint8_t unknown0[0x180];
+	VTABLE_FAKE_ENTRY(32, 0);
 
 	VTABLE_ENTRY(
 		void, SetText,
 		struct GUITextBox_Wrapped *textBox, const char *text
 	);
 
-	uint8_t unknown1[0xA8];
+	VTABLE_FAKE_ENTRY(14, 1);
 };
 static_assert(sizeof(struct GUITextBox_Wrapped_VTable) == 0x234);
 
