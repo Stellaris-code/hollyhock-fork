@@ -11,6 +11,8 @@ CC_FLAGS:=-ffreestanding -fno-exceptions -fno-rtti -Wall -Wextra -O2 -I $(SDK_DI
 LD:=sh4-elf-ld
 LD_FLAGS:=-nostdlib --no-undefined
 
+READELF:=sh4-elf-readelf
+
 AS_SOURCES:=$(wildcard *.s)
 CC_SOURCES:=$(wildcard *.cpp)
 OBJECTS:=$(AS_SOURCES:.s=.o) $(CC_SOURCES:.cpp=.o)
@@ -32,7 +34,13 @@ $(SDK_DIR)/sdk.o:
 %.o: %.s
 	$(AS) $< -o $@ $(AS_FLAGS)
 
+# Break the build if global constructors are present:
+# Read the sections from the object file (with readelf -S) and look for any
+# called .ctors - if they exist, give the user an error message, delete the
+# object file (so that on subsequent runs of make the build will still fail)
+# and exit with an error code to halt the build.
 %.o: %.cpp
 	$(CC) -c $< -o $@ $(CC_FLAGS)
+	@$(READELF) $@ -S | grep ".ctors" > /dev/null && echo "ERROR: Global constructors aren't supported." && rm $@ && exit 1 || exit 0
 
 .PHONY: all clean
