@@ -5,7 +5,7 @@
  * Provides an API similar to that of Unix.
  * 
  * The storage which appears when the calculator is attached to a PC is found
- * under the path @c \fls0\ (remember to escape the @c \ in strings!).
+ * under the path @c \\fls0\ (remember to escape the @c \ in strings!).
  *
  * Example: reading 256 bytes from a file called @c test.txt from the USB flash
  * @code{cpp}
@@ -127,55 +127,75 @@ const int OPEN_APPEND = 1 << 4;
  * Retrieves the year from a @c struct @ref stat date field.
  * 
  * @param date The date field from a @c struct @ref stat.
+ * @return The year encoded in the date.
  * 
  * @see struct stat
  */
-#define FSTAT_DATE_YEAR(date) (((date >> 9) & 0b1111111) + 1980)
+uint16_t constexpr fstatDateYear(uint16_t date) {
+	return ((date >> 9) & 0b1111111) + 1980;
+}
 
 /**
  * Retrieves the month from a @c struct @ref stat date field.
  * 
  * @param date The date field from a @c struct @ref stat.
+ * @return The month encoded in the date.
  * 
  * @see struct stat
  */
-#define FSTAT_DATE_MONTH(date) ((date >> 5) & 0b1111)
+uint16_t constexpr fstatDateMonth(uint16_t date) {
+	return (date >> 5) & 0b1111;
+}
 
 /**
  * Retrieves the day from a @c struct @ref stat date field.
  * 
  * @param date The date field from a @c struct @ref stat.
+ * @return The day encoded in the date.
  * 
  * @see struct stat
  */
-#define FSTAT_DATE_DAY(date) (date & 0b11111)
+uint16_t constexpr fstatDateDay(uint16_t date) {
+	return date & 0b11111;
+}
 
 /**
  * Retrieves the hour from a @c struct @ref stat time field.
  * 
  * @param time The time field from a @c struct @ref stat.
+ * @return The hour encoded in the time.
  * 
  * @see struct stat
  */
-#define FSTAT_TIME_HOUR(time) ((time >> 11) & 0b11111)
+uint16_t constexpr fstatTimeHour(uint16_t time) {
+	return (time >> 11) & 0b11111;
+}
 
 /**
  * Retrieves the minute from a @c struct @ref stat time field.
  * 
  * @param time The time field from a @c struct @ref stat.
+ * @return The minute encoded in the time.
  * 
  * @see struct stat
  */
-#define FSTAT_TIME_MINUTE(time) ((time >> 5) & 0b111111)
+uint16_t constexpr fstatTimeMinute(uint16_t time) {
+	return (time >> 5) & 0b111111;
+}
 
 /**
  * Retrieves the second from a @c struct @ref stat time field.
  * 
+ * Has a maximum resolution of 2 seconds.
+ * 
  * @param time The time field from a @c struct @ref stat.
+ * @return The second encoded in the time.
  * 
  * @see struct stat
  */
-#define FSTAT_TIME_SECOND(time) ((time & 0b11111) * 2)
+uint16_t constexpr fstatTimeSecond(uint16_t time) {
+	return (time & 0b11111) * 2;
+}
 
 /**
  * Information about a file as retrieved from @ref fstat or @ref stat.
@@ -243,7 +263,6 @@ const int OPEN_APPEND = 1 << 4;
  *     </tr>
  * </table>
  * 
- * @see stat
  * @see fstat
  */
 struct stat {
