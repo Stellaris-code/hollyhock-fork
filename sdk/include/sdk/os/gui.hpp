@@ -104,9 +104,9 @@ struct GUIDialog_Wrapped_VTable {
 	
 	void (*const ShowDialog)(struct GUIDialog_Wrapped *dialog);
 
-	// TODO: work out the true length of the vtable
-	uint8_t unknown5[0x200];
+	uint8_t unknown5[0x84];
 };
+static_assert(sizeof(struct GUIDialog_Wrapped_VTable) == 0x21C);
 
 /// @private
 struct GUIDialog_Wrapped {
@@ -273,7 +273,10 @@ struct GUITextBox_Wrapped_VTable {
 	uint8_t unknown0[0x188];
 
 	void (*const SetText)(struct GUITextBox_Wrapped *textBox, const char *text);
+
+	uint8_t unknown1[0xA8];
 };
+static_assert(sizeof(struct GUITextBox_Wrapped_VTable) == 0x234);
 
 /// @private
 struct GUITextBox_Wrapped {
