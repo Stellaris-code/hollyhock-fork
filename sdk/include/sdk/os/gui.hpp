@@ -1,6 +1,9 @@
 /**
  * @file
- * Functions and classes used to create/display GUI elements.
+ * @brief Functions and classes to create/display GUI elements.
+ * 
+ * Provides functions and classes which can be used to create graphical user
+ * interfaces 
  *
  * Example: display a simple dialog with a label
  * @code{cpp}
@@ -25,15 +28,20 @@
 #include <stdint.h>
 
 /**
- * Create @p n fake vtable entries. 
+ * Create @p n fake vtable function entries.
  * 
- * @param name The name to give the fake entries.
- * @param n The number of fake vtable entries.
+ * The parameter @p x is required as the fake entry needs a name. It is
+ * recommended to simply increment from 0 as fake entries are required.
+ * 
+ * @param n The number of fake vtable entries to create.
+ * @param x An integer, unique within the vtable.
  */
 #define VTABLE_FAKE_ENTRY(n, x) uint32_t fakeentry##x[n * 3]
 
 /**
- * Create a vtable entry. Makes entries for the offset (suffix @c _Offset)
+ * Create a vtable function entry.
+ * 
+ * Makes entries for the offset (suffix @c _Offset)
  * (added to @c self when the function is called), an unused padding entry, and
  * an entry for the function pointer.
  * 

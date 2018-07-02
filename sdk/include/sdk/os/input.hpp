@@ -1,6 +1,9 @@
 /**
  * @file
- * Functions used to retrieve user input via the touch screen or keypad.
+ * @brief Functions used to retrieve user input via the touch screen or keypad.
+ * 
+ * Provides the @ref GetInput method, a function which polls for input events
+ * (screen touches and key presses).
  */
 
 #pragma once

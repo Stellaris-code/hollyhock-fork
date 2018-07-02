@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief UBC (User Break Controller)
+ * @brief UBC (User Break Controller).
  */
 #pragma once
 #include <stdint.h>

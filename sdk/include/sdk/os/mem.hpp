@@ -1,7 +1,8 @@
 /**
  * @file
- * Functions used for modifying memory. Similar to the memory functions
- * provided by the C standard library.
+ * @brief Functions used for modifying and allocating memory.
+ * 
+ * Similar to the memory functions provided by the C standard library.
  */
 
 #pragma once

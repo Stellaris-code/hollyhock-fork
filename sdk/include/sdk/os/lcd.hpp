@@ -1,7 +1,12 @@
 /**
  * @file
- * Functions for interacting with the LCD and VRAM.
+ * @brief Functions for interacting with the LCD and VRAM.
  *
+ * Different levels of indirection are availiable to write to VRAM (direct
+ * memory access, getter/setters and palette-based drawing). The contents of
+ * VRAM are not automatically drawn to the LCD, and must be rendered with
+ * @ref LCD_Refresh. 
+ * 
  * Example: drawing a 30x50 rectangle at 10, 20 in purple
  * @code{cpp}
  * uint16_t *vram = LCD_GetVRAMAddress();

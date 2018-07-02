@@ -1,6 +1,6 @@
 /**
  * @file
- * Functions for retrieving and setting data in the MCS.
+ * @brief Functions for retrieving and setting data in the MCS.
  */
 
 #pragma once
@@ -150,7 +150,7 @@ int MCS_GetVariable(
  * @param folder The folder to create the list in.
  * @param name The desired name of the variable.
  * @param size The size of the variable type specified.
- * @praram length The number of entries in the list.
+ * @param length The number of entries in the list.
  * @param variableType The variable type to initialize the list with (macros
  * starting with @c VARTYPE).
  * @return 0 on success, @c MCS_NO_FOLDER if the requested folder does not
@@ -167,7 +167,7 @@ int MCS_List_Create(
  *
  * @param folder The folder containing the list variable.
  * @param name The name of the list variable.
- * @praam size The size of the data to store in the element.
+ * @param size The size of the data to store in the element.
  * @param index The index into the list of the element to modify.
  * @param variableType The type of the data to be stored in the list element
  * (macros starting with @c VARTYPE).

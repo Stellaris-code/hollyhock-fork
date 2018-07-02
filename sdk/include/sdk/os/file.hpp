@@ -1,9 +1,11 @@
 /**
  * @file
- * Functions for interacting with the calculator's file system.
+ * @brief Functions for interacting with the calculator's file system.
  *
+ * Provides an API similar to that of Unix.
+ * 
  * The storage which appears when the calculator is attached to a PC is found
- * under the path @c \\fls0\\.
+ * under the path @c \fls0\ (remember to escape the @c \ in strings!).
  *
  * Example: reading 256 bytes from a file called @c test.txt from the USB flash
  * @code{cpp}
@@ -57,6 +59,11 @@
 #pragma once
 #include <stdint.h>
 
+/**
+ * @name Errors
+ * Errors returned by file system functions. All negative numbers.
+ * @{
+ */
 const int ENOMEM = -1;
 const int EINVAL = -2;
 const int EDEVFAIL = -3;
@@ -79,6 +86,7 @@ const int EEOF = -19;
 const int ENOTEMPTY = -20;
 const int ECLUSTERSIZEMISMATCH = -40;
 const int ESYSTEM = -99;
+/// @}
 
 /**
  * Flag passed to @ref lseek. Specifies that the file offset be set to

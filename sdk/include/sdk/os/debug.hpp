@@ -1,7 +1,11 @@
 /**
  * @file
- * Functions commonly used while debugging, such as printing text or
- * numbers to the screen, or waiting for a key press.
+ * @brief Functions used during debugging.
+ * 
+ * It can be useful to print text or numbers to the screen whilst debugging,
+ * without creating a full GUI, or pause execution and wait for a key press.
+ * Thoroughly recommended only for debugging - prefer GUI elements for
+ * user-facing input/output!
  *
  * Example:
  * @code{cpp}
@@ -17,6 +21,7 @@
  * Debug_PrintNumberHex_Word(0x1322, 3, 7);
  *
  * // Draw the changes we made to VRAM onto the LCD
+ * // Defined in sdk/os/lcd.hpp
  * LCD_Refresh();
  *
  * // Block until the user presses a key
