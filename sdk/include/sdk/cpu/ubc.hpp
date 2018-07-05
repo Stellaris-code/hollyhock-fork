@@ -6,15 +6,15 @@
 #include <stdint.h>
 
 /// Match condition setting register 0.
-uint32_t &UBC_REG_CBR0 = *reinterpret_cast<uint32_t *>(0xFF200000);
+volatile uint32_t &UBC_REG_CBR0 = *reinterpret_cast<uint32_t *>(0xFF200000);
 /// Match operation setting register 0.
-uint32_t &UBC_REG_CRR0 = *reinterpret_cast<uint32_t *>(0xFF200004);
+volatile uint32_t &UBC_REG_CRR0 = *reinterpret_cast<uint32_t *>(0xFF200004);
 /// Match address setting register 0.
-uint32_t &UBC_REG_CAR0 = *reinterpret_cast<uint32_t *>(0xFF200008);
+volatile uint32_t &UBC_REG_CAR0 = *reinterpret_cast<uint32_t *>(0xFF200008);
 /// Match address mask setting register 0.
-uint32_t &UBC_REG_CAMR0 = *reinterpret_cast<uint32_t *>(0xFF20000C);
+volatile uint32_t &UBC_REG_CAMR0 = *reinterpret_cast<uint32_t *>(0xFF20000C);
 /// Break control register.
-uint32_t &UBC_REG_CBCR = *reinterpret_cast<uint32_t *>(0xFF200620);
+volatile uint32_t &UBC_REG_CBCR = *reinterpret_cast<uint32_t *>(0xFF200620);
 
 /// CBR.ID offset (bits).
 const uint32_t UBC_CBR_ID = 4;
