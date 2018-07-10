@@ -6,7 +6,7 @@ AS:=sh4-elf-as
 AS_FLAGS:=
 
 CC:=sh4-elf-g++
-CC_FLAGS:=-ffreestanding -fno-exceptions -fno-rtti -Wall -Wextra -O2 -I $(SDK_DIR)/include/
+CC_FLAGS:=-ffreestanding -fno-exceptions -fno-rtti -fshort-wchar -Wall -Wextra -O2 -I $(SDK_DIR)/include/
 
 LD:=sh4-elf-ld
 LD_FLAGS:=-nostdlib --no-undefined

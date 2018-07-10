@@ -307,6 +307,30 @@ struct stat {
 };
 
 /**
+ * Information about a file/directory, as returned from @ref findFirst or
+ * @ref findNext.
+ */
+struct findInfo {
+	uint8_t unknown0[4];
+
+	/// The type of entry which was located.
+	enum : uint16_t {
+		EntryTypeFile = 0x1,
+		EntryTypeDirectory = 0x5
+	} type;
+
+	uint8_t unknown1[2];
+	
+	/*
+	 * The size of the entry, in bytes. If the entry is a directory, @c size is
+	 * zero.
+	 */
+	uint32_t size;
+	
+	uint8_t unknown2[8];
+};
+
+/**
  * Closes an open file.
  *
  * @param fd The file descriptor for the open file.
@@ -314,6 +338,54 @@ struct stat {
  */
 extern "C"
 int close(int fd);
+
+/**
+ * Closes a find handle.
+ * 
+ * Very, very, very bad things happen if a find handle is not closed.
+ * 
+ * @param findHandle The find handle to close.
+ * @return 0 on success, or a negative error code on failure.
+ */
+extern "C"
+int findClose(int findHandle);
+
+/**
+ * Starts a find operation, locating files matching a specific path.
+ * 
+ * Can be used to list the contents of a directory by using a wildcard. For
+ * example, passing the path @c L"\\fls0\\*" or @c L"\\fls0\\*.*" matches all files and
+ * directories on the calculator's flash.
+ * 
+ * To find the next file/directory which matches the path, call @ref findNext,
+ * passing in the find handle returned by this function.
+ * 
+ * Ensure the find handle is closed using @ref findClose when the find operation
+ * is finished. Bad things happen if the handle is not closed.
+ * 
+ * @param path The path to search. May contain wildcards.
+ * @param findHandle A pointer to store the find handle in. Must be closed when
+ * the find operation is finished.
+ * @param name The name of the file/directory found.
+ * @param findInfoBuf A pointer to a struct to store information about the
+ * found file in.
+ * @return 0 on success, or a negative error code on failure.
+ */
+extern "C"
+int findFirst(const wchar_t *path, int *findHandle, wchar_t *name, struct findInfo *findInfoBuf);
+
+/**
+ * Returns information about the next matching file/directory in a find
+ * operation.
+ * 
+ * @param findHandle The find handle returned from @ref findFirst.
+ * @param name A string to store the name of the file/directory found in.
+ * @param findInfoBuf A pointer to a struct to store information about the
+ * found file in.
+ * @return 0 on success, or a negative error code on failure.
+ */
+extern "C"
+int findNext(int findHandle, wchar_t *name, struct findInfo *findInfoBuf);
 
 /**
  * Retrieves information about an open file.
