@@ -8,7 +8,9 @@
 - **YOU HAVE BEEN WARNED**
 
 # hollyhock
-Tools and software for the CASIO fx-CP400 graphics calculator.
+An SDK to write your own applications for the CASIO fx-CP400 graphics calculator.
+
+This is by no means a finished project. Like the disclaimer says, use at your own risk! Breaking changes are not out of the question, and should be 100% expected.
 
 ## Guides
 1. [Patching your firmware](doc/patching.md)
