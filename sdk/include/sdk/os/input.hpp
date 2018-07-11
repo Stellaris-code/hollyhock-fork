@@ -162,8 +162,7 @@ struct InputEvent {
  *
  * The @p event structure should be zeroed before calling @ref GetInput.
  *
- * @param event A pointer to an @c struct @ref InputEvent to store the input
- * event's data in.
+ * @param[out] event The input event's data.
  * @param unknown1 An unknown value. The value @c 0xFFFFFFFF must be supplied.
  * @param unknown2 An unknown value. The value @c 0x10 must be supplied.
  * @return Always returns 0.

@@ -28,37 +28,19 @@
 #include <stdint.h>
 
 /**
- * Palette color passed to @ref LCD_SetPixelFromPalette.
+ * @defgroup palette_colors Palette Colors
+ * Passed to @ref LCD_SetPixelFromPalette.
+ * @{
  */
 const uint8_t PALETTE_BLACK = 0;
-/**
- * Palette color passed to @ref LCD_SetPixelFromPalette.
- */
 const uint8_t PALETTE_BLUE = 1;
-/**
- * Palette color passed to @ref LCD_SetPixelFromPalette.
- */
 const uint8_t PALETTE_GREEN = 2;
-/**
- * Palette color passed to @ref LCD_SetPixelFromPalette.
- */
 const uint8_t PALETTE_CYAN = 3;
-/**
- * Palette color passed to @ref LCD_SetPixelFromPalette.
- */
 const uint8_t PALETTE_RED = 4;
-/**
- * Palette color passed to @ref LCD_SetPixelFromPalette.
- */
 const uint8_t PALETTE_MAGENTA = 5;
-/**
- * Palette color passed to @ref LCD_SetPixelFromPalette.
- */
 const uint8_t PALETTE_YELLOW = 6;
-/**
- * Palette color passed to @ref LCD_SetPixelFromPalette.
- */
 const uint8_t PALETTE_WHITE = 7;
+/// @}
 
 /**
  * Converts three RGB values into one RGB565 value.
@@ -109,8 +91,7 @@ void LCD_ClearScreen();
  * being displayed on the LCD, but instead is the color specified for the pixel
  * in the VRAM buffer. Color is in RGB565 format.
  * 
- * @param x The X coordinate of the pixel.
- * @param y The Y coordinate of the pixel.
+ * @param x,y The coordinates of the pixel.
  * @return The color of the pixel, in RGB565 format.
  */
 extern "C"
@@ -119,8 +100,7 @@ uint16_t LCD_GetPixel(int x, int y);
 /**
  * Retrieves the size, in pixels, of the LCD.
  * 
- * @param width A pointer to an int to store the LCD's width in.
- * @param height A pointer to an int to store the LCD's height in.
+ * @param[out] width,height The LCD's size.
  */
 extern "C"
 void LCD_GetSize(int *width, int *height);
@@ -145,8 +125,7 @@ void LCD_Refresh();
  * Sets the color of a pixel. The result of this operation will not be visible
  * until @ref LCD_Refresh is called. Color is in RGB565 format.
  * 
- * @param x The X coordinate of the pixel.
- * @param y The Y coordinate of the pixel.
+ * @param x,y The coordinate of the pixel.
  * @param color The color to set the pixel, in RGB565 format.
  */
 extern "C"
@@ -154,11 +133,9 @@ void LCD_SetPixel(int x, int y, uint16_t color);
 
 /**
  * Sets the color of a pixel, from a pre-defined palette. Result is not visible
- * until @ref LCD_Refresh is called. Index is from macros beginning with
- * @c PALETTE_.
+ * until @ref LCD_Refresh is called. See @ref palette_colors.
  *
- * @param x The X coordinate of the pixel.
- * @param y The Y coordinate of the pixel.
+ * @param x,y The coordinate of the pixel.
  * @param index The index of the color in the palette to use.
  */
 extern "C"

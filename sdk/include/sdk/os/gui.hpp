@@ -1,9 +1,6 @@
 /**
  * @file
  * @brief Functions and classes to create/display GUI elements.
- * 
- * Provides functions and classes which can be used to create graphical user
- * interfaces 
  *
  * Example: display a simple dialog with a label
  * @code{cpp}
@@ -27,6 +24,9 @@
 #pragma once
 #include <stdint.h>
 
+// No point in documenting these macros. If people are trying to use them,
+// they're doing something weird and I don't want to help them :)
+/// @cond INTERNAL
 /**
  * Create @p n fake vtable function entries.
  * 
@@ -59,7 +59,7 @@
  * @param vtable The vtable containing the function.
  * @param name The name of the function to call.
  * @param self The pointer to the object to call the function on.
- * @param .. The arguments to the function.
+ * @param ... The arguments to the function.
  */
 #define VTABLE_CALL_EXT(self, vtable, name, ...) (vtable)->name( \
 	reinterpret_cast<decltype(self)>( \
@@ -74,11 +74,12 @@
  * @param vtable The name of the vtable inside @p self.
  * @param name The name of the function to call.
  * @param self The pointer to the object to call the function on.
- * @param .. The arguments to the function.
+ * @param ... The arguments to the function.
  */
 #define VTABLE_CALL(self, vtable, name, ...) VTABLE_CALL_EXT( \
 	self, self->vtable, name, ## __VA_ARGS__ \
 )
+/// @endcond
 
 const int BUTTON_OK = 1 << 5;
 const int BUTTON_YES = 1 << 6;
@@ -113,6 +114,7 @@ protected:
 	Wrapped(Wrapped const &) = delete;
 	void operator=(Wrapped const &) = delete;
 
+	/// A pointer to the wrapped class.
 	void *m_wrapped;
 };
 
@@ -386,6 +388,7 @@ public:
 	void SetText(const char *text);
 };
 
+/// @cond INTERNAL
 extern "C"
 void *GUI_CreateButton(
 	void *button,
@@ -436,6 +439,7 @@ struct GUITextBox_Wrapped *GUI_CreateTextBox(
 	int flags,
 	int maxLength, bool countLengthByBytes
 );
+/// @endcond
 
 /**
  * Displays a message box with the specified title and content, retrieved
@@ -466,9 +470,9 @@ void GUI_DisplayMessageBox(int unknown, int titleStringID, int contentStringID);
  * impossible to exit the message box.
  * 
  * @param unknown An unknown parameter.
- * @param titleString A string to use for the message box's title.
- * @param contentPrefix A string to prefix the content with.
- * @param contentString A string to use for the message box's content.
+ * @param[in] titleString A string to use for the message box's title.
+ * @param[in] contentPrefix A string to prefix the content with.
+ * @param[in] contentString A string to use for the message box's content.
  * @param buttons A bitfield specifying which buttons to show.
  * @param disableCloseButton Set to @c true to disable the close button.
  * @return An unknown GUI struct.

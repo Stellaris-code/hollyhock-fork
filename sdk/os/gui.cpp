@@ -6,7 +6,7 @@
  * 
  * @param height The height of the dialog.
  * @param alignment The screen position to align the dialog with.
- * @param title The string to display in the title bar of the dialog.
+ * @param[in] title The string to display in the title bar of the dialog.
  * @param keyboard The keyboard to display when the dialog is shown.
  */
 GUIDialog::GUIDialog(
@@ -129,15 +129,9 @@ void GUIDialog::ShowDialog() {
  * to the @c event.type value. 0 is not a valid value for the @p eventType
  * parameter.
  * 
- * @param leftX The X coordinate of the left edge of the button, in pixels and
- * relative to the top left of the display.
- * @param topY The Y coordinate of the top edge of the button, in pixels and
- * relative to the top left of the display.
- * @param rightX The X coordinate of the right edge of the button, in pixels and
- * relative to the top left of the display.
- * @param bottomY The Y coordinate of the bottom edge of the button, in pixels
- * and relative to the top left of the display.
- * @param text The text to display on the button.
+ * @param leftX,topY,rightX,bottomY The coordinates of the bounding box of the
+ * button, in screen pixels relative to the top left of the display.
+ * @param[in] text The text to display on the button.
  * @param eventType Part of the type to pass in the event data to the dialog's
  * OnEvent method when the button is pressed.
  */
@@ -161,15 +155,9 @@ GUIButton::GUIButton(
  * to the @c event.type value. 0 is not a valid value for the @p eventType
  * parameter.
  * 
- * @param leftX The X coordinate of the left edge of the button, in pixels and
- * relative to the top left of the display.
- * @param topY The Y coordinate of the top edge of the button, in pixels and
- * relative to the top left of the display.
- * @param rightX The X coordinate of the right edge of the button, in pixels and
- * relative to the top left of the display.
- * @param bottomY The Y coordinate of the bottom edge of the button, in pixels
- * and relative to the top left of the display.
- * @param text The text to display on the button.
+ * @param leftX,topY,rightX,bottomY The coordinates of the bounding box of the
+ * button, in screen pixels relative to the top left of the display.
+ * @param[in] text The text to display on the button.
  * @param eventType The type to pass in the event data to the dialog's OnEvent
  * method when the button is pressed.
  * @param flags A bitfield of flags specified by bitwise-ORing members of
@@ -195,11 +183,9 @@ GUIButton::GUIButton(
 /**
  * Creates a label.
  * 
- * @param x The X position to place the label at, in pixels and relative to
- * the top left of the display.
- * @param y The Y position to place the label at, in pixels and relative to
- * the top left of the display.
- * @param text The text to display as the label.
+ * @param x,y The position to place the label at, in pixels and relative to the
+ * top left of the display.
+ * @param[in] text The text to display as the label.
  */
 GUILabel::GUILabel(int x, int y, const char *text) : GUILabel(
 	x, y, text, 0, 0, 0, false, 0
@@ -210,16 +196,14 @@ GUILabel::GUILabel(int x, int y, const char *text) : GUILabel(
 /**
  * Creates a label.
  * 
- * @param x The X position to place the label at, in pixels and relative to
- * the top left of the display.
- * @param y The Y position to place the label at, in pixels and relative to
- * the top left of the display.
- * @param text The text to display as the label.
+ * @param x,y The position to place the label at, in pixels and relative to the
+ * top left of the display.
+ * @param[in] text The text to display as the label.
  * @param flags A bitfield of flags specified by bitwise-ORing members of
  * the @ref Flag enum.
- * @param textColor A pointer to an RGB565 color to use for the text, or 0
+ * @param[in] textColor A pointer to an RGB565 color to use for the text, or 0
  * for the default color.
- * @param backgroundColor A pointer to an RGB565 color to use for the
+ * @param[in] backgroundColor A pointer to an RGB565 color to use for the
  * background, or 0 for the default color.
  */
 GUILabel::GUILabel(
@@ -234,16 +218,14 @@ GUILabel::GUILabel(
 /**
  * Creates a label.
  * 
- * @param x The X position to place the label at, in pixels and relative to
- * the top left of the display.
- * @param y The Y position to place the label at, in pixels and relative to
- * the top left of the display.
- * @param text The text to display as the label.
+ * @param x,y The position to place the label at, in pixels and relative to the
+ * top left of the display.
+ * @param[in] text The text to display as the label.
  * @param flags A bitfield of flags specified by bitwise-ORing members of
  * the @ref Flag enum.
- * @param textColor A pointer to an RGB565 color to use for the text, or 0
+ * @param[in] textColor A pointer to an RGB565 color to use for the text, or 0
  * for the default color.
- * @param backgroundColor A pointer to an RGB565 color to use for the
+ * @param[in] backgroundColor A pointer to an RGB565 color to use for the
  * background, or 0 for the default color.
  * @param showShadow True if the text shadow should be shown.
  * @param shadowColor An RGB565 color to use for the text shadow.
@@ -269,11 +251,9 @@ GUILabel::GUILabel(
 /**
  * Creates a radio button.
  * 
- * @param x The X position to place the radio button at, in pixels and
- * relative to the top left of the display.
- * @param y The Y position to place the radio button at, in pixels and
- * relative to the top left of the display.
- * @param text The text to display to the right-hand side of the radio
+ * @param x,y The position to place the radio button at, in pixels and relative
+ * to the top left of the display.
+ * @param[in] text The text to display to the right-hand side of the radio
  * button.
  * @param flags A bitfield of flags specified by bitwise-ORing members of
  * the @ref Flag enum.
@@ -305,10 +285,8 @@ GUIRadioButton::GUIRadioButton(
  * This may be four 2-byte characters, one 2-byte character and three 1-byte
  * characters, etc.
  * 
- * @param x The X position to place the text box at, in pixels and relative
- * to the top left of the display.
- * @param y The Y position to place the text box at, in pixels and relative
- * to the top left of the display.
+ * @param x,y The position to place the text box at, in pixels and relative to
+ * the top left of the display.
  * @param width The width of the textbox, in pixels.
  * @param maxLength The maximum number of characters/bytes the text box
  * should hold.
@@ -337,12 +315,10 @@ GUITextBox::GUITextBox(
  * This may be four 2-byte characters, one 2-byte character and three 1-byte
  * characters, etc.
  * 
- * @param x The X position to place the text box at, in pixels and relative
- * to the top left of the display.
- * @param y The Y position to place the text box at, in pixels and relative
- * to the top left of the display.
+ * @param x,y The position to place the text box at, in pixels and relative to
+ * the top left of the display.
  * @param width The width of the textbox, in pixels.
- * @param text A string to pre-populate the text box with, or 0 if the
+ * @param[in] text A string to pre-populate the text box with, or 0 if the
  * textbox should be initially empty.
  * @param maxLength The maximum number of characters/bytes the text box
  * should hold.
@@ -379,7 +355,7 @@ const char *GUITextBox::GetText() {
  * If the text specified is longer than the maximum string length permitted by
  * the textbox, it is truncated to fit.
  * 
- * @param text The new string for the textbox.
+ * @param[in] text The new string for the textbox.
  */
 void GUITextBox::SetText(const char *text) {
 	VTABLE_CALL(

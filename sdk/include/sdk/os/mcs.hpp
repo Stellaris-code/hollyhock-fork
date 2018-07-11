@@ -7,12 +7,12 @@
 #include <stdint.h>
 
 /**
- * Variable type: OBCD (@c struct @ref OBCD).
+ * Variable type: %OBCD (@c struct @ref OBCD).
  */
 const uint8_t VARTYPE_OBCD = 0x01;
 
 /**
- * Variable type: CBCD (@c struct @ref CBCD).
+ * Variable type: %CBCD (@c struct @ref CBCD).
  */
 const uint8_t VARTYPE_CBCD = 0x02;
 
@@ -114,8 +114,8 @@ struct CBCD {
  * The @p folderIndex parameter is still populated if the folder already exists.
  * However, its purpose is currently unknown.
  *
- * @param folder The name of the folder to create.
- * @param folderIndex A pointer to store an unknown index for the folder in.
+ * @param[in] folder The name of the folder to create.
+ * @param[out] folderIndex An unknown index for the folder.
  * @return 0 if the folder was created successfully, or @c MCS_FOLDER_EXISTS if
  * the folder already exists.
  */
@@ -125,12 +125,12 @@ int MCS_CreateFolder(const char *folder, uint8_t *folderIndex);
 /**
  * Retrieves information about a variable stored in the MCS.
  *
- * @param folder The folder the requested MCS variable is located in.
- * @param name The name of the requested MCS variable.
- * @param variableType A pointer to store the variable's type in.
- * @param name2 A pointer to store the variable's name in.
- * @param data A pointer to store a pointer to the variable's data in.
- * @param size A pointer to store the length of the variable's data in.
+ * @param[in] folder The folder the requested MCS variable is located in.
+ * @param[in] name The name of the requested MCS variable.
+ * @param[out] variableType The variable's type.
+ * @param[out] name2 The variable's name.
+ * @param[out] data A pointer to the variable's data.
+ * @param[out] size The length of the variable's data.
  * @return 0 if the variable exists, @c MCS_NO_VARIABLE if the variable does not
  * exist, or @c MCS_NO_FOLDER if the folder does not exist.
  */
@@ -147,8 +147,8 @@ int MCS_GetVariable(
  * specified. If the variable already exists, it is overwritten (even if it's
  * not a list).
  * 
- * @param folder The folder to create the list in.
- * @param name The desired name of the variable.
+ * @param[in] folder The folder to create the list in.
+ * @param[in] name The desired name of the variable.
  * @param size The size of the variable type specified.
  * @param length The number of entries in the list.
  * @param variableType The variable type to initialize the list with (macros
@@ -165,13 +165,13 @@ int MCS_List_Create(
 /**
  * Sets an element of a list in the MCS.
  *
- * @param folder The folder containing the list variable.
- * @param name The name of the list variable.
+ * @param[in] folder The folder containing the list variable.
+ * @param[in] name The name of the list variable.
  * @param size The size of the data to store in the element.
  * @param index The index into the list of the element to modify.
  * @param variableType The type of the data to be stored in the list element
  * (macros starting with @c VARTYPE).
- * @param data A pointer to the data to copy into the list element.
+ * @param[in] data The data to copy into the list element.
  * @return 0 on success, @c MCS_NO_FOLDER if the requested folder does not
  * exist, @c MCS_NO_VARIABLE if the variable does not exist, @c MCS_NOT_LIST
  * if the variable was not a list, or @c MCS_INDEX_OOB if the index was out of
@@ -190,12 +190,12 @@ int MCS_List_Set(
  * This function does not create the folder if it does not exist. Use
  * @ref MCS_CreateFolder to create a folder if necessary.
  *
- * @param folder The folder the variable to set it stored in.
- * @param name The name of the desired MCS variable.
+ * @param[in] folder The folder the variable to set it stored in.
+ * @param[in] name The name of the desired MCS variable.
  * @param variableType The type of the variable (macros starting with
  * @c VARTYPE).
  * @param size The size of the variable's data.
- * @param data A pointer to the data to copy into the variable.
+ * @param[in] data A pointer to the data to copy into the variable.
  * @return 0 if the variable was set successfully, or @c MCS_NO_FOLDER if the
  * specified folder does not exist.
  */

@@ -25,8 +25,8 @@ void *malloc(uint32_t size);
  *
  * Copies @p num bytes from @p source to @p destination.
  * 
- * @param destination A pointer to the destination of the copy.
- * @param source A pointer to the source for the copy.
+ * @param[out] destination A pointer to the destination of the copy.
+ * @param[in] source A pointer to the source for the copy.
  * @param num The number of bytes to copy.
  * @return @p destination
  */
@@ -40,7 +40,7 @@ void *memcpy(void *destination, const void *source, int num);
  * Fills the region pointed to by @p ptr with @p num bytes of value @p value
  * (zero-extended to a byte).
  *
- * @param ptr A pointer to the region of memory to fill.
+ * @param[out] ptr A pointer to the region of memory to fill.
  * @param value The value to fill the memory region with.
  * @param num The number of bytes to fill.
  * @return @p ptr
