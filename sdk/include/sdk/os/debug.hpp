@@ -43,6 +43,23 @@ extern "C"
 int Debug_GetCursorPosition(int *x, int *y);
 
 /**
+ * Print a formatted string in small debug text mode, either in normal
+ * black-on-white or inverted white-on-black. Color inversion occurs if
+ * @p invert is true.
+ * 
+ * Supports most format specifiers.
+ * 
+ * @param x The X coordinate to print the formatted string at.
+ * @param y The Y coordinate to print the formatted string at.
+ * @param invert True if the colors used to print the text should be inverted.
+ * @param zero Must be passed 0.
+ * @param format The format string to use.
+ * @param ... The values to substitute into the format string.
+ */
+extern "C"
+void Debug_Printf(int x, int y, bool invert, int zero, const char *format, ...);
+
+/**
  * Prints the hex representation of a byte (8-bit number) at the specified
  * position in debug text mode.
  *
