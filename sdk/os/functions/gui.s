@@ -1,6 +1,8 @@
 .include "os/functions/_util.inc"
 
 DEFINE_OS_FUNC GUI_CreateButton 0x800F84F6
+DEFINE_OS_FUNC GUI_CreateDropDownMenu 0x800FBEAA
+DEFINE_OS_FUNC GUI_CreateDropDownMenuItem 0x800FAB38
 DEFINE_OS_FUNC GUI_CreateDialog 0x800D57F6
 DEFINE_OS_FUNC GUI_CreateLabel 0x80109980
 DEFINE_OS_FUNC GUI_CreateRadioButton 0x800F9964
