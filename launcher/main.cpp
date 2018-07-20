@@ -1,12 +1,12 @@
-#include <sdk/os/debug.hpp>
 #include <sdk/os/file.hpp>
 #include <sdk/os/gui.hpp>
-#include <sdk/os/lcd.hpp>
+#include <sdk/os/debug.hpp>
 #include <sdk/os/mem.hpp>
+#include <sdk/os/string.hpp>
+#include <sdk/os/lcd.hpp>
 #include "elf.h"
 
 int y;
-
 #define printf(format, ...) do { \
 	Debug_Printf(0, y++, false, 0, format, ## __VA_ARGS__); \
 	LCD_Refresh(); \
@@ -39,6 +39,133 @@ private:
 	int m_fd;
 };
 
+class Find {
+public:
+	Find() : m_opened(false), m_findHandle(-1) {
+
+	}
+
+	~Find() {
+		if (m_opened) {
+			findClose(m_findHandle);
+		}
+	}
+
+	int findFirst(const wchar_t *path, wchar_t *name, struct findInfo *findInfoBuf) {
+		int ret = ::findFirst(path, &m_findHandle, name, findInfoBuf);
+		m_opened = true;
+		return ret;
+	}
+
+	int findNext(wchar_t *name, struct findInfo *findInfoBuf) {
+		return ::findNext(m_findHandle, name, findInfoBuf);
+	}
+
+private:
+	bool m_opened;
+	int m_findHandle;
+};
+
+class Launcher : public GUIDialog {
+public:
+    int m_numApps = 0;
+    struct {
+        char fileName[100];
+        char path[200];
+    } m_apps[64];
+    int m_selectedApp = 0;
+
+    Launcher() : GUIDialog(
+        GUIDialog::Height35, GUIDialog::AlignTop,
+        "Hollyhock Launcher",
+        GUIDialog::KeyboardStateNone
+    ), m_appNames(
+        GetLeftX() + 10, GetTopY() + 10, GetRightX() - 10, GetBottomY() - 10,
+        APP_NAMES_EVENT_ID
+    ), m_run(
+        GetLeftX() + 10, GetTopY() + 45, GetLeftX() + 10 + 100, GetTopY() + 45 + 35,
+        "Run", RUN_EVENT_ID
+    ), m_close(
+        GetRightX() - 10 - 100, GetTopY() + 45, GetRightX() - 10, GetTopY() + 45 + 35,
+        "Close", CLOSE_EVENT_ID
+    ) {
+        FindApps();
+        PopulateDropDown();
+
+        m_appNames.SetScrollBarVisibility(
+            GUIDropDownMenu::ScrollBarVisibleWhenRequired
+        );
+        AddElement(m_appNames);
+        
+        AddElement(m_run);
+        AddElement(m_close);
+    }
+
+    void FindApps() {
+        const char *basePath = "\\fls0\\";
+
+        Find find;
+
+        wchar_t fileName[100];
+        struct findInfo findInfoBuf;
+        int ret = find.findFirst(L"\\fls0\\*.hhk", fileName, &findInfoBuf);
+
+        while (ret >= 0) {
+            if (findInfoBuf.type == findInfoBuf.EntryTypeFile) {
+                memset(&m_apps[m_numApps], 0, sizeof(m_apps[m_numApps]));
+
+                // copy the file name (converting to a non-wide string in the
+                // process)
+                for (int i = 0; i < 100; ++i) {
+                    wchar_t c = fileName[i];
+                    m_apps[m_numApps].fileName[i] = c;
+                    if (c == 0x0000) {
+                        break;
+                    }
+                }
+
+                // build the path
+                strcat(m_apps[m_numApps].path, basePath);
+                strcat(m_apps[m_numApps].path, m_apps[m_numApps].fileName);
+
+                m_numApps++;
+            }
+
+            ret = find.findNext(fileName, &findInfoBuf);
+        }
+    }
+
+    void PopulateDropDown() {
+        for (int i = 0; i < m_numApps; ++i) {
+            m_appNames.AddMenuItem(*(
+                new GUIDropDownMenuItem(
+                    m_apps[i].path, i + 1,
+                    GUIDropDownMenuItem::FlagEnabled |
+                    GUIDropDownMenuItem::FlagTextAlignLeft
+                )
+            ));
+        }
+    }
+
+    virtual int OnEvent(GUIDialog_Wrapped *dialog, GUIDialog_OnEvent_Data *event) {
+        if (event->GetEventID() == APP_NAMES_EVENT_ID) {
+            m_selectedApp = event->data - 1;
+        }
+
+        return GUIDialog::OnEvent(dialog, event);
+    }
+
+private:
+    const uint16_t APP_NAMES_EVENT_ID = 1;
+    GUIDropDownMenu m_appNames;
+
+    const uint16_t RUN_EVENT_ID = 0x3EA;
+    GUIButton m_run;
+
+    const uint16_t CLOSE_EVENT_ID = 0x3EB;
+    GUIButton m_close;
+};
+
 bool strcmp(const char *str1, const char *str2) {
 	while (*str1 == *str2) {
 		// if we've reached the end of one or both strings
@@ -55,14 +182,14 @@ bool strcmp(const char *str1, const char *str2) {
 	return false;
 }
 
-void main() {
-	y = 0;
+void RunELF(const char *path) {
+    y = 0;
 	int ret;
 
 	File f;
-	ret = f.open("\\fls0\\app.hhk", OPEN_READ);
+	ret = f.open(path, OPEN_READ);
 	if (ret < 0) {
-		printf("Error: Could not open app.hhk (%d)", ret);
+		printf("Error: Could not open %s (%d)", path, ret);
 		return;
 	}
 
@@ -188,7 +315,9 @@ void main() {
 	if (appAuthor) printf("App author: %s", appAuthor);
 	if (appVersion) printf("App version: %s", appVersion);
 
-	printf("Entry point %#010x - calling", elf->e_entry);
+	printf("Entry point %#010x - calling on key press", elf->e_entry);
+
+    Debug_WaitKey();
 
 	__asm__ volatile(
 		"jsr @%0\n"
@@ -201,6 +330,13 @@ void main() {
 	printf("App exited - press to finish");
 
 	Debug_WaitKey();
+}
+
+void main() {
+    Launcher launcher;
+    if (launcher.ShowDialog() == 0x3EA) {
+        RunELF(launcher.m_apps[launcher.m_selectedApp].path);
+    }
 }
 
 extern "C"

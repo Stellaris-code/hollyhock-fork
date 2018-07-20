@@ -49,7 +49,7 @@ struct GUIDialog_Wrapped_VTable {
 	VTABLE_FAKE_ENTRY(23, 3);
 
 	VTABLE_ENTRY(
-		void, ShowDialog,
+		int, ShowDialog,
 		struct GUIDialog_Wrapped *dialog
 	);
 
@@ -140,7 +140,7 @@ public:
 
 	void AddElement(GUIElement &element);
 	void Refresh();
-	void ShowDialog();
+	int ShowDialog();
 
 private:
 	struct GUIDialog_Wrapped_VTable *m_oldVTable;
