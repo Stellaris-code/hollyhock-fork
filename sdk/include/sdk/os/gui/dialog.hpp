@@ -76,10 +76,23 @@ static_assert(sizeof(struct GUIDialog_Wrapped) == 0xA8);
 
 struct GUIDialog_OnEvent_Data {
 	uint16_t type;
-	uint16_t unknown0;
+
+	/// Arbitary data. Usage dependent on event and element type.
+	uint16_t data;
 
 	/// The pointer to the internal GUI element class the event refers to. 
 	void *element;
+
+	/**
+	 * Returns the event ID encoded in this event's @c type. This is the value
+	 * which would have been passed in to the @c eventID parameter when the
+	 * GUI element was created.
+	 * 
+	 * @returns The event ID of the event.
+	 */
+	constexpr uint16_t GetEventID() {
+		return (type >> 4) - 8;
+	}
 };
 
 class GUIDialog : public Wrapped {

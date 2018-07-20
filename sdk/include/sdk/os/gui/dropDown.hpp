@@ -41,7 +41,7 @@ public:
 
 	GUIDropDownMenu(
 		uint16_t leftX, uint16_t topY, uint16_t rightX, uint16_t bottomY,
-		uint16_t eventType
+		uint16_t eventID
 	);
 
 	void SetScrollBarVisibility(ScrollBarVisibility visibility);
@@ -67,7 +67,7 @@ extern "C"
 void *GUI_CreateDropDownMenu(
 	void *dropDownMenu,
 	uint16_t bounds[4],
-	uint16_t eventType, int flags1
+	uint16_t eventID, int flags1
 );
 
 extern "C"

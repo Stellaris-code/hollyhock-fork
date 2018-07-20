@@ -9,15 +9,15 @@
  * 
  * @param leftX,topY,rightX,bottomY The coordinates of the bounding box of the
  * drop down menu, in screen pixels relative to the top left of the display.
- * @param eventType See @ref GUIButton documentation.
+ * @param eventID The ID to use for events relating to this drop down menu.
  */
 GUIDropDownMenu::GUIDropDownMenu(
 	uint16_t leftX, uint16_t topY, uint16_t rightX, uint16_t bottomY,
-	uint16_t eventType
+	uint16_t eventID
 ) {
 	uint16_t bounds[] = {leftX, topY, rightX, bottomY};
 	m_wrapped = GUI_CreateDropDownMenu(
-		nullptr, bounds, eventType, 8
+		nullptr, bounds, eventID, 8
 	);
 }
 

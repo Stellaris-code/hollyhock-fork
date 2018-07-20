@@ -12,27 +12,13 @@ public:
 	GUIButton(
 		uint16_t leftX, uint16_t topY, uint16_t rightX, uint16_t bottomY,
 		const char *text,
-		uint16_t eventType
+		uint16_t eventID
 	);
 	GUIButton(
 		uint16_t leftX, uint16_t topY, uint16_t rightX, uint16_t bottomY,
 		const char *text,
-		uint16_t eventType, int flags
+		uint16_t eventID, int flags
 	);
-
-	/**
-	 * Returns the type which will be reported in the event data passed to a
-	 * dialog's OnEvent from an @c eventType passed into the constructor for a
-	 * @ref GUIButton.
-	 * 
-	 * @param eventType The @c eventType value passed into the button's
-	 * constructor.
-	 * @return The type reported in the event data for the specified
-	 * @p eventType.
-	 */
-	static constexpr uint16_t GetEventType(uint16_t eventType) {
-		return ((eventType + 8) << 4) | (1 << 3);
-	}
 };
 
 /// @cond INTERNAL
@@ -41,6 +27,6 @@ void *GUI_CreateButton(
 	void *button,
 	uint16_t bounds[4],
 	const char *text,
-	uint16_t eventType, int unk0, int unk1
+	uint16_t eventID, int unk0, int unk1
 );
 /// @endcond
