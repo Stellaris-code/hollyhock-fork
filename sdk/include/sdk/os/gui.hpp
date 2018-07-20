@@ -174,9 +174,8 @@ struct GUIDialog_Wrapped_VTable {
 		struct GUIDialog_Wrapped *dialog
 	);
 
-	VTABLE_FAKE_ENTRY(11, 4);
+	VTABLE_FAKE_ENTRY(20, 4);
 };
-static_assert(sizeof(struct GUIDialog_Wrapped_VTable) == 0x21C);
 
 /// @private
 struct GUIDialog_Wrapped {
@@ -347,9 +346,8 @@ struct GUITextBox_Wrapped_VTable {
 		struct GUITextBox_Wrapped *textBox, const char *text
 	);
 
-	VTABLE_FAKE_ENTRY(14, 1);
+	// no need to length match
 };
-static_assert(sizeof(struct GUITextBox_Wrapped_VTable) == 0x234);
 
 /// @private
 struct GUITextBox_Wrapped {
