@@ -1,0 +1,148 @@
+#pragma once
+#include <stdint.h>
+#include "util.hpp"
+
+// pre-declare the class, since a pointer to it is placed in the vtable
+class GUIDialog;
+
+/// @private
+struct GUIDialog_Wrapped_VTable {
+	/**
+	 * Stores the address of the @ref GUIDialog object this vtable belongs to.
+	 * Should be set by the constructor of @ref GUIDialog.
+	 * 
+	 * In the original vtable, the first dword is zero. Since it appears to
+	 * never be accessed, and the vtables in the firmware are stored in ROM (i.e
+	 * even if the firmware wanted to change the value, it couldn't) we're safe
+	 * to use it for our own purposes.
+	 * 
+	 * That purpose is to link the vtable to an instance of the @ref GUIDialog.
+	 * Since we can't populate the vtable with instance function pointers, we
+	 * have to use a static function. Without this entry, the static function
+	 * would have no idea which @ref GUIDialog instance the function call was
+	 * associated with.
+	 */
+	GUIDialog *me;
+	uint32_t fakeentrypadding[2];
+
+	VTABLE_FAKE_ENTRY(1, 0);
+	
+	VTABLE_ENTRY(
+		int, OnEvent,
+		struct GUIDialog_Wrapped *dialog, struct GUIDialog_OnEvent_Data *event
+	);
+	VTABLE_FAKE_ENTRY(1, 1);
+
+	// unknown0 - always pass 0
+	VTABLE_ENTRY(
+		void, AddElement,
+		struct GUIDialog_Wrapped *dialog, void *element, int unknown0
+	);
+
+	VTABLE_FAKE_ENTRY(4, 2);
+
+	VTABLE_ENTRY(
+		void, Refresh,
+		struct GUIDialog_Wrapped *dialog
+	);
+
+	VTABLE_FAKE_ENTRY(23, 3);
+
+	VTABLE_ENTRY(
+		void, ShowDialog,
+		struct GUIDialog_Wrapped *dialog
+	);
+
+	VTABLE_FAKE_ENTRY(20, 4);
+};
+
+/// @private
+struct GUIDialog_Wrapped {
+	uint8_t unknown0[0x10];
+
+	// refer to accessors in GUIDialog class for documentation
+	uint16_t leftX;
+	uint16_t topY;
+	uint16_t rightX;
+	uint16_t bottomY;
+
+	uint8_t unknown1[0x34];
+
+	struct GUIDialog_Wrapped_VTable *vtable;
+
+	uint8_t unknown2[0x58];
+};
+static_assert(sizeof(struct GUIDialog_Wrapped) == 0xA8);
+
+struct GUIDialog_OnEvent_Data {
+	uint16_t type;
+	uint16_t unknown0;
+
+	/// The pointer to the internal GUI element class the event refers to. 
+	void *element;
+};
+
+class GUIDialog : public Wrapped {
+public:
+	enum Height : int {
+		Height25 = 0,
+		Height55 = 1,
+		Height75 = 2,
+		Height95 = 3,
+		Height35 = 4,
+		Height60 = 5
+	};
+
+	enum Alignment : int {
+		AlignTop = 0,
+		AlignCenter = 1,
+		AlignBottom = 2
+	};
+
+	enum KeyboardState : int {
+		KeyboardStateNone = 0, // 2 gives same effect
+		KeyboardStateMath1 = 1, // 3 gives same effect
+		KeyboardStateMath2 = 4,
+		KeyboardStateMath3 = 5,
+		KeyboardStateTrig = 6,
+		KeyboardStateVar = 7,
+		KeyboardStateABC = 8,
+		KeyboardStateCatalog = 9,
+		KeyboardStateAdvance = 10,
+		KeyboardStateNumber = 11
+	};
+
+	GUIDialog(
+		enum Height height, enum Alignment alignment,
+		const char* title,
+		enum KeyboardState keyboard
+	);
+
+	virtual int OnEvent(struct GUIDialog_Wrapped *dialog, struct GUIDialog_OnEvent_Data *event);
+	
+	uint16_t GetLeftX();
+	uint16_t GetTopY();
+	uint16_t GetRightX();
+	uint16_t GetBottomY();
+
+	void AddElement(GUIElement &element);
+	void Refresh();
+	void ShowDialog();
+
+private:
+	struct GUIDialog_Wrapped_VTable *m_oldVTable;
+	struct GUIDialog_Wrapped_VTable m_vtable;
+
+	static int OnEvent_Wrap(struct GUIDialog_Wrapped *dialog, struct GUIDialog_OnEvent_Data *event);
+};
+
+/// @cond INTERNAL
+extern "C"
+struct GUIDialog_Wrapped *GUI_CreateDialog(
+	void *dialog,
+	int height, int alignment,
+	const char *title,
+	int unknown2, int unknown3,
+	int keyboard
+);
+/// @endcond
