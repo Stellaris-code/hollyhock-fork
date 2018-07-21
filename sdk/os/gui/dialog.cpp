@@ -112,10 +112,12 @@ void GUIDialog::Refresh() {
 
 /**
  * Presents the dialog to the user. Blocks until the dialog is closed.
+ * 
+ * @return The result of the dialog.
  */
-int GUIDialog::ShowDialog() {
-	return VTABLE_CALL(
+GUIDialog::DialogResult GUIDialog::ShowDialog() {
+	return static_cast<GUIDialog::DialogResult>(VTABLE_CALL(
 		GetWrapped<GUIDialog_Wrapped>(), vtable,
 		ShowDialog
-	);
+	));
 }

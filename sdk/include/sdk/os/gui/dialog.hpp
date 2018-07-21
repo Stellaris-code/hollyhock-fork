@@ -125,6 +125,11 @@ public:
 		KeyboardStateNumber = 11
 	};
 
+	enum DialogResult : int {
+		DialogResultOK = 0x3EA,
+		DialogResultCancel = 0x3EB
+	};
+
 	GUIDialog(
 		enum Height height, enum Alignment alignment,
 		const char* title,
@@ -140,7 +145,7 @@ public:
 
 	void AddElement(GUIElement &element);
 	void Refresh();
-	int ShowDialog();
+	DialogResult ShowDialog();
 
 private:
 	struct GUIDialog_Wrapped_VTable *m_oldVTable;

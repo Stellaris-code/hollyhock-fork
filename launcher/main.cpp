@@ -159,10 +159,10 @@ private:
     const uint16_t APP_NAMES_EVENT_ID = 1;
     GUIDropDownMenu m_appNames;
 
-    const uint16_t RUN_EVENT_ID = 0x3EA;
+    const uint16_t RUN_EVENT_ID = GUIDialog::DialogResultOK;
     GUIButton m_run;
 
-    const uint16_t CLOSE_EVENT_ID = 0x3EB;
+    const uint16_t CLOSE_EVENT_ID = GUIDialog::DialogResultCancel;
     GUIButton m_close;
 };
 
@@ -334,7 +334,7 @@ void RunELF(const char *path) {
 
 void main() {
     Launcher launcher;
-    if (launcher.ShowDialog() == 0x3EA) {
+    if (launcher.ShowDialog() == GUIDialog::DialogResultOK) {
         RunELF(launcher.m_apps[launcher.m_selectedApp].path);
     }
 }
