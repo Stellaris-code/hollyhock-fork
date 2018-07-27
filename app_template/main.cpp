@@ -1,4 +1,4 @@
-#include <appdef.h>
+#include <appdef.hpp>
 
 /*
  * Fill this section in with some information about your app.
