@@ -61,6 +61,43 @@ const uint32_t TOUCH_HOLD_DRAG = 2;
 const uint32_t TOUCH_ACT_BAR = 0x100;
 const uint32_t TOUCH_UP = 0x40;
 
+enum InputScancode : uint16_t {
+	ScancodeKeyboard = (7 << 8) | 5,
+	ScancodeShift = (7 << 8) | 1,
+	ScancodeBackspace = (7 << 8) | 2,
+	ScancodeClear = (1 << 8) | 0,
+	ScancodeUp = (7 << 8) | 4,
+	ScancodeDown = (6 << 8) | 4,
+	ScancodeLeft = (6 << 8) | 3,
+	ScancodeRight = (7 << 8) | 3,
+	ScancodeEquals = (7 << 8) | 6,
+	ScancodeX = (6 << 8) | 6,
+	ScancodeY = (6 << 8) | 5,
+	ScancodeZ = (5 << 8) | 3,
+	ScancodePower = (6 << 8) | 2,
+	ScancodeDivide = (6 << 8) | 1,
+	ScancodeOpenParenthesis = (5 << 8) | 6,
+	Scancode7 = (5 << 8) | 5,
+	Scancode8 = (5 << 8) | 4,
+	Scancode9 = (5 << 8) | 2,
+	ScancodeTimes = (5 << 8) | 1,
+	ScancodeCloseParenthesis = (4 << 8) | 6,
+	Scancode4 = (4 << 8) | 5,
+	Scancode5 = (4 << 8) | 4,
+	Scancode6 = (4 << 8) | 2,
+	ScancodeMinus = (4 << 8) | 1,
+	ScancodeComma = (3 << 8) | 6,
+	Scancode1 = (3 << 8) | 5,
+	Scancode2 = (3 << 8) | 4,
+	Scancode3 = (3 << 8) | 2,
+	ScancodePlus = (3 << 8) | 1,
+	ScancodeNegative = (2 << 8) | 6,
+	Scancode0 = (2 << 8) | 5,
+	ScancodeDot = (2 << 8) | 4,
+	ScancodeEXP = (2 << 8) | 2,
+	ScancodeEXE = (2 << 8) | 1
+};
+
 /**
  * Information about an input event returned from @ref GetInput. See
  * documentation for individual members for more information.
@@ -169,3 +206,20 @@ struct InputEvent {
  */
 extern "C"
 int GetInput(struct InputEvent *event, uint32_t unknown1, uint32_t unknown2);
+
+/**
+ * Returns true if the specified key is currently down.
+ * 
+ * @param[in] scanCode The scancode of the key to check.
+ * @returns True if the key is down, false otherwise.
+ */
+extern "C"
+bool Input_GetKeyState(InputScancode *scancode);
+
+/**
+ * Returns true if any key on the keyboard is currently down.
+ * 
+ * @returns True if a key is pressed, false otherwise.
+ */
+extern "C"
+bool Input_IsAnyKeyDown();
