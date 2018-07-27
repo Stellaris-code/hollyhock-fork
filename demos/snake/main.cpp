@@ -1,6 +1,12 @@
+#include <appdef.hpp>
 #include <sdk/os/debug.hpp>
 #include <sdk/os/input.hpp>
 #include <sdk/os/lcd.hpp>
+
+APP_NAME("Snake")
+APP_DESCRIPTION("A simple implementation of the game Snake.")
+APP_AUTHOR("The6P4C")
+APP_VERSION("1.0.0")
 
 #define COLOR_BACKGROUND RGB_TO_RGB565(0, 0, 0)
 #define COLOR_SNAKE RGB_TO_RGB565(0x1F, 0, 0)

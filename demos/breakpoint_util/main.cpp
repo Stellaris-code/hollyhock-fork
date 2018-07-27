@@ -1,8 +1,14 @@
+#include <appdef.hpp>
 #include <stdint.h>
 #include <sdk/cpu/ubc.hpp>
 #include <sdk/os/debug.hpp>
 #include <sdk/os/gui.hpp>
 #include <sdk/os/lcd.hpp>
+
+APP_NAME("Breakpoint Utility")
+APP_DESCRIPTION("Set breakpoints within apps or OS code to view CPU state.")
+APP_AUTHOR("The6P4C")
+APP_VERSION("1.0.0")
 
 struct CPUState {
 	uint32_t r0;
@@ -155,13 +161,13 @@ public:
 		8, true 
 	), m_setBreakpoint(
 		GetLeftX() + 10, GetTopY() + 60, GetRightX() - 10, GetTopY() + 90,
-		"Set breakpoint", BUTTON_SET_BREAKPOINT_EVENT_TYPE
+		"Set breakpoint", BUTTON_SET_BREAKPOINT_EVENT_ID
 	), m_removeBreakpoint(
 		GetLeftX() + 10, GetTopY() + 95, GetRightX() - 10, GetTopY() + 125,
-		"Remove breakpoint", BUTTON_REMOVE_BREAKPOINT_EVENT_TYPE
+		"Remove breakpoint", BUTTON_REMOVE_BREAKPOINT_EVENT_ID
 	), m_close(
 		GetLeftX() + 10, GetTopY() + 130, GetRightX() - 10, GetTopY() + 160,
-		"Close", BUTTON_CLOSE_EVENT_TYPE
+		"Close", BUTTON_CLOSE_EVENT_ID
 	) {
 		AddElement(m_breakpointAddressLabel);
 		AddElement(m_breakpointAddress);
@@ -224,8 +230,7 @@ public:
 		// Not elegant, but it gets the job done.
 		// TODO: Add a label to indicate the status -> requires finding a
 		// SetText function for labels.
-
-		if (event->type == GUIButton::GetEventType(BUTTON_SET_BREAKPOINT_EVENT_TYPE)) {
+		if (event->GetEventID() == BUTTON_SET_BREAKPOINT_EVENT_ID) {
 			uint32_t address = GetBreakpointAddress();
 
 			if (address != 0) {
@@ -240,7 +245,7 @@ public:
 			return 0;
 		}
 
-		if (event->type == GUIButton::GetEventType(BUTTON_REMOVE_BREAKPOINT_EVENT_TYPE)) {
+		if (event->GetEventID() == BUTTON_REMOVE_BREAKPOINT_EVENT_ID) {
 			RemoveBreakpoint();
 
 			m_breakpointAddress.SetText("Removed.");
@@ -255,16 +260,13 @@ private:
 	GUILabel m_breakpointAddressLabel;
 	GUITextBox m_breakpointAddress;
 
-	static const int BUTTON_SET_BREAKPOINT_EVENT_TYPE = 1;
+	static const int BUTTON_SET_BREAKPOINT_EVENT_ID = 1;
 	GUIButton m_setBreakpoint;
 
-	static const int BUTTON_REMOVE_BREAKPOINT_EVENT_TYPE = 2;
+	static const int BUTTON_REMOVE_BREAKPOINT_EVENT_ID = 2;
 	GUIButton m_removeBreakpoint;
 
-	// This corresponds to the event that causes the dialog to close.
-	// Not 100% sure of the mechanism that makes this work, but that hasn't
-	// stopped me using stuff before :)
-	static const int BUTTON_CLOSE_EVENT_TYPE = 0x3EA;
+	static const int BUTTON_CLOSE_EVENT_ID = GUIDialog::DialogResultCancel;
 	GUIButton m_close;
 };
 

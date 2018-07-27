@@ -1,4 +1,10 @@
+#include <appdef.hpp>
 #include <sdk/os/gui.hpp>
+
+APP_NAME("Demo GUI")
+APP_DESCRIPTION("A simple demo GUI.")
+APP_AUTHOR("The6P4C")
+APP_VERSION("1.0.0")
 
 void main() {
 	GUIDialog dialog(
@@ -26,7 +32,6 @@ void main() {
 		dialog.GetTopY() + 10,
 		100,
 		"Textbox!",
-		GUITextBox::FlagEditable | GUITextBox::FlagDrawBox,
 		100000, false
 	);
 	dialog.AddElement(textBox);

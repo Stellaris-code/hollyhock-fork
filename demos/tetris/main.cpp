@@ -1,8 +1,14 @@
+#include <appdef.hpp>
 #include <sdk/os/debug.hpp>
 #include <sdk/os/input.hpp>
 #include <sdk/os/lcd.hpp>
 #include <sdk/os/mem.hpp>
 //320x520 -> 16x26 (20px x 20px) -> 12x22
+
+APP_NAME("Tetris")
+APP_DESCRIPTION("A simple implementation of the game Tetris.")
+APP_AUTHOR("De_Coder")
+APP_VERSION("1.0.0")
 
 void print_score(uint32_t score){	//prints to score to the top of the screen
 	Debug_SetCursorPosition(7, 0);

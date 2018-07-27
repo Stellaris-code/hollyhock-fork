@@ -1,6 +1,12 @@
+#include <appdef.hpp>
 #include <sdk/os/input.hpp>
 #include <sdk/os/lcd.hpp>
 #include <sdk/os/mem.hpp>
+
+APP_NAME("Random Circles (VRAM Test)")
+APP_DESCRIPTION("Draw random circles at tapped locations on the display.")
+APP_AUTHOR("The6P4C")
+APP_VERSION("1.0.0")
 
 #define PIXEL(x, y) (vram[(x) + (y) * width])
 

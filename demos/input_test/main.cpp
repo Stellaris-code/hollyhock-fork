@@ -1,7 +1,13 @@
+#include <appdef.hpp>
 #include <sdk/os/debug.hpp>
 #include <sdk/os/input.hpp>
 #include <sdk/os/lcd.hpp>
 #include <sdk/os/mem.hpp>
+
+APP_NAME("Input Test")
+APP_DESCRIPTION("Test of the GetInput function.")
+APP_AUTHOR("The6P4C")
+APP_VERSION("1.0.0")
 
 struct LUTEntry {
 	const char *str;
