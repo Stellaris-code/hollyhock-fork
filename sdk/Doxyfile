@@ -1,6 +1,7 @@
 PROJECT_NAME = "hollyhock"
 
 INPUT = .
+FILE_PATTERNS = *.c *.cpp *.h *.hpp *.s
 RECURSIVE = YES
 EXTRACT_PRIVATE = NO
 

@@ -26,6 +26,7 @@
 #include "gui/dialog.hpp"
 #include "gui/dropDown.hpp"
 #include "gui/label.hpp"
+#include "gui/longLabel.hpp"
 #include "gui/radioButton.hpp"
 #include "gui/textBox.hpp"
 
