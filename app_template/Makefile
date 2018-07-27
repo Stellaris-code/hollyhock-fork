@@ -7,7 +7,7 @@ endif
 AS:=sh4-elf-as
 AS_FLAGS:=
 
-CC:=sh4-elf0-gcc
+CC:=sh4-elf-gcc
 CC_FLAGS:=-ffreestanding -fshort-wchar -Wall -Wextra -O2 -I $(SDK_DIR)/include/
 
 CXX:=sh4-elf-g++
