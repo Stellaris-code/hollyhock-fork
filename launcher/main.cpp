@@ -18,7 +18,11 @@ public:
         APP_NAMES_EVENT_ID
     ), m_appInfo(
         GetLeftX() + 10, GetTopY() + 90, GetRightX() - 10, GetBottomY() - 10,
-        "Path: \\fls0\\myApp.hhk\n\nName: This is the app name\n\nDescription: It does some fancy stuff for you. You can make it bleep and bloop.\n\nAuthor: The6P4C\n\nVersion: 1.0.0"
+        // Since the app info string is immediately updated based on the
+        // selected app, if no apps are found, this is the string that stays
+        // displayed.
+        // Use it to communicate to the user that we couldn't find any apps.
+        "No apps were found on your calculator.\n\nEnsure their .hhk files have been copied to the root directory of your calculator's flash."
     ), m_run(
         GetLeftX() + 10, GetTopY() + 45, GetLeftX() + 10 + 100, GetTopY() + 45 + 35,
         "Run", RUN_EVENT_ID
@@ -54,8 +58,13 @@ public:
         );
         AddElement(m_appNames);
 
-        AddElement(m_appInfo);        
-        AddElement(m_run);
+        AddElement(m_appInfo);
+
+        // Only show the Run button if there's apps to display
+        if (Apps::g_numApps > 0) {
+            AddElement(m_run);
+        }
+
         AddElement(m_close);
 
         UpdateAppInfo();
@@ -74,6 +83,9 @@ public:
     }
 
     void UpdateAppInfo() {
+        // If an invalid index is selected, don't do anything
+        if (m_selectedApp >= Apps::g_numApps) return;
+
         struct Apps::AppInfo *app = &Apps::g_apps[m_selectedApp];
         bool hasName = app->name[0] != '\0';
         bool hasDescription = app->description[0] != '\0';
