@@ -57,7 +57,7 @@ GUITextBox::GUITextBox(
 	int x, int y, int width,
 	const char *text, int maxLength, bool countLengthByBytes
 ) {
-	m_wrapped = GUI_CreateTextBox(
+	m_wrapped = GUITextBox_ctor(
 		0,
 		x, y, width,
 		text,

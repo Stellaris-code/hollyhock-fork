@@ -53,7 +53,7 @@ public:
 
 /// @cond INTERNAL
 extern "C"
-struct GUITextBox_Wrapped *GUI_CreateTextBox(
+struct GUITextBox_Wrapped *GUITextBox_ctor(
 	void *textBox,
 	int x, int y, int width,
 	const char *text,

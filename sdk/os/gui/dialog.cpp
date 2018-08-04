@@ -14,7 +14,7 @@ GUIDialog::GUIDialog(
 	const char* title,
 	enum KeyboardState keyboard
 ) : m_vtable({}) {
-	m_wrapped = GUI_CreateDialog(
+	m_wrapped = GUIDialog_ctor(
 		0,
 		height, alignment,
 		title,

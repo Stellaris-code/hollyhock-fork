@@ -20,7 +20,7 @@ public:
 
 /// @cond INTERNAL
 extern "C"
-void *GUI_CreateRadioButton(
+void *GUIRadioButton_ctor(
 	void *radioButton,
 	int x, int y,
 	const char *text,

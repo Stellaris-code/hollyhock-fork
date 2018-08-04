@@ -64,14 +64,14 @@ public:
 
 /// @cond INTERNAL
 extern "C"
-void *GUI_CreateDropDownMenu(
+void *GUIDropDownMenu_ctor(
 	void *dropDownMenu,
 	uint16_t bounds[4],
 	uint16_t eventID, int flags1
 );
 
 extern "C"
-void *GUI_CreateDropDownMenuItem(
+void *GUIDropDownMenuItem_ctor(
 	void *dropDownMenuItem,
 	int unk0, int unk1,
 	const char *text,

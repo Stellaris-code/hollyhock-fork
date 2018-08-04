@@ -41,5 +41,5 @@ public:
 
 /// @cond INTERNAL
 extern "C"
-void *GUI_CreateLongLabel(void *longLabel, uint16_t bounds[4], int unk0, int unk1, const char *text, int unk2);
+void *GUILongLabel_ctor(void *longLabel, uint16_t bounds[4], int unk0, int unk1, const char *text, int unk2);
 /// @endcond

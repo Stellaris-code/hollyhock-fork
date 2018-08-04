@@ -16,7 +16,7 @@ GUIDropDownMenu::GUIDropDownMenu(
 	uint16_t eventID
 ) {
 	uint16_t bounds[] = {leftX, topY, rightX, bottomY};
-	m_wrapped = GUI_CreateDropDownMenu(
+	m_wrapped = GUIDropDownMenu_ctor(
 		nullptr, bounds, eventID, 8
 	);
 }
@@ -54,7 +54,7 @@ void GUIDropDownMenu::AddMenuItem(GUIDropDownMenuItem &dropDownMenuItem) {
  * @ref Flag enum.
  */
 GUIDropDownMenuItem::GUIDropDownMenuItem(const char *text, int index, int flags) {
-	m_wrapped = GUI_CreateDropDownMenuItem(
+	m_wrapped = GUIDropDownMenuItem_ctor(
 		0, 0, 0, text, index, flags, 0
 	);
 }

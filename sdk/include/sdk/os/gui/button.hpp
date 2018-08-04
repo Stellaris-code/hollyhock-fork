@@ -23,7 +23,7 @@ public:
 
 /// @cond INTERNAL
 extern "C"
-void *GUI_CreateButton(
+void *GUIButton_ctor(
 	void *button,
 	uint16_t bounds[4],
 	const char *text,

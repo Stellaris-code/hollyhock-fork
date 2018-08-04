@@ -156,7 +156,7 @@ private:
 
 /// @cond INTERNAL
 extern "C"
-struct GUIDialog_Wrapped *GUI_CreateDialog(
+struct GUIDialog_Wrapped *GUIDialog_ctor(
 	void *dialog,
 	int height, int alignment,
 	const char *title,

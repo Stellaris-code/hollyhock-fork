@@ -12,7 +12,7 @@ GUILongLabel::GUILongLabel(
     const char *text
 ) {
     uint16_t bounds[] = {leftX, topY, rightX, bottomY};
-    m_wrapped = GUI_CreateLongLabel(0, bounds, 0, 0x441, text, 0x3E8);
+    m_wrapped = GUILongLabel_ctor(0, bounds, 0, 0x441, text, 0x3E8);
 }
 
 /**

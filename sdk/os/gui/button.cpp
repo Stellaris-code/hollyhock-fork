@@ -51,7 +51,7 @@ GUIButton::GUIButton(
 		rightX, bottomY
 	};
 
-	m_wrapped = GUI_CreateButton(
+	m_wrapped = GUIButton_ctor(
 		0,
 		bounds, text, eventID,
 		flags, 0

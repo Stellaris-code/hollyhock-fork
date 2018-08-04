@@ -34,7 +34,7 @@ public:
 
 /// @cond INTERNAL
 extern "C"
-void *GUI_CreateLabel(
+void *GUILabel_ctor(
 	void *label,
 	int x, int y,
 	const char *text,

@@ -15,7 +15,7 @@ GUIRadioButton::GUIRadioButton(
 	const char *text,
 	int flags
 ) {
-	m_wrapped = GUI_CreateRadioButton(
+	m_wrapped = GUIRadioButton_ctor(
 		0,
 		x, y,
 		text,

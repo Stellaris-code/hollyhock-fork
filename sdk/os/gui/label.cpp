@@ -57,7 +57,7 @@ GUILabel::GUILabel(
 	uint16_t *textColor, uint16_t *backgroundColor,
 	bool showShadow, uint16_t shadowColor
 ) {
-	m_wrapped = GUI_CreateLabel(
+	m_wrapped = GUILabel_ctor(
 		0,
 		x, y, text,
 		0,
