@@ -170,6 +170,8 @@ bool checkSnake() {
 }
 
 void main() {
+	LCD_VRAMBackup();
+
 	// Initialize our constants
 	LCD_ClearScreen();
 
@@ -239,5 +241,8 @@ void main() {
 		}
 	}
 
+	Debug_WaitKey();
+
+	LCD_VRAMRestore();
 	LCD_Refresh();
 }

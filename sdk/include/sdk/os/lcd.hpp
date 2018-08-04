@@ -140,3 +140,22 @@ void LCD_SetPixel(int x, int y, uint16_t color);
  */
 extern "C"
 void LCD_SetPixelFromPalette(int x, int y, uint8_t index);
+
+/**
+ * Backs up the current contents of VRAM.
+ * 
+ * Should be used to prevent display corruption when writing directly to VRAM.
+ * 
+ * Used in conjunction with @ref LCD_VRAMRestore.
+ */
+extern "C"
+void LCD_VRAMBackup();
+
+/**
+ * Restores the backed up contents of VRAM. The restored content is not
+ * displayed until @ref LCD_Refresh is called.
+ * 
+ * Used in conjunction with @ref LCD_VRAMBackup.
+ */
+extern "C"
+void LCD_VRAMRestore();

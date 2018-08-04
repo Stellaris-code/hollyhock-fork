@@ -32,6 +32,8 @@ void drawCircle(int32_t x0, int32_t y0, int radius) {
 }
 
 void main() {
+	LCD_VRAMBackup();
+
 	vram = LCD_GetVRAMAddress();
 	LCD_GetSize(&width, &height);
 
@@ -78,4 +80,7 @@ void main() {
 			}
 		}
 	}
+	
+	LCD_VRAMRestore();
+	LCD_Refresh();
 }

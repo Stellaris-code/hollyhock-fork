@@ -43,7 +43,6 @@ void draw_square(unsigned int x, unsigned int y, uint8_t color_index){	//draws o
 }
 
 void main() {
-	
 	uint32_t rand = 0;	//used to save random numbers. the last number is used as the seed for the next number
 	uint32_t score = 0;
 	uint32_t wait_down = 0;		//counter for the cycles until the block moves down one field
@@ -112,6 +111,8 @@ void main() {
 	unsigned char rot = 0;		//rotation of the active block
 	unsigned char block_type = 0;		//type of the active block
 	
+	LCD_VRAMBackup();
+
 	LCD_ClearScreen();
 	LCD_Refresh();
 	
@@ -394,4 +395,7 @@ void main() {
 	print_score(score);
 	LCD_Refresh();
 	Debug_WaitKey();
+
+	LCD_VRAMRestore();
+	LCD_Refresh();
 }
