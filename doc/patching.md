@@ -50,7 +50,7 @@ sudo make install-gcc
 sudo make install-target-libgcc
 ```
 
-You’ll now have `sh4-elf-gcc` available for your usage. Double check it runs and outputs `sh4-elf-gcc: fatal error: no input files`  when you run it.
+You’ll now have `sh4-elf-gcc` and `sh4-elf-g++` available for your usage.
 
 ## 2. Build the patches
 Keep working on your Linux machine.
@@ -90,6 +90,7 @@ Copy the `OSupdateDLL.dll` file to something new (maybe `patched_OSupdateDLL.dll
 Don't connect your calculator to your PC yet.
 
 On your Windows machine and in the temporary directory you've been working in, open the command prompt and run the following command.
+
 ```
 <hollyhock_path>\tools\run_update.bat patched_OSupdateDLL.dll
 ```
@@ -106,7 +107,13 @@ When the updater opens, hold the `[EXP]`, `[^]` and `Clear` keys on your fx-CP40
 
 Release the buttons and connect the calculator to your PC using a USB cable. Proceed through the OS updater, and disconnect your calculator **only** once the update has finished.
 
-## 6. Celebrate
-You've now patched your fx-CP400's firmware. Confirm the patch was applied correctly by opening the version dialog (either from the settings menu in the top left corner of Main > Version or in System) and confirm the string "hollyhock" is displayed.
+## 6. Check the patch
+Turn on your calculator and confirm the patch was applied correctly by opening the version dialog (either from the settings menu in the top left corner of Main > Version, or in System) and confirming the string "hollyhock" is displayed.
 
-You can now start [developing](developing.md) software for your GC.
+## 7. Build the launcher
+`cd` into the `launcher/` directory. Run `make`, then copy the file `run.bin` into the root directory of your GC's flash.
+
+## 8. Celebrate!
+You've successfully patched your fx-CP400's firmware, and installed the Hollyhock Launcher. You're ready to go!
+
+You can now start [using](using.md) or [developing](developing.md) software for your GC.

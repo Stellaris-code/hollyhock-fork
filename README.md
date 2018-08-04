@@ -14,4 +14,5 @@ This is by no means a finished project. Like the disclaimer says, use at your ow
 
 ## Guides
 1. [Patching your firmware](doc/patching.md)
-2. [Developing applications](doc/developing.md)
+2. [Using add-on software](doc/using.md)
+3. [Developing applications](doc/developing.md)
