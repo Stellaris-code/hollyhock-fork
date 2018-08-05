@@ -58,22 +58,6 @@ private:
 	int m_findHandle;
 };
 
-bool strcmp(const char *str1, const char *str2) {
-	while (*str1 == *str2) {
-		// if we've reached the end of one or both strings
-		if (*str1 == '\0' || *str2 == '\0') {
-			// return true if we're at the end of both (i.e. they matched) and
-			// false if we didn't
-			return *str1 == '\0' && *str2 == '\0';
-		}
-
-		str1++;
-		str2++;
-	}
-
-	return false;
-}
-
 namespace Apps {
     struct AppInfo g_apps[MAX_APPS];
     int g_numApps;
@@ -196,13 +180,13 @@ namespace Apps {
                             sectionHeader->sh_offset
                         );
 
-                        if (strcmp(sectionName, ".hollyhock_name")) {
+                        if (strcmp(sectionName, ".hollyhock_name") == 0) {
                             strcat(app->name, sectionData);
-                        } else if (strcmp(sectionName, ".hollyhock_description")) {
+                        } else if (strcmp(sectionName, ".hollyhock_description") == 0) {
                             strcat(app->description, sectionData);
-                        } else if (strcmp(sectionName, ".hollyhock_author")) {
+                        } else if (strcmp(sectionName, ".hollyhock_author") == 0) {
                             strcat(app->author, sectionData);
-                        } else if (strcmp(sectionName, ".hollyhock_version")) {
+                        } else if (strcmp(sectionName, ".hollyhock_version") == 0) {
                             strcat(app->version, sectionData);
                         }
                     }
