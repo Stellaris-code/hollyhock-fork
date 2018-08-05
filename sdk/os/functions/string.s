@@ -1,3 +1,7 @@
 .include "os/functions/_util.inc"
 
 DEFINE_OS_FUNC strcat 0x800A80D0
+DEFINE_OS_FUNC strchr 0x800A80F8
+DEFINE_OS_FUNC strcmp 0x800AB802
+DEFINE_OS_FUNC strcpy 0x800A811C
+DEFINE_OS_FUNC strlen 0x800A8128
