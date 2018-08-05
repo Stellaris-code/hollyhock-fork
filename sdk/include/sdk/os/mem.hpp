@@ -9,6 +9,14 @@
 #include <stdint.h>
 
 /**
+ * Frees memory allocated by @ref malloc, allowing it to be reused.
+ * 
+ * @param ptr The pointer to the allocated region of memory to free.
+ */
+extern "C"
+void free(void *ptr);
+
+/**
  * Allocates @p size bytes of memory.
  *
  * The current application crashes if the memory cannot be allocated.

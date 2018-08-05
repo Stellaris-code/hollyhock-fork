@@ -9,18 +9,18 @@ void *operator new[](size_t size) {
     return malloc(size);
 }
 
-void operator delete(void *p [[maybe_unused]]) {
-    // TODO: free(p)
+void operator delete(void *p) {
+    free(p);
 }
 
-void operator delete(void *p [[maybe_unused]], size_t size [[maybe_unused]]) {
-    // TODO: free(p)
+void operator delete(void *p, size_t size [[maybe_unused]]) {
+    free(p);
 }
 
-void operator delete[](void *p [[maybe_unused]]) {
-    // TODO: free(p)
+void operator delete[](void *p) {
+    free(p);
 }
 
-void operator delete[](void *p [[maybe_unused]], size_t size [[maybe_unused]]) {
-    // TODO: free(p)
+void operator delete[](void *p, size_t size [[maybe_unused]]) {
+    free(p);
 }
