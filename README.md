@@ -12,7 +12,7 @@ An SDK to write your own applications for the CASIO fx-CP400 graphics calculator
 
 This is by no means a finished project. Like the disclaimer says, use at your own risk! Breaking changes are not out of the question, and should be 100% expected.
 
-## Guides
-1. [Patching your firmware](doc/patching.md)
-2. [Using add-on software](doc/using.md)
-3. [Developing applications](doc/developing.md)
+## User Guides
+1. [Patching your firmware](doc/user/patching.md)
+2. [Using add-on software](doc/user/using.md)
+3. [Developing applications](doc/user/developing.md)
