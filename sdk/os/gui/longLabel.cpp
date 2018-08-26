@@ -21,9 +21,8 @@ GUILongLabel::GUILongLabel(
  * @param[in] text The new string for the long label.
  */
 void GUILongLabel::SetText(const char *text) {
-    VTABLE_CALL(
-		GetWrapped<GUILongLabel_Wrapped>(), vtable,
-		SetText,
+	GetWrapped<GUILongLabel_Wrapped>()->vtable->SetText(
+		m_wrapped,
 		text
 	);
 }
@@ -32,8 +31,5 @@ void GUILongLabel::SetText(const char *text) {
  * Refreshes the long label, redrawing it.
  */
 void GUILongLabel::Refresh() {
-    VTABLE_CALL(
-		GetWrapped<GUILongLabel_Wrapped>(), vtable,
-		Refresh
-	);
+	GetWrapped<GUILongLabel_Wrapped>()->vtable->Refresh(m_wrapped);
 }

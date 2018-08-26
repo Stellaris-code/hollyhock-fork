@@ -6,12 +6,8 @@
 struct GUITextBox_Wrapped_VTable {
 	VTABLE_FAKE_ENTRY(32, 0);
 
-	VTABLE_ENTRY(
-		void, SetText,
-		struct GUITextBox_Wrapped *textBox, const char *text
-	);
-
-	// no need to length match
+	// Args: text
+	VTableFunction<void, const char *> SetText;
 };
 
 /// @private

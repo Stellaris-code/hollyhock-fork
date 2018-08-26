@@ -85,9 +85,5 @@ const char *GUITextBox::GetText() {
  * @param[in] text The new string for the textbox.
  */
 void GUITextBox::SetText(const char *text) {
-	VTABLE_CALL(
-		GetWrapped<GUITextBox_Wrapped>(), vtable,
-		SetText,
-		text
-	);
+	GetWrapped<GUITextBox_Wrapped>()->vtable->SetText(m_wrapped, text);
 }

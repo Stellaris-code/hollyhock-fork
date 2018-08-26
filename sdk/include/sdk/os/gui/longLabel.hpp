@@ -5,17 +5,12 @@
 struct GUILongLabel_Wrapped_VTable {
     VTABLE_FAKE_ENTRY(9, 0);
 
-    VTABLE_ENTRY(
-		void, Refresh,
-		struct GUILongLabel_Wrapped *longLabel
-	);
+	VTableFunction<void> Refresh;
 
     VTABLE_FAKE_ENTRY(33, 1);
 
-    VTABLE_ENTRY(
-		void, SetText,
-		struct GUILongLabel_Wrapped *longLabel, const char *text
-	);
+	// Args: text
+	VTableFunction<void, const char *> SetText;
 };
 
 /// @private

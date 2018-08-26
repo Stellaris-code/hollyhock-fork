@@ -3,6 +3,7 @@
 
 // No point in documenting these macros. If people are trying to use them,
 // they're doing something weird and I don't want to help them :)
+// If you need to know what they do, look at how they're used.
 /// @cond INTERNAL
 /**
  * Create @p n fake vtable function entries.
@@ -16,46 +17,29 @@
 #define VTABLE_FAKE_ENTRY(n, x) uint32_t fakeentry##x[n * 3]
 
 /**
- * Create a vtable function entry.
+ * Represents an entry in a vtable.
  * 
- * Makes entries for the offset (suffix @c _Offset)
- * (added to @c self when the function is called), an unused padding entry, and
- * an entry for the function pointer.
+ * The function can be called with the () operator. The first argument must be
+ * the object to call the function on, followed by the arguments to the
+ * function.
  * 
- * @param return_type The return type of the function.
- * @param name The name of the function.
- * @param ... The arguments to the function (type and name).
+ * @tparam TReturn The return type of the function.
+ * @tparam ...TArgs The types of the function's arguments.
  */
-#define VTABLE_ENTRY(return_type, name, ...) int32_t name##_Offset; \
-                                             uint32_t name##_Unused; \
-                                             return_type (*name)(__VA_ARGS__)
+template<typename TReturn, typename ...TArgs>
+struct VTableFunction {
+	int32_t offset;
+	uint32_t unused;
+	TReturn (*func)(void *self, TArgs...);
 
-/**
- * Call a function within an external vtable.
- * 
- * @param vtable The vtable containing the function.
- * @param name The name of the function to call.
- * @param self The pointer to the object to call the function on.
- * @param ... The arguments to the function.
- */
-#define VTABLE_CALL_EXT(self, vtable, name, ...) (vtable)->name( \
-	reinterpret_cast<decltype(self)>( \
-		reinterpret_cast<uint8_t *>(self) + (vtable)->name##_Offset \
-	), \
-	## __VA_ARGS__ \
-)
+	TReturn operator()(void *self, TArgs... args) {
+		void *self2 = reinterpret_cast<void *>(
+			reinterpret_cast<uint8_t *>(self) + offset
+		);
 
-/**
- * Call a function within a vtable.
- * 
- * @param vtable The name of the vtable inside @p self.
- * @param name The name of the function to call.
- * @param self The pointer to the object to call the function on.
- * @param ... The arguments to the function.
- */
-#define VTABLE_CALL(self, vtable, name, ...) VTABLE_CALL_EXT( \
-	self, self->vtable, name, ## __VA_ARGS__ \
-)
+		return func(self2, args...);
+	}
+};
 /// @endcond
 
 /**

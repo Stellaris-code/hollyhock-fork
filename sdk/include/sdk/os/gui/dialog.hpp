@@ -27,31 +27,24 @@ struct GUIDialog_Wrapped_VTable {
 
 	VTABLE_FAKE_ENTRY(1, 0);
 	
-	VTABLE_ENTRY(
-		int, OnEvent,
-		struct GUIDialog_Wrapped *dialog, struct GUIDialog_OnEvent_Data *event
-	);
+	// Args: event
+	// Return: unknown?
+	VTableFunction<int, struct GUIDialog_OnEvent_Data *> OnEvent;
+
 	VTABLE_FAKE_ENTRY(1, 1);
 
+	// Args: element, unknown0
 	// unknown0 - always pass 0
-	VTABLE_ENTRY(
-		void, AddElement,
-		struct GUIDialog_Wrapped *dialog, void *element, int unknown0
-	);
+	VTableFunction<void, void *, int> AddElement;
 
 	VTABLE_FAKE_ENTRY(4, 2);
 
-	VTABLE_ENTRY(
-		void, Refresh,
-		struct GUIDialog_Wrapped *dialog
-	);
+	VTableFunction<void> Refresh;
 
 	VTABLE_FAKE_ENTRY(23, 3);
 
-	VTABLE_ENTRY(
-		int, ShowDialog,
-		struct GUIDialog_Wrapped *dialog
-	);
+	// Return: dialog result
+	VTableFunction<int> ShowDialog;
 
 	VTABLE_FAKE_ENTRY(20, 4);
 };

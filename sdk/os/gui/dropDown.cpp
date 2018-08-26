@@ -27,8 +27,8 @@ GUIDropDownMenu::GUIDropDownMenu(
  * @param visibility The visibility of the scroll bar.
  */
 void GUIDropDownMenu::SetScrollBarVisibility(ScrollBarVisibility visibility) {
-	VTABLE_CALL(
-		GetWrapped<GUIDropDownMenu_Wrapped>(), vtable, SetScrollBarVisibility,
+	GetWrapped<GUIDropDownMenu_Wrapped>()->vtable->SetScrollBarVisibility(
+		m_wrapped,
 		visibility
 	);
 }
@@ -39,8 +39,8 @@ void GUIDropDownMenu::SetScrollBarVisibility(ScrollBarVisibility visibility) {
  * @param The item to add.
  */
 void GUIDropDownMenu::AddMenuItem(GUIDropDownMenuItem &dropDownMenuItem) {
-	VTABLE_CALL(
-		GetWrapped<GUIDropDownMenu_Wrapped>(), vtable, AddMenuItem,
+	GetWrapped<GUIDropDownMenu_Wrapped>()->vtable->AddMenuItem(
+		m_wrapped,
 		dropDownMenuItem.GetWrapped<void>(), 1
 	);
 }

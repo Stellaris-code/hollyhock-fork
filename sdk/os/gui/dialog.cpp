@@ -29,7 +29,7 @@ GUIDialog::GUIDialog(
 	memcpy(&m_vtable, GetWrapped<GUIDialog_Wrapped>()->vtable, sizeof(m_vtable));
 
 	m_vtable.me = this;
-	m_vtable.OnEvent = OnEvent_Wrap;
+	m_vtable.OnEvent.func = reinterpret_cast<decltype(m_vtable.OnEvent.func)>(OnEvent_Wrap);
 
 	GetWrapped<GUIDialog_Wrapped>()->vtable = &m_vtable;
 }
@@ -39,16 +39,13 @@ int GUIDialog::OnEvent_Wrap(struct GUIDialog_Wrapped *dialog, struct GUIDialog_O
 	return dialog->vtable->me->OnEvent(dialog, event);
 }
 
+// TODO: remove the dialog param and update apps
 int GUIDialog::OnEvent(struct GUIDialog_Wrapped *dialog, struct GUIDialog_OnEvent_Data *event) {
 	// We've overidden the entry for OnEvent in our vtable with one that
 	// redirects to this method. Since we've done that, if we want to call the
 	// actual base OnEvent method, we use the old vtable we backed up in the
 	// constructor.
-	return VTABLE_CALL_EXT(
-		dialog, m_oldVTable,
-		OnEvent,
-		event
-	);
+	return m_oldVTable->OnEvent(m_wrapped, event);
 }
 
 /**
@@ -93,9 +90,8 @@ uint16_t GUIDialog::GetBottomY() {
  * @param element The GUI element to add.
  */
 void GUIDialog::AddElement(GUIElement &element) {
-	VTABLE_CALL(
-		GetWrapped<GUIDialog_Wrapped>(), vtable,
-		AddElement,
+	GetWrapped<GUIDialog_Wrapped>()->vtable->AddElement(
+		m_wrapped,
 		element.GetWrapped<void>(), 1
 	);
 }
@@ -104,10 +100,7 @@ void GUIDialog::AddElement(GUIElement &element) {
  * Refreshes the dialog, redrawing all components.
  */
 void GUIDialog::Refresh() {
-	VTABLE_CALL(
-		GetWrapped<GUIDialog_Wrapped>(), vtable,
-		Refresh
-	);
+	GetWrapped<GUIDialog_Wrapped>()->vtable->Refresh(m_wrapped);
 }
 
 /**
@@ -116,8 +109,7 @@ void GUIDialog::Refresh() {
  * @return The result of the dialog.
  */
 GUIDialog::DialogResult GUIDialog::ShowDialog() {
-	return static_cast<GUIDialog::DialogResult>(VTABLE_CALL(
-		GetWrapped<GUIDialog_Wrapped>(), vtable,
-		ShowDialog
-	));
+	return static_cast<GUIDialog::DialogResult>(
+		GetWrapped<GUIDialog_Wrapped>()->vtable->ShowDialog(m_wrapped)
+	);
 }

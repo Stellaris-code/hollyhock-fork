@@ -7,18 +7,15 @@ class GUIDropDownMenuItem;
 /// @private
 struct GUIDropDownMenu_Wrapped_VTable {
 	VTABLE_FAKE_ENTRY(5, 0);
-
-	VTABLE_ENTRY(
-		void, AddMenuItem,
-		void *dropDownMenu, void *dropDownMenuItem, uint32_t unk0
-	);
+	
+	// Args: dropDownMenuItem, unknown0
+	// unknown0 - always pass 1
+	VTableFunction<void, void *, uint32_t> AddMenuItem;
 
 	VTABLE_FAKE_ENTRY(28, 1);
 
-	VTABLE_ENTRY(
-		void, SetScrollBarVisibility,
-		void *dropDownMenu, uint32_t visibility
-	);
+	// Args: visibility
+	VTableFunction<void, uint32_t> SetScrollBarVisibility;
 };
 
 /// @private
