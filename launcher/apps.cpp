@@ -121,9 +121,73 @@ namespace Apps {
         return elf;
     }
 
+	void LoadApp(wchar_t *fileName) {
+		struct AppInfo app;
+		memset(&app, 0, sizeof(app));
+
+		// copy the file name (converting to a non-wide string in the
+		// process)
+		for (int i = 0; i < 100; ++i) {
+			wchar_t c = fileName[i];
+			app.fileName[i] = c;
+			if (c == 0x0000) {
+				break;
+			}
+		}
+
+		// build the path
+		strcat(app.path, "\\fls0\\");
+		strcat(app.path, app.fileName);
+
+		File f;
+		int ret = f.open(app.path, OPEN_READ);
+		if (ret < 0) {
+			return;
+		}
+
+		const Elf32_Shdr *sectionHeaders;
+		const Elf32_Ehdr *elf = LoadELF(f, &sectionHeaders);
+
+		if (elf == nullptr) {
+			return;
+		}
+
+		const Elf32_Shdr *sectionHeaderStringTable = &sectionHeaders[elf->e_shstrndx];
+		for (int i = 0; i < elf->e_shnum; ++i) {
+			const Elf32_Shdr *sectionHeader = &sectionHeaders[i];
+
+			// skip the first empty section header
+			if (sectionHeader->sh_type == SHT_NULL) {
+				continue;
+			}
+
+			const char *sectionName = reinterpret_cast<const char *>(
+				reinterpret_cast<const uint8_t *>(elf) +
+				sectionHeaderStringTable->sh_offset +
+				sectionHeader->sh_name
+			);
+
+			const char *sectionData = reinterpret_cast<const char *>(
+				reinterpret_cast<const uint8_t *>(elf) +
+				sectionHeader->sh_offset
+			);
+
+			if (strcmp(sectionName, ".hollyhock_name") == 0) {
+				strcat(app.name, sectionData);
+			} else if (strcmp(sectionName, ".hollyhock_description") == 0) {
+				strcat(app.description, sectionData);
+			} else if (strcmp(sectionName, ".hollyhock_author") == 0) {
+				strcat(app.author, sectionData);
+			} else if (strcmp(sectionName, ".hollyhock_version") == 0) {
+				strcat(app.version, sectionData);
+			}
+		}
+
+		g_apps[g_numApps++] = app;
+	}
+
     void LoadAppInfo() {
-        memset(g_apps, 0, sizeof(g_apps));
-        g_numApps = 0;
+		g_numApps = 0;
 
         Find find;
 
@@ -131,67 +195,10 @@ namespace Apps {
         struct findInfo findInfoBuf;
 
         int ret = find.findFirst(L"\\fls0\\*.hhk", fileName, &findInfoBuf);
-
         while (ret >= 0) {
             if (findInfoBuf.type == findInfoBuf.EntryTypeFile) {
-                struct AppInfo *app = &g_apps[g_numApps++];
-
-                // copy the file name (converting to a non-wide string in the
-                // process)
-                for (int i = 0; i < 100; ++i) {
-                    wchar_t c = fileName[i];
-                    app->fileName[i] = c;
-                    if (c == 0x0000) {
-                        break;
-                    }
-                }
-
-                // build the path
-                strcat(app->path, "\\fls0\\");
-                strcat(app->path, app->fileName);
-
-                File f;
-                ret = f.open(app->path, OPEN_READ);
-                if (ret < 0) {
-                    return;
-                }
-
-                const Elf32_Shdr *sectionHeaders;
-                const Elf32_Ehdr *elf = LoadELF(f, &sectionHeaders);
-                if (elf != nullptr) {
-                    const Elf32_Shdr *sectionHeaderStringTable = &sectionHeaders[elf->e_shstrndx];
-
-                    for (int i = 0; i < elf->e_shnum; ++i) {
-                        const Elf32_Shdr *sectionHeader = &sectionHeaders[i];
-
-                        // skip the first empty section header
-                        if (sectionHeader->sh_type == SHT_NULL) {
-                            continue;
-                        }
-
-                        const char *sectionName = reinterpret_cast<const char *>(
-                            reinterpret_cast<const uint8_t *>(elf) +
-                            sectionHeaderStringTable->sh_offset +
-                            sectionHeader->sh_name
-                        );
-
-                        const char *sectionData = reinterpret_cast<const char *>(
-                            reinterpret_cast<const uint8_t *>(elf) +
-                            sectionHeader->sh_offset
-                        );
-
-                        if (strcmp(sectionName, ".hollyhock_name") == 0) {
-                            strcat(app->name, sectionData);
-                        } else if (strcmp(sectionName, ".hollyhock_description") == 0) {
-                            strcat(app->description, sectionData);
-                        } else if (strcmp(sectionName, ".hollyhock_author") == 0) {
-                            strcat(app->author, sectionData);
-                        } else if (strcmp(sectionName, ".hollyhock_version") == 0) {
-                            strcat(app->version, sectionData);
-                        }
-                    }
-                }
-            }
+				LoadApp(fileName);
+			}
 
             ret = find.findNext(fileName, &findInfoBuf);
         }
@@ -209,34 +216,34 @@ namespace Apps {
         const Elf32_Shdr *sectionHeaders;
         const Elf32_Ehdr *elf = LoadELF(f, &sectionHeaders);
 
-        if (elf != nullptr) {
-            for (int i = 0; i < elf->e_shnum; ++i) {
-                const Elf32_Shdr *sectionHeader = &sectionHeaders[i];
+		if (elf == nullptr) {
+			return nullptr;
+		}
 
-                // skip the first empty section header
-                if (sectionHeader->sh_type == SHT_NULL) {
-                    continue;
-                }
+		for (int i = 0; i < elf->e_shnum; ++i) {
+			const Elf32_Shdr *sectionHeader = &sectionHeaders[i];
 
-                const void *sectionData = reinterpret_cast<const void *>(
-                    reinterpret_cast<const uint8_t *>(elf) +
-                    sectionHeader->sh_offset
-                );
+			// skip the first empty section header
+			if (sectionHeader->sh_type == SHT_NULL) {
+				continue;
+			}
 
-                if ((sectionHeader->sh_flags & SHF_ALLOC) == SHF_ALLOC) {
-                    void *dest = reinterpret_cast<void *>(sectionHeader->sh_addr);
+			const void *sectionData = reinterpret_cast<const void *>(
+				reinterpret_cast<const uint8_t *>(elf) +
+				sectionHeader->sh_offset
+			);
 
-                    if (sectionHeader->sh_type == SHT_PROGBITS) {
-                        memcpy(dest, sectionData, sectionHeader->sh_size);
-                    } else if (sectionHeader->sh_type == SHT_NOBITS) {
-                        memset(dest, 0, sectionHeader->sh_size);
-                    }
-                }
-            }
+			if ((sectionHeader->sh_flags & SHF_ALLOC) == SHF_ALLOC) {
+				void *dest = reinterpret_cast<void *>(sectionHeader->sh_addr);
 
-            return reinterpret_cast<EntryPoint>(elf->e_entry);
-        }
+				if (sectionHeader->sh_type == SHT_PROGBITS) {
+					memcpy(dest, sectionData, sectionHeader->sh_size);
+				} else if (sectionHeader->sh_type == SHT_NOBITS) {
+					memset(dest, 0, sectionHeader->sh_size);
+				}
+			}
+		}
 
-        return nullptr;
+		return reinterpret_cast<EntryPoint>(elf->e_entry);
     }
 }
