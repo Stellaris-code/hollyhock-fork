@@ -48,7 +48,7 @@ $(SDK_DIR)/sdk.o:
 	$(AS) $< -o $@ $(AS_FLAGS)
 
 %.o: %.c
-	$(CC) $< -o $@ $(CC_FLAGS)
+	$(CC) -c $< -o $@ $(CC_FLAGS)
 
 # Break the build if global constructors are present:
 # Read the sections from the object file (with readelf -S) and look for any
